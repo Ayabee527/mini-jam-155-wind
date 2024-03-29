@@ -40,7 +40,7 @@ func contain_window() -> void:
 		window_velocity.y *= bounce_factor
 
 func bump_window(direction: Vector2) -> void:
-	window_velocity += direction * 1.5
+	window_velocity += direction * 1.0
 	
 	var speed_multiplier = wind_momma.wind_direction.normalized().dot(
 		direction.normalized()
@@ -49,8 +49,8 @@ func bump_window(direction: Vector2) -> void:
 	if speed_multiplier < 0:
 		speed_multiplier *= -1
 	
-	wind_momma.wind_speed *= speed_multiplier
-	wind_momma.wind_direction += direction.normalized()
+	wind_momma.wind_speed *= 0.75
+	wind_momma.wind_direction += ( direction.normalized() * 2.0 )
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
 	bump_window(direction)
