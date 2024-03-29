@@ -1,11 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvopkx5b76dd6"]
+[gd_scene load_steps=7 format=3 uid="uid://bvopkx5b76dd6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_0evvo"]
+[ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="2_ruvyn"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="3_1tkx3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_brsdm"]
 bounce = 0.75
 
-[node name="Player" type="RigidBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_vb2vq"]
+radius = 12.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0y18g"]
+random_pitch = 1.5
+random_volume_offset_db = 10.0
+streams_count = 1
+stream_0/stream = ExtResource("2_ruvyn")
+stream_0/weight = 1.0
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("bump_sound")]
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_brsdm")
 gravity_scale = 0.0
@@ -13,6 +25,11 @@ max_contacts_reported = 4
 contact_monitor = true
 constant_torque = 50.0
 script = ExtResource("1_0evvo")
+bump_sound = NodePath("Bump")
+
+[node name="Trail" parent="." instance=ExtResource("3_1tkx3")]
+width = 12.0
+gradient = null
 
 [node name="Shape" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4, 7, 0, 6, -4, 7, -7, 4, -6, 0)
@@ -26,7 +43,12 @@ polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4,
 
 [node name="Bumper" type="Area2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bumper"]
-polygon = PackedVector2Array(-8, -4, -4, -8, 0, -7, 4, -8, 8, -4, 7, 0, 8, 4, 4, 8, 0, 7, -4, 8, -8, 4, -7, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumper"]
+shape = SubResource("CircleShape2D_vb2vq")
 
-[connection signal="body_exited" from="Bumper" to="." method="_on_bumper_body_exited"]
+[node name="Bump" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_0y18g")
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Bumper" to="." method="_on_bumper_body_entered"]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://chy6fqwpgumba"]
+
+[ext_resource type="Script" path="res://wind_gust/wind_gust.gd" id="1_q57as"]
+
+[node name="WindGust" type="Line2D"]
+width = 2.0
+begin_cap_mode = 1
+end_cap_mode = 1
+script = ExtResource("1_q57as")

@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var wind_momma: WindMomma
+@export var player: Player
+
 var tween: Tween
 var window_velocity: Vector2 = Vector2.ZERO
 
@@ -16,7 +19,7 @@ func _process(delta: float) -> void:
 	contain_window()
 
 func contain_window() -> void:
-	var bounce_factor: float = -1.25
+	var bounce_factor: float = -0.9
 	var screen_size: Vector2i = DisplayServer.screen_get_size()
 	var window_size: Vector2i = window.size
 	
@@ -37,7 +40,17 @@ func contain_window() -> void:
 		window_velocity.y *= bounce_factor
 
 func bump_window(direction: Vector2) -> void:
-	window_velocity = direction.rotated(PI) * 1.5
+	window_velocity += direction * 1.5
+	
+	var speed_multiplier = wind_momma.wind_direction.normalized().dot(
+		direction.normalized()
+	)
+	speed_multiplier = 1 - min(0.1, abs(speed_multiplier))
+	if speed_multiplier < 0:
+		speed_multiplier *= -1
+	
+	wind_momma.wind_speed *= speed_multiplier
+	wind_momma.wind_direction += direction.normalized()
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
 	bump_window(direction)

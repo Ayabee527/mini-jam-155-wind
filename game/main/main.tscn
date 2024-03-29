@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=9 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
+[ext_resource type="Script" path="res://main/WindMomma.gd" id="3_3bs31"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pocrq"]
 bg_color = Color(0, 0, 0, 1)
@@ -23,8 +24,10 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1og74"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("wind_momma", "player")]
 script = ExtResource("1_k70rq")
+wind_momma = NodePath("WindMomma")
+player = NodePath("Player")
 
 [node name="BGColor" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(256, 256)
@@ -59,4 +62,13 @@ shape = SubResource("WorldBoundaryShape2D_1og74")
 [node name="Player" parent="." instance=ExtResource("1_8r0be")]
 position = Vector2(128, 124)
 
+[node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("3_3bs31")
+player = NodePath("../Player")
+
+[node name="FunnyTimer" type="Timer" parent="WindMomma"]
+wait_time = 5.0
+autostart = true
+
 [connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]
+[connection signal="timeout" from="WindMomma/FunnyTimer" to="WindMomma" method="_on_funny_timer_timeout"]
