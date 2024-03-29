@@ -13,6 +13,7 @@ const GUST = preload("res://wind_gust/wind_gust.tscn")
 
 @export_group("Outer Dependencies")
 @export var player: Player
+@export var player_goal: PlayerGoal
 
 var gusts: Array[WindGust] = []
 
@@ -41,6 +42,7 @@ func set_wind_speed(new_speed: float) -> void:
 		gust.speed = wind_speed
 	
 	player.constant_force = wind_direction * wind_speed / 5.0
+	player_goal.constant_force = wind_direction * wind_speed / 5.0
 
 func set_wind_direction(new_direction: Vector2) -> void:
 	wind_direction = new_direction.normalized()
@@ -48,6 +50,7 @@ func set_wind_direction(new_direction: Vector2) -> void:
 		gust.direction = wind_direction
 	
 	player.constant_force = wind_direction * wind_speed / 5.0
+	player_goal.constant_force = wind_direction * wind_speed / 5.0
 
 
 func _on_funny_timer_timeout() -> void:

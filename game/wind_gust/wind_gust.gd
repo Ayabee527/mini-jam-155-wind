@@ -9,7 +9,7 @@ var tail_end: Vector2 = Vector2.ZERO
 var velocity: Vector2
 
 func _ready() -> void:
-	width = randi_range(1, 3)
+	width = randi_range(1, 2)
 	
 	add_point(Vector2.ZERO)
 	

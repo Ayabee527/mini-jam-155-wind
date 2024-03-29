@@ -3,7 +3,7 @@ extends RigidBody2D
 
 signal bumped_wall(direction: Vector2)
 
-@export var speed: float = 500.0
+@export var speed: float = 1000.0
 
 @export_group("Inner Dependencies")
 @export var bump_sound: AudioStreamPlayer

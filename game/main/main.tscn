@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=10 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
 [ext_resource type="Script" path="res://main/WindMomma.gd" id="3_3bs31"]
+[ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="4_5fkus"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pocrq"]
 bg_color = Color(0, 0, 0, 1)
@@ -37,38 +38,48 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_pocrq")
 
 [node name="WallLeft" type="StaticBody2D" parent="."]
 position = Vector2(3, 128)
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
 shape = SubResource("WorldBoundaryShape2D_6y7ge")
 
 [node name="WallUp" type="StaticBody2D" parent="."]
 position = Vector2(128, 3)
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallUp"]
 shape = SubResource("WorldBoundaryShape2D_8xcy0")
 
 [node name="WallRight" type="StaticBody2D" parent="."]
 position = Vector2(253, 128)
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
 shape = SubResource("WorldBoundaryShape2D_5aiac")
 
 [node name="WallDown" type="StaticBody2D" parent="."]
 position = Vector2(128, 253)
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDown"]
 shape = SubResource("WorldBoundaryShape2D_1og74")
 
-[node name="Player" parent="." instance=ExtResource("1_8r0be")]
-position = Vector2(128, 124)
+[node name="PlayerGoal" parent="." instance=ExtResource("4_5fkus")]
+position = Vector2(128, 128)
 
-[node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+[node name="Player" parent="." instance=ExtResource("1_8r0be")]
+position = Vector2(128, 128)
+
+[node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player", "player_goal")]
 script = ExtResource("3_3bs31")
+gust_count = 50
 player = NodePath("../Player")
+player_goal = NodePath("../PlayerGoal")
 
 [node name="FunnyTimer" type="Timer" parent="WindMomma"]
 wait_time = 5.0
 autostart = true
 
+[connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]
 [connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]
 [connection signal="timeout" from="WindMomma/FunnyTimer" to="WindMomma" method="_on_funny_timer_timeout"]
