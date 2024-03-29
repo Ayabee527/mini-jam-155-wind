@@ -25,6 +25,10 @@ window/size/window_width_override=768
 window/size/window_height_override=768
 window/stretch/mode="viewport"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg")
+
 [input]
 
 move_left={

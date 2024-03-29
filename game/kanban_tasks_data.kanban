@@ -1,0 +1,92 @@
+{
+	"categories": [
+		{
+			"uuid": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"title": "Task",
+			"color": "70bafa"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "0fdd5149-32fa-4530-8183-3ab246f94a9b",
+			"title": "Todo",
+			"tasks": [
+				"04dcbbf9-288f-47e4-b8ae-77eddc3ab4e4",
+				"d5b4af0e-5790-4271-9be3-d9430634dd40"
+			]
+		},
+		{
+			"uuid": "ad73f86c-e742-426e-9009-59f506be9e75",
+			"title": "Doing",
+			"tasks": [
+				"13b90420-1702-4bff-a115-74c989fc30b3"
+			]
+		},
+		{
+			"uuid": "9ad08e5a-bbe9-402b-b134-af80db443ea9",
+			"title": "Done",
+			"tasks": [
+				"75cd7d3c-0c91-4bcf-aced-5828e972d497",
+				"b03c4834-5794-4a18-a6ff-b6a98784c527",
+				"886cddf1-da0d-4269-9931-e3550c25c3b5"
+			]
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "75cd7d3c-0c91-4bcf-aced-5828e972d497",
+			"title": "Player",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "b03c4834-5794-4a18-a6ff-b6a98784c527",
+			"title": "Window Bump",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "886cddf1-da0d-4269-9931-e3550c25c3b5",
+			"title": "Player Goal",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "13b90420-1702-4bff-a115-74c989fc30b3",
+			"title": "Player Goal Spawns Hazards",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "04dcbbf9-288f-47e4-b8ae-77eddc3ab4e4",
+			"title": "Score + Highscore",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "d5b4af0e-5790-4271-9be3-d9430634dd40",
+			"title": "Speed Score Multiplier",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"0fdd5149-32fa-4530-8183-3ab246f94a9b"
+			],
+			[
+				"ad73f86c-e742-426e-9009-59f506be9e75"
+			],
+			[
+				"9ad08e5a-bbe9-402b-b134-af80db443ea9"
+			]
+		]
+	}
+}

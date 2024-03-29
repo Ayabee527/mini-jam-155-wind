@@ -75,6 +75,7 @@ polygon = PackedVector2Array(8, -14, 1, -1, 12, -12, 14, -8, 3, -1, 16, -2, 16, 
 polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_hq080")
 
 [node name="MoveTimer" type="Timer" parent="."]
@@ -85,6 +86,7 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerZone"]
+visible = false
 shape = SubResource("CircleShape2D_oekn7")
 
 [node name="StunTimer" type="Timer" parent="."]
@@ -102,11 +104,11 @@ explosiveness = 1.0
 
 [node name="Explod" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_qwa8d")
+volume_db = -10.0
 bus = &"sfx"
 
 [node name="Yipee" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_dobcb")
-volume_db = 12.0
 pitch_scale = 0.75
 bus = &"sfx"
 
