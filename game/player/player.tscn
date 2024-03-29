@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvopkx5b76dd6"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_0evvo"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_brsdm"]
+bounce = 0.75
+
+[node name="Player" type="RigidBody2D"]
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_brsdm")
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+constant_torque = 50.0
+script = ExtResource("1_0evvo")
+
+[node name="Shape" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4, 7, 0, 6, -4, 7, -7, 4, -6, 0)
+
+[node name="Fill" type="Polygon2D" parent="Shape"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-5, -3, -3, -5, 0, -4, 3, -5, 5, -3, 4, 0, 5, 3, 3, 5, 0, 4, -3, 5, -5, 3, -4, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4, 7, 0, 6, -4, 7, -7, 4, -6, 0)
+
+[node name="Bumper" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bumper"]
+polygon = PackedVector2Array(-8, -4, -4, -8, 0, -7, 4, -8, 8, -4, 7, 0, 8, 4, 4, 8, 0, 7, -4, 8, -8, 4, -7, 0)
+
+[connection signal="body_exited" from="Bumper" to="." method="_on_bumper_body_exited"]

@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://3r620wirfx5j"]
+
+[ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
+[ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pocrq"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6y7ge"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8xcy0"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_5aiac"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1og74"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_k70rq")
+
+[node name="BGColor" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pocrq")
+
+[node name="WallLeft" type="StaticBody2D" parent="."]
+position = Vector2(3, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
+shape = SubResource("WorldBoundaryShape2D_6y7ge")
+
+[node name="WallUp" type="StaticBody2D" parent="."]
+position = Vector2(128, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallUp"]
+shape = SubResource("WorldBoundaryShape2D_8xcy0")
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2(253, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
+shape = SubResource("WorldBoundaryShape2D_5aiac")
+
+[node name="WallDown" type="StaticBody2D" parent="."]
+position = Vector2(128, 253)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDown"]
+shape = SubResource("WorldBoundaryShape2D_1og74")
+
+[node name="Player" parent="." instance=ExtResource("1_8r0be")]
+position = Vector2(128, 124)
+
+[connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]
