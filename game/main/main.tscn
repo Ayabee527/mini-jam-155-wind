@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=11 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
 [ext_resource type="Script" path="res://main/WindMomma.gd" id="3_3bs31"]
 [ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="4_5fkus"]
+[ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="5_nku0o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pocrq"]
 bg_color = Color(0, 0, 0, 1)
@@ -79,6 +80,12 @@ player_goal = NodePath("../PlayerGoal")
 [node name="FunnyTimer" type="Timer" parent="WindMomma"]
 wait_time = 10.0
 autostart = true
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_nku0o")
+volume_db = -5.0
+autoplay = true
+bus = &"music"
 
 [connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]
 [connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]

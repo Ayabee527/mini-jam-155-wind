@@ -109,6 +109,7 @@ bus = &"sfx"
 
 [node name="Yipee" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_dobcb")
+volume_db = 10.0
 pitch_scale = 0.75
 bus = &"sfx"
 
