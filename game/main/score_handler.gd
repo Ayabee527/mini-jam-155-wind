@@ -72,4 +72,4 @@ func _on_player_goal_collected() -> void:
 
 func _on_player_hurt() -> void:
 	multiplier = 0.0
-	score -= 50 * combo
+	score -= 100 * combo
