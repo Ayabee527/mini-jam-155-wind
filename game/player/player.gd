@@ -7,6 +7,7 @@ signal bumped_wall(direction: Vector2)
 
 @export_group("Inner Dependencies")
 @export var bump_sound: AudioStreamPlayer
+@export var ouch_sound: AudioStreamPlayer
 
 func _ready() -> void:
 	pass
@@ -32,3 +33,11 @@ func _on_bumper_body_entered(body: Node2D) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	bump_sound.play()
+
+
+func _on_owie_detector_area_entered(area: Area2D) -> void:
+	print("OWIE!")
+	ouch_sound.play()
+	apply_central_impulse(
+		area.global_position.direction_to(global_position) * speed * 0.5
+	)

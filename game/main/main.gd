@@ -42,13 +42,6 @@ func contain_window() -> void:
 func bump_window(direction: Vector2) -> void:
 	window_velocity += direction * 0.5
 	
-	var speed_multiplier = wind_momma.wind_direction.normalized().dot(
-		direction.normalized()
-	)
-	speed_multiplier = 1 - min(0.1, abs(speed_multiplier))
-	if speed_multiplier < 0:
-		speed_multiplier *= -1
-	
 	wind_momma.wind_speed *= 0.5
 	wind_momma.wind_direction = direction.normalized()
 	#wind_momma.wind_direction += ( direction.normalized() * 2.0 )

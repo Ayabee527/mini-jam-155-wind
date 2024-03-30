@@ -1,6 +1,8 @@
 class_name PlayerGoal
 extends RigidBody2D
 
+const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
+
 signal collected()
 
 @export var stun_timer: Timer
@@ -10,6 +12,8 @@ signal collected()
 
 @export var explod_sound: AudioStreamPlayer
 @export var yipee_sound: AudioStreamPlayer
+
+var combo: int = 0
 
 var velocity: Vector2
 
@@ -36,9 +40,31 @@ func show_collect() -> void:
 	explod_sound.play()
 	yipee_sound.play()
 
+func explode() -> void:
+	var owies = get_tree().get_nodes_in_group("owies")
+	for owie: RigidBody2D in owies:
+		if owie.has_method("die"):
+			owie.die()
+		else:
+			owie.queue_free()
+	
+	var amount: int = 2
+	for i: int in range(amount):
+		var bullet = BULLET.instantiate()
+		bullet.global_position = global_position
+		var dir := Vector2.from_angle(TAU * randf())
+		var speed := randf_range(50, 150)
+		bullet.apply_central_impulse(
+			dir * speed
+		)
+		get_tree().current_scene.add_child(bullet)
+
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if stun_timer.is_stopped():
+			combo += 1
+			explode()
+			
 			stun_timer.start()
 			show_collect()
 			collected.emit()

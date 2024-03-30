@@ -19,7 +19,7 @@ radius = 24.0
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_xkk78"]
+[sub_resource type="CurveTexture" id="CurveTexture_pvwyv"]
 curve = SubResource("Curve_mou8y")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d03xg"]
@@ -32,7 +32,7 @@ damping_min = 50.0
 damping_max = 150.0
 scale_min = 0.05
 scale_max = 0.25
-scale_curve = SubResource("CurveTexture_xkk78")
+scale_curve = SubResource("CurveTexture_pvwyv")
 color = Color(0, 1, 0, 1)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qwa8d"]
@@ -49,7 +49,7 @@ stream_0/stream = ExtResource("4_yyl1y")
 stream_0/weight = 1.0
 
 [node name="PlayerGoal" type="RigidBody2D" node_paths=PackedStringArray("stun_timer", "shape", "collect_particles", "explod_sound", "yipee_sound")]
-collision_layer = 8
+collision_layer = 16
 physics_material_override = SubResource("PhysicsMaterial_2tyrj")
 gravity_scale = 0.0
 constant_torque = -100.0
@@ -82,7 +82,7 @@ shape = SubResource("CircleShape2D_hq080")
 autostart = true
 
 [node name="PlayerZone" type="Area2D" parent="."]
-collision_layer = 16
+collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerZone"]

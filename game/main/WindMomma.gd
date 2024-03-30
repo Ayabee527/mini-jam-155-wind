@@ -1,6 +1,8 @@
 class_name WindMomma
 extends Node2D
 
+signal wind_updated(direction: Vector2, speed: float)
+
 const GUST = preload("res://wind_gust/wind_gust.tscn")
 
 @export var gust_count: int = 30
@@ -41,6 +43,8 @@ func set_wind_speed(new_speed: float) -> void:
 	for gust: WindGust in gusts:
 		gust.speed = wind_speed
 	
+	wind_updated.emit(wind_direction, wind_speed)
+	
 	player.constant_force = wind_direction * wind_speed / 5.0
 	player_goal.constant_force = wind_direction * wind_speed / 5.0
 
@@ -49,10 +53,12 @@ func set_wind_direction(new_direction: Vector2) -> void:
 	for gust: WindGust in gusts:
 		gust.direction = wind_direction
 	
+	wind_updated.emit(wind_direction, wind_speed)
+	
 	player.constant_force = wind_direction * wind_speed / 5.0
 	player_goal.constant_force = wind_direction * wind_speed / 5.0
 
 
 func _on_funny_timer_timeout() -> void:
 	wind_direction = Vector2.from_angle(TAU * randf())
-	wind_speed = randf_range(player.speed * 0.33, player.speed * 0.75) * 5.0
+	wind_speed = randf_range(player.speed * 0.75, player.speed) * 5.0

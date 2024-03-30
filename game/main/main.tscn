@@ -39,28 +39,28 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_pocrq")
 
 [node name="WallLeft" type="StaticBody2D" parent="."]
 position = Vector2(3, 128)
-collision_mask = 10
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
 shape = SubResource("WorldBoundaryShape2D_6y7ge")
 
 [node name="WallUp" type="StaticBody2D" parent="."]
 position = Vector2(128, 3)
-collision_mask = 10
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallUp"]
 shape = SubResource("WorldBoundaryShape2D_8xcy0")
 
 [node name="WallRight" type="StaticBody2D" parent="."]
 position = Vector2(253, 128)
-collision_mask = 10
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
 shape = SubResource("WorldBoundaryShape2D_5aiac")
 
 [node name="WallDown" type="StaticBody2D" parent="."]
 position = Vector2(128, 253)
-collision_mask = 10
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDown"]
 shape = SubResource("WorldBoundaryShape2D_1og74")
@@ -71,7 +71,7 @@ position = Vector2(128, 128)
 [node name="Player" parent="." instance=ExtResource("1_8r0be")]
 position = Vector2(128, 128)
 
-[node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player", "player_goal")]
+[node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player", "player_goal") groups=["wind_momma"]]
 script = ExtResource("3_3bs31")
 gust_count = 50
 player = NodePath("../Player")
