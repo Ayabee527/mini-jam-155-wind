@@ -1,6 +1,7 @@
 class_name Player
 extends RigidBody2D
 
+signal hurt()
 signal bumped_wall(direction: Vector2)
 
 @export var speed: float = 1000.0
@@ -37,6 +38,7 @@ func _on_body_entered(body: Node) -> void:
 
 func _on_owie_detector_area_entered(area: Area2D) -> void:
 	print("OWIE!")
+	hurt.emit()
 	ouch_sound.play()
 	apply_central_impulse(
 		area.global_position.direction_to(global_position) * speed * 0.5

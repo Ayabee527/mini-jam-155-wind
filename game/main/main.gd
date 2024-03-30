@@ -1,5 +1,9 @@
 extends Node2D
 
+@export var timer_gradient: Gradient
+
+@export var life_timer: Timer
+@export var timer_bar: TextureProgressBar
 @export var wind_momma: WindMomma
 @export var player: Player
 
@@ -12,6 +16,10 @@ func _ready() -> void:
 	window = get_window()
 
 func _process(delta: float) -> void:
+	timer_bar.tint_progress = timer_gradient.sample(
+		1.0 - (life_timer.time_left / 12.0)
+	)
+	
 	window_velocity = window_velocity.move_toward(Vector2.ZERO, 50.0 * delta)
 	
 	window.position += Vector2i(window_velocity * delta)
@@ -53,5 +61,14 @@ func _on_player_bumped_wall(direction: Vector2) -> void:
 
 
 func _on_player_goal_collected() -> void:
-	bump_window(player.linear_velocity * 2.5)
+	life_timer.start(12)
+	bump_window(player.linear_velocity * 1.25)
 	print("Goal Got!")
+
+
+func _on_life_timer_timeout() -> void:
+	print("GAME OVER!!!")
+
+
+func _on_player_hurt() -> void:
+	life_timer.start(life_timer.time_left - 3)

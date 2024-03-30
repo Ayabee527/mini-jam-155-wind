@@ -46,7 +46,7 @@ func set_wind_speed(new_speed: float) -> void:
 	wind_updated.emit(wind_direction, wind_speed)
 	
 	player.constant_force = wind_direction * wind_speed / 5.0
-	player_goal.constant_force = wind_direction * wind_speed / 5.0
+	player_goal.constant_force = (wind_direction * wind_speed).rotated(PI) / 5.0
 
 func set_wind_direction(new_direction: Vector2) -> void:
 	wind_direction = new_direction.normalized()
@@ -56,9 +56,9 @@ func set_wind_direction(new_direction: Vector2) -> void:
 	wind_updated.emit(wind_direction, wind_speed)
 	
 	player.constant_force = wind_direction * wind_speed / 5.0
-	player_goal.constant_force = wind_direction * wind_speed / 5.0
+	player_goal.constant_force = (wind_direction * wind_speed).rotated(PI) / 5.0
 
 
 func _on_funny_timer_timeout() -> void:
 	wind_direction = Vector2.from_angle(TAU * randf())
-	wind_speed = randf_range(player.speed * 0.75, player.speed) * 5.0
+	wind_speed = randf_range(player.speed * 0.5, player.speed * 0.75) * 5.0
