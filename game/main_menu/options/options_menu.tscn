@@ -1,0 +1,188 @@
+[gd_scene load_steps=15 format=3 uid="uid://cmamu5udwoaqb"]
+
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_age2a"]
+[ext_resource type="Script" path="res://main_menu/options/options_menu.gd" id="1_y0nrf"]
+[ext_resource type="PackedScene" uid="uid://d24cmkro7w3qy" path="res://main_menu/options/volume_slider.tscn" id="2_7dklg"]
+[ext_resource type="Texture2D" uid="uid://ca1aefaxi8xp7" path="res://assets/textures/check.png" id="2_tmccf"]
+[ext_resource type="Texture2D" uid="uid://b7ouovbvxenb0" path="res://assets/textures/notcheck.png" id="3_gp2vc"]
+[ext_resource type="AudioStream" uid="uid://bxulnxxri6way" path="res://assets/music/lil-guy-doing-big-things.ogg" id="6_n7p4d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw356"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5bg1j"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5g70"]
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aetpj"]
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jq6wo"]
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lpnc0"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrhld"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fci8x"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[node name="OptionsMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tw356")
+script = ExtResource("1_y0nrf")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="WindowMove" type="HBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/WindowMove"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_age2a")
+theme_override_font_sizes/font_size = 8
+text = "Window Movement:"
+horizontal_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/CenterContainer/VBoxContainer/WindowMove"]
+layout_mode = 2
+theme_override_icons/checked = ExtResource("2_tmccf")
+theme_override_icons/unchecked = ExtResource("3_gp2vc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5bg1j")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_d5g70")
+theme_override_styles/hover = SubResource("StyleBoxFlat_aetpj")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_d5g70")
+theme_override_styles/focus = SubResource("StyleBoxFlat_jq6wo")
+
+[node name="Master" type="VBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/Master"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_age2a")
+theme_override_font_sizes/font_size = 8
+text = "MASTER VOLUME"
+horizontal_alignment = 1
+
+[node name="VolumeSlider" parent="MarginContainer/CenterContainer/VBoxContainer/Master" instance=ExtResource("2_7dklg")]
+layout_mode = 2
+
+[node name="Sound" type="VBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/Sound"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_age2a")
+theme_override_font_sizes/font_size = 8
+text = "SOUND VOLUME"
+horizontal_alignment = 1
+
+[node name="VolumeSlider" parent="MarginContainer/CenterContainer/VBoxContainer/Sound" instance=ExtResource("2_7dklg")]
+layout_mode = 2
+bus_name = "sfx"
+
+[node name="Music" type="VBoxContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/Music"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_age2a")
+theme_override_font_sizes/font_size = 8
+text = "MUSIC VOLUME"
+horizontal_alignment = 1
+
+[node name="VolumeSlider" parent="MarginContainer/CenterContainer/VBoxContainer/Music" instance=ExtResource("2_7dklg")]
+layout_mode = 2
+bus_name = "music"
+
+[node name="Back" type="Button" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_age2a")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_lpnc0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mrhld")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fci8x")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mrhld")
+text = "BACK"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_n7p4d")
+volume_db = -20.0
+autoplay = true
+bus = &"music"
+
+[connection signal="pressed" from="MarginContainer/Back" to="." method="_on_back_pressed"]

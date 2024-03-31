@@ -1,5 +1,9 @@
 extends Node
 
+var window_movement: bool = true
+var sfx_volume: float
+var music_volume: float
+
 var latest_score: int = 0:
 	set = set_latest_score
 var latest_time: int = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=21 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="4_5fkus"]
 [ext_resource type="Texture2D" uid="uid://ckf3axdyd60bj" path="res://assets/textures/bar-fill.png" id="4_eqekf"]
 [ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="5_nku0o"]
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="6_5e1ef"]
 
 [sub_resource type="Gradient" id="Gradient_6u8cl"]
 offsets = PackedFloat32Array(0, 0.24, 0.25, 0.5, 1)
@@ -27,6 +28,42 @@ border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpfxu"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwkxi"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6kcy"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6y7ge"]
 normal = Vector2(1, 0)
 
@@ -38,7 +75,7 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1og74"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "gameover_label", "multiplier_label", "timer_label")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt")]
 script = ExtResource("1_k70rq")
 timer_gradient = SubResource("Gradient_6u8cl")
 time_timer = NodePath("TimerTimer")
@@ -50,6 +87,8 @@ player_goal = NodePath("PlayerGoal")
 gameover_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/GAMEOVER")
 multiplier_label = NodePath("BGColor/MarginContainer/Multiplier")
 timer_label = NodePath("BGColor/MarginContainer/Time")
+retry_butt = NodePath("BGColor/MarginContainer/Retry")
+back_butt = NodePath("BGColor/MarginContainer/Back")
 
 [node name="TimerTimer" type="Timer" parent="."]
 autostart = true
@@ -161,6 +200,33 @@ stretch_margin_bottom = 1
 texture_under = ExtResource("3_tn14n")
 texture_progress = ExtResource("4_eqekf")
 
+[node name="Retry" type="Button" parent="BGColor/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
+text = "RETRY?"
+
+[node name="Back" type="Button" parent="BGColor/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
+text = "MENU?
+"
+
 [node name="WallLeft" type="StaticBody2D" parent="."]
 position = Vector2(3, 128)
 collision_mask = 16
@@ -213,6 +279,9 @@ bus = &"music"
 
 [connection signal="timeout" from="TimerTimer" to="." method="_on_timer_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
+[connection signal="score_updated" from="ScoreHandler" to="." method="_on_score_handler_score_updated"]
+[connection signal="pressed" from="BGColor/MarginContainer/Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="BGColor/MarginContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]
 [connection signal="collected" from="PlayerGoal" to="ScoreHandler" method="_on_player_goal_collected"]
 [connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]

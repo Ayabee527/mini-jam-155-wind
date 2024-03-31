@@ -1,5 +1,7 @@
 extends Node
 
+signal score_updated(new_score: int)
+
 @export var timer_multiplier_curve: Curve
 
 @export_group("Outer Dependencies")
@@ -59,6 +61,11 @@ func set_score(new_score: int):
 		increment_score, last_score, score, 1.0
 	)
 	last_score = score
+	
+	tween.finished.connect(
+		func():
+			score_updated.emit(score)
+	)
 
 func increment_score(new_score: int):
 	score_label.text = "[center][shake rate=10 level=24]"

@@ -14,6 +14,8 @@ signal game_over()
 @export var gameover_label: RichTextLabel
 @export var multiplier_label: RichTextLabel
 @export var timer_label: RichTextLabel
+@export var retry_butt: Button
+@export var back_butt: Button
 
 var tween: Tween
 var window_velocity: Vector2 = Vector2.ZERO
@@ -21,6 +23,7 @@ var window_velocity: Vector2 = Vector2.ZERO
 var window: Window
 
 var time_alive: int = 0
+var game_overed: bool = false
 
 func _ready() -> void:
 	window = get_window()
@@ -96,7 +99,9 @@ func _on_player_goal_collected() -> void:
 
 func _on_life_timer_timeout() -> void:
 	print("GAME OVER!!!")
-	over_game()
+	if not game_overed:
+		game_overed = true
+		over_game()
 
 
 func _on_player_hurt() -> void:
@@ -113,7 +118,6 @@ func get_time_text() -> String:
 	
 	seconds = time_alive % 60
 	minutes = time_alive / 60
-	print(time_alive, ", ", minutes, ", ", seconds)
 	
 	var minute_text: String = "00"
 	if minutes < 10:
@@ -134,3 +138,28 @@ func get_time_text() -> String:
 func _on_timer_timer_timeout() -> void:
 	time_alive += 1
 	timer_label.text = "[wave]" + get_time_text()
+
+
+func _on_score_handler_score_updated(new_score: int) -> void:
+	if game_overed:
+		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.set_parallel()
+		tween.tween_property(
+			retry_butt, "modulate:a",
+			1.0, 1.0
+		).from(0.0)
+		tween.tween_property(
+			back_butt, "modulate:a",
+			1.0, 1.0
+		).from(0.0)
+		retry_butt.show()
+		back_butt.show()
+		tween.play()
+
+
+func _on_retry_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
+func _on_back_pressed() -> void:
+	SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")

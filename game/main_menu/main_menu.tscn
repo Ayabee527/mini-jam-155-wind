@@ -126,7 +126,12 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "DON'T PLAY!"
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+autoplay = true
+bus = &"music"
+
 [connection signal="timeout" from="WindHolder/WindTimer" to="WindHolder" method="_on_wind_timer_timeout"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
