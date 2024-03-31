@@ -1,4 +1,3 @@
-class_name DataLoader
 extends Node
 
 const SAVE_PATH = "user://data.score"

@@ -75,7 +75,7 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1og74"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "score_handler", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt")]
 script = ExtResource("1_k70rq")
 timer_gradient = SubResource("Gradient_6u8cl")
 time_timer = NodePath("TimerTimer")
@@ -84,6 +84,7 @@ timer_bar = NodePath("BGColor/MarginContainer/TimerBar")
 wind_momma = NodePath("WindMomma")
 player = NodePath("Player")
 player_goal = NodePath("PlayerGoal")
+score_handler = NodePath("ScoreHandler")
 gameover_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/GAMEOVER")
 multiplier_label = NodePath("BGColor/MarginContainer/Multiplier")
 timer_label = NodePath("BGColor/MarginContainer/Time")

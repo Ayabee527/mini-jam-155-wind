@@ -1,3 +1,4 @@
+class_name ScoreHandler
 extends Node
 
 signal score_updating()

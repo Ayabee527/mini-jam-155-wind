@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=8 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
-[ext_resource type="Script" path="res://main_menu/data_loader.gd" id="2_6rupi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -49,7 +48,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("data_loader")]
+[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("last_score", "high_score", "last_time", "high_time")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -57,10 +56,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jdj60")
 script = ExtResource("1_4r7go")
-data_loader = NodePath("DataLoader")
-
-[node name="DataLoader" type="Node" parent="."]
-script = ExtResource("2_6rupi")
+last_score = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Score")
+high_score = NodePath("MarginContainer/VBoxContainer/HBoxContainer/HiScore")
+last_time = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Time")
+high_time = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/HiTime")
 
 [node name="WindHolder" type="Node2D" parent="."]
 script = ExtResource("1_d3t3r")
@@ -130,6 +129,74 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "DON'T PLAY!"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "last 000000 "
+
+[node name="Slash" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "vs"
+horizontal_alignment = 1
+
+[node name="HiScore" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "000000 high"
+horizontal_alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "00:00"
+
+[node name="HiTime" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "00:00"
+horizontal_alignment = 2
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 autoplay = true

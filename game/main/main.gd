@@ -11,6 +11,7 @@ signal game_over()
 @export var player: Player
 @export var player_goal: PlayerGoal
 
+@export var score_handler: ScoreHandler
 @export var gameover_label: RichTextLabel
 @export var multiplier_label: RichTextLabel
 @export var timer_label: RichTextLabel
@@ -85,6 +86,8 @@ func over_game() -> void:
 	tween.play()
 	
 	if not updating_score:
+		Global.latest_time = time_alive
+		Global.latest_score = score_handler.score
 		allow_escape()
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
@@ -162,7 +165,7 @@ func allow_escape() -> void:
 	tween.play()
 
 func _on_score_handler_score_updated(new_score: int) -> void:
-	Global.latest_score = new_score
+	updating_score = false
 	
 	if game_overed:
 		allow_escape()
