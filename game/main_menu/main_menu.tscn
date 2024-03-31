@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=9 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
+[ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="4_wm8vi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -199,6 +200,7 @@ text = "00:00"
 horizontal_alignment = 2
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_wm8vi")
 autoplay = true
 bus = &"music"
 

@@ -18,9 +18,7 @@
 		{
 			"uuid": "ad73f86c-e742-426e-9009-59f506be9e75",
 			"title": "Doing",
-			"tasks": [
-				"f2e52365-38de-4826-a0d8-77fecfba7b76"
-			]
+			"tasks": []
 		},
 		{
 			"uuid": "9ad08e5a-bbe9-402b-b134-af80db443ea9",
@@ -36,7 +34,9 @@
 				"477476fa-43ae-440d-be9c-0a31b25bd867",
 				"bf1bdef3-efd0-4344-9a30-4ee55eba9c4b",
 				"8b87607a-b582-44ff-aa47-36cff8dcb106",
-				"30fd3ea0-4dd3-4787-b0a8-8e3c3332b7e9"
+				"30fd3ea0-4dd3-4787-b0a8-8e3c3332b7e9",
+				"f2e52365-38de-4826-a0d8-77fecfba7b76",
+				"b7e72cdd-a68d-4934-b4cc-323383cb8d17"
 			]
 		}
 	],
@@ -135,6 +135,13 @@
 		{
 			"uuid": "8b87607a-b582-44ff-aa47-36cff8dcb106",
 			"title": "Options",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "b7e72cdd-a68d-4934-b4cc-323383cb8d17",
+			"title": "Menu Music",
 			"description": "",
 			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
 			"steps": []
