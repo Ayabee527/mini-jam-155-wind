@@ -1,26 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://clrtvk4mji6hx"]
+[gd_scene load_steps=9 format=3 uid="uid://nslxlwuchbkk"]
 
-[ext_resource type="Script" path="res://goal/hazards/bomb/bomb.gd" id="1_xqnn4"]
-[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="2_dx1w6"]
-[ext_resource type="AudioStream" uid="uid://bigqmw32qq7sh" path="res://assets/sounds/2up.wav" id="3_wtinw"]
+[ext_resource type="Script" path="res://goal/hazards/bomb/bomb.gd" id="1_vaw8o"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="2_ch18f"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bq3if"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ih2u"]
 bounce = 0.75
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bsi1w"]
-radius = 16.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_i2ojj"]
+radius = 16.1245
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1l2r1"]
-radius = 16.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_ny8e1"]
+radius = 16.1245
 
-[sub_resource type="Curve" id="Curve_d07mk"]
+[sub_resource type="Curve" id="Curve_76c4m"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_kxnbv"]
-curve = SubResource("Curve_d07mk")
+[sub_resource type="CurveTexture" id="CurveTexture_73uqj"]
+curve = SubResource("Curve_76c4m")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qiuyr"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bnnqy"]
 particle_flag_disable_z = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 0, 1)
@@ -35,28 +34,17 @@ tangential_accel_min = 10.0
 tangential_accel_max = 10.0
 scale_min = 0.05
 scale_max = 0.1
-scale_curve = SubResource("CurveTexture_kxnbv")
+scale_curve = SubResource("CurveTexture_73uqj")
 color = Color(0, 1, 0, 1)
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_axlcd"]
-random_pitch = 1.5
-streams_count = 1
-stream_0/stream = ExtResource("3_wtinw")
-stream_0/weight = 1.0
-
-[node name="Bomb" type="RigidBody2D" node_paths=PackedStringArray("shape", "collision_shape", "owie_collision", "explode_particles", "bump_sound") groups=["owies"]]
-collision_layer = 16
-physics_material_override = SubResource("PhysicsMaterial_bq3if")
+[node name="Bomb" type="RigidBody2D" node_paths=PackedStringArray("shape", "collision_shape", "owie_collision", "explode_particles") groups=["owies"]]
+physics_material_override = SubResource("PhysicsMaterial_3ih2u")
 gravity_scale = 0.0
-max_contacts_reported = 4
-contact_monitor = true
-constant_torque = -100.0
-script = ExtResource("1_xqnn4")
+script = ExtResource("1_vaw8o")
 shape = NodePath("Shape")
 collision_shape = NodePath("CollisionShape2D")
 owie_collision = NodePath("Owie/CollisionShape2D")
 explode_particles = NodePath("ExplodeParticles")
-bump_sound = NodePath("Bump")
 
 [node name="Shape" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-14, -8, -8, -14, 0, -16, 8, -14, 14, -8, 16, 0, 14, 8, 8, 14, 0, 16, -8, 14, -14, 8, -16, 0)
@@ -69,35 +57,27 @@ polygon = PackedVector2Array(-12, -6, -6, -12, 0, -14, 6, -12, 12, -6, 14, 0, 12
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(8, -14, 1, -1, 12, -12, 14, -8, 3, -1, 16, -2, 16, 4, 3, 1, 14, 8, 12, 12, 1, 1, 8, 14, 4, 16, 0, 2, -4, 16, -8, 14, -1, 1, -12, 12, -14, 8, -3, 1, -16, 3, -16, -3, -3, -1, -14, -8, -12, -12, -1, -1, -8, -14, -4, -16, 0, -2, 4, -16)
 
-[node name="Center" type="Polygon2D" parent="Shape"]
+[node name="Polygon2D" type="Polygon2D" parent="Shape"]
 polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_bsi1w")
+shape = SubResource("CircleShape2D_i2ojj")
 
 [node name="Owie" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Owie"]
-shape = SubResource("CircleShape2D_1l2r1")
+shape = SubResource("CircleShape2D_ny8e1")
 disabled = true
 
 [node name="ExplodeParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_qiuyr")
-texture = ExtResource("2_dx1w6")
+process_material = SubResource("ParticleProcessMaterial_bnnqy")
+texture = ExtResource("2_ch18f")
 one_shot = true
 explosiveness = 1.0
 
-[node name="Bump" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_axlcd")
-volume_db = 5.0
-pitch_scale = 0.25
-max_polyphony = 5
-bus = &"sfx"
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="Owie" to="." method="_on_owie_body_entered"]
 [connection signal="finished" from="ExplodeParticles" to="." method="_on_explode_particles_finished"]

@@ -71,9 +71,8 @@ func set_multiplier(new_multiplier: float) -> void:
 func _on_player_goal_collected() -> void:
 	combo += 1
 	if combo > 1:
-		multiplier += 1.0 * (1.0 + (combo * 0.25))
-		
 		score += (100 * (1.0 + (combo * 0.1))) * multiplier
+		multiplier += 1.0 * (1.0 + (combo * 0.25))
 
 
 func _on_player_hurt() -> void:

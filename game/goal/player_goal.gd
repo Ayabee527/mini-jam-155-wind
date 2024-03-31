@@ -97,10 +97,6 @@ func explode() -> void:
 			dir * speed
 		)
 		get_tree().current_scene.add_child(hazard)
-	
-	if randf() <= 0.25:
-		combo -= 2
-		combo = max(0, combo)
 
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:

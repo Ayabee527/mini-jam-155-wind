@@ -1,0 +1,19 @@
+extends Node
+
+var latest_score: int = 0:
+	set = set_latest_score
+var latest_time: int = 0
+
+var high_score: int = 0
+var high_time: int = 0
+
+func set_latest_score(new_score: int) -> void:
+	latest_score = new_score
+	
+	if latest_score > high_score:
+		high_score = latest_score
+		high_time = latest_time
+	
+	if latest_score == high_score:
+		if latest_time < high_time:
+			high_time = latest_time

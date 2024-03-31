@@ -8,8 +8,6 @@ const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 
 @export var explode_particles: GPUParticles2D
 
-@export var bump_sound: AudioStreamPlayer
-
 var bounces: int = 0
 
 var wind_momma: WindMomma
@@ -53,8 +51,7 @@ func explode() -> void:
 	linear_velocity = Vector2.ZERO
 	set_deferred("freeze", true)
 	
-	shape.modulate.g = 1.0
-	shape.modulate.r = 0.0
+	shape.modulate = Color.GREEN
 	explode_particles.restart()
 	
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -72,8 +69,7 @@ func die() -> void:
 	linear_velocity = Vector2.ZERO
 	set_deferred("freeze", true)
 	
-	shape.modulate.g = 1.0
-	shape.modulate.r = 0.0
+	shape.modulate = Color.GREEN
 	explode_particles.restart()
 	
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -88,16 +84,11 @@ func update_wind(direction: Vector2, speed: float) -> void:
 	add_constant_central_force(direction * speed)
 
 
-func _on_body_entered(body: Node) -> void:
-	bump_sound.play()
-
-
 func _on_explode_particles_finished() -> void:
 	queue_free()
 
 
 func _on_owie_body_entered(body: Node2D) -> void:
-	print("a")
 	body = body as Player
 	body.apply_central_impulse(
 		global_position.direction_to(body.global_position) * body.linear_velocity.length()

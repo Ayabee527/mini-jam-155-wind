@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="wind jam"
-run/main_scene="res://main/main.tscn"
+run/main_scene="res://main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+SceneSwitcher="*res://autoloads/SceneSwitcher.tscn"
+Score="*res://autoloads/Score.gd"
 
 [display]
 
@@ -28,6 +33,19 @@ window/stretch/mode="viewport"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "green",
+"res://autoloads/": "yellow",
+"res://components/": "gray",
+"res://goal/": "teal",
+"res://main/": "purple",
+"res://main_menu/": "purple",
+"res://player/": "teal",
+"res://wind_gust/": "gray"
+}
 
 [input]
 
