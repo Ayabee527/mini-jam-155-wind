@@ -14,7 +14,8 @@ config/name="Wind Of Change"
 run/main_scene="res://main_menu/main_menu.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/textures/icon.png"
+config/windows_native_icon="res://assets/textures/icon.ico"
 
 [autoload]
 
