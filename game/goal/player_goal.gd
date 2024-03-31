@@ -3,15 +3,18 @@ extends RigidBody2D
 
 const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 const SAW = preload("res://goal/hazards/saw/saw.tscn")
+const BOMB = preload("res://goal/hazards/bomb/bomb.tscn")
 
 const HAZARDS = {
 	"BULLET": BULLET,
-	"SAW": SAW
+	"SAW": SAW,
+	"BOMB": BOMB
 }
 
 const COSTS = {
 	"BULLET": 2,
-	"SAW": 6
+	"SAW": 6,
+	"BOMB": 10
 }
 
 signal collected()
