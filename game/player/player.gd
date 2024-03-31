@@ -20,7 +20,9 @@ func _physics_process(delta: float) -> void:
 			get_move_dir() * speed
 		)
 	else:
-		pass
+		apply_central_force(
+			linear_velocity.rotated(PI) * 2.0
+		)
 
 func get_move_dir() -> Vector2:
 	return Input.get_vector(

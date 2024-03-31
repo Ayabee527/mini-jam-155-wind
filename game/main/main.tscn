@@ -50,10 +50,11 @@ player = NodePath("Player")
 wait_time = 12.0
 one_shot = true
 
-[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("player", "life_timer", "multiplier_label", "score_label", "timer_bar")]
+[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("player", "player_goal", "life_timer", "multiplier_label", "score_label", "timer_bar")]
 script = ExtResource("2_2wxyd")
 timer_multiplier_curve = SubResource("Curve_it4fr")
 player = NodePath("../Player")
+player_goal = NodePath("../PlayerGoal")
 life_timer = NodePath("../LifeTimer")
 multiplier_label = NodePath("../BGColor/MarginContainer/Multiplier")
 score_label = NodePath("../BGColor/MarginContainer/CenterContainer/Score")

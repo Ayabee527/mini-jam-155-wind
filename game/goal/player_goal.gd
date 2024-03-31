@@ -2,6 +2,17 @@ class_name PlayerGoal
 extends RigidBody2D
 
 const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
+const SAW = preload("res://goal/hazards/saw/saw.tscn")
+
+const HAZARDS = {
+	"BULLET": BULLET,
+	"SAW": SAW
+}
+
+const COSTS = {
+	"BULLET": 2,
+	"SAW": 6
+}
 
 signal collected()
 
@@ -48,16 +59,41 @@ func explode() -> void:
 		else:
 			owie.queue_free()
 	
-	var amount: int = 2
-	for i: int in range(amount):
-		var bullet = BULLET.instantiate()
-		bullet.global_position = global_position
-		var dir := Vector2.from_angle(TAU * randf())
+	var score: int = combo
+	
+	var chosens: Array = []
+	
+	var hazards: Array = COSTS.keys().duplicate()
+	var score_out: bool = false
+	while score > 0:
+		hazards = COSTS.keys().duplicate()
+		
+		hazards.shuffle()
+		var chosen_hazard = hazards.pop_back()
+		
+		while (COSTS[chosen_hazard] > score):
+			if hazards.size() == 0:
+				score_out = true
+				break
+			
+			chosen_hazard = hazards.pop_back()
+		
+		if score_out:
+			break
+		
+		chosens.append(chosen_hazard)
+		score -= COSTS[chosen_hazard]
+	
+	for hazard_name: String in chosens:
+		var hazard: RigidBody2D = HAZARDS[hazard_name].instantiate()
+		hazard.global_position = global_position
+		var ang_offset = randf_range(-PI/4, PI/4)
+		var dir := linear_velocity.normalized().rotated(ang_offset)
 		var speed := randf_range(50, 150)
-		bullet.apply_central_impulse(
+		hazard.apply_central_impulse(
 			dir * speed
 		)
-		get_tree().current_scene.add_child(bullet)
+		get_tree().current_scene.add_child(hazard)
 
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:

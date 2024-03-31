@@ -4,6 +4,7 @@ extends Node
 
 @export_group("Outer Dependencies")
 @export var player: Player
+@export var player_goal: PlayerGoal
 @export var life_timer: Timer
 
 @export var multiplier_label: RichTextLabel
@@ -33,7 +34,11 @@ func get_speed_multiplier() -> float:
 	var multi: float = 0
 	
 	multi = max(
-		player.linear_velocity.length() / (player.speed * 0.25),
+		player.linear_velocity.length() / (player.speed * 0.5),
+		0
+	)
+	multi += max(
+		player_goal.linear_velocity.length() / 250.0,
 		0
 	)
 	
@@ -43,7 +48,7 @@ func get_timer_multiplier() -> float:
 	var multi: float = 0
 	
 	var time_ratio = 1.0 - (life_timer.time_left / 12.0)
-	multi = 10.0 * timer_multiplier_curve.sample(time_ratio)
+	multi = 5.0 * timer_multiplier_curve.sample(time_ratio)
 	
 	return multi
 
@@ -65,9 +70,10 @@ func set_multiplier(new_multiplier: float) -> void:
 
 func _on_player_goal_collected() -> void:
 	combo += 1
-	multiplier += 1.0 * (1.0 + (combo * 0.1))
-	
-	score += 100 * multiplier
+	if combo > 1:
+		multiplier += 1.0 * (1.0 + (combo * 0.25))
+		
+		score += (100 * (1.0 + (combo * 0.1))) * multiplier
 
 
 func _on_player_hurt() -> void:

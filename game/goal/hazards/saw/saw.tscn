@@ -1,0 +1,119 @@
+[gd_scene load_steps=12 format=3 uid="uid://blkf7aod75jgk"]
+
+[ext_resource type="Script" path="res://goal/hazards/saw/saw.gd" id="1_mrnf7"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="1_pw4cg"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="2_2n1fv"]
+[ext_resource type="AudioStream" uid="uid://cj22thlejgkgk" path="res://assets/sounds/saw-bounce.wav" id="3_hkgve"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c0tks"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ogdt7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wg7bc"]
+radius = 12.0416
+
+[sub_resource type="Curve" id="Curve_2vj58"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gwk4w"]
+curve = SubResource("Curve_2vj58")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ur1l6"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 24.0
+emission_ring_radius = 24.0
+emission_ring_inner_radius = 24.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+tangential_accel_min = 10.0
+tangential_accel_max = 10.0
+scale_min = 0.05
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_gwk4w")
+color = Color(0, 1, 0, 1)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ckvpn"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("3_hkgve")
+stream_0/weight = 1.0
+
+[node name="Saw" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "owie_collision", "explode_particles", "bump_sound") groups=["owies"]]
+collision_layer = 16
+mass = 12.5
+physics_material_override = SubResource("PhysicsMaterial_c0tks")
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+constant_torque = 10000.0
+script = ExtResource("1_mrnf7")
+shape = NodePath("Shape")
+trail = NodePath("Trail")
+collision_shape = NodePath("CollisionShape2D")
+owie_collision = NodePath("Owie/CollisionShape2D")
+explode_particles = NodePath("ExplodeParticles")
+bump_sound = NodePath("Bump")
+
+[node name="Trail" parent="." instance=ExtResource("1_pw4cg")]
+modulate = Color(1, 0, 0, 1)
+width = 8.0
+gradient = null
+
+[node name="Shape" type="Node2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+
+[node name="Center" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(-4, 0, -3, -3, 0, -4, 3, -3, 4, 0, 3, 3, 0, 4, -3, 3)
+
+[node name="Blade1" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(-2, -5, 0, -6, 2, -5, 0, -12)
+
+[node name="Blade2" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(5, -2, 6, 0, 5, 2, 12, 0)
+
+[node name="Blade3" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(-2, 5, 0, 6, 2, 5, 0, 12)
+
+[node name="Blade4" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(-5, 2, -6, 0, -5, -2, -12, 0)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -1)
+rect = Rect2(-48, -48, 96, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ogdt7")
+
+[node name="Owie" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Owie"]
+shape = SubResource("CircleShape2D_wg7bc")
+disabled = true
+
+[node name="ExplodeParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_ur1l6")
+texture = ExtResource("2_2n1fv")
+one_shot = true
+explosiveness = 1.0
+
+[node name="Bump" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ckvpn")
+volume_db = 15.0
+max_polyphony = 5
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="Owie" to="." method="_on_owie_body_entered"]
+[connection signal="finished" from="ExplodeParticles" to="." method="_on_explode_particles_finished"]

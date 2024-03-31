@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvopkx5b76dd6"]
+[gd_scene load_steps=11 format=3 uid="uid://bvopkx5b76dd6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_0evvo"]
 [ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="2_ruvyn"]
@@ -7,6 +7,9 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_brsdm"]
 bounce = 0.75
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sf47k"]
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vb2vq"]
 radius = 12.0
@@ -51,8 +54,8 @@ polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4,
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-5, -3, -3, -5, 0, -4, 3, -5, 5, -3, 4, 0, 5, 3, 3, 5, 0, 4, -3, 5, -5, 3, -4, 0)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4, 7, 0, 6, -4, 7, -7, 4, -6, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_sf47k")
 
 [node name="Bumper" type="Area2D" parent="."]
 collision_layer = 16

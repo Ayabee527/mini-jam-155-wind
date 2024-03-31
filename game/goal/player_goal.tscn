@@ -7,7 +7,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2tyrj"]
 rough = true
-bounce = 0.5
+bounce = 0.75
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hq080"]
 radius = 16.0
@@ -79,7 +79,6 @@ visible = false
 shape = SubResource("CircleShape2D_hq080")
 
 [node name="MoveTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="PlayerZone" type="Area2D" parent="."]
 collision_layer = 8
