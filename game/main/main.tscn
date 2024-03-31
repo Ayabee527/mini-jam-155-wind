@@ -38,13 +38,21 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1og74"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("life_timer", "timer_bar", "wind_momma", "player")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "gameover_label", "multiplier_label", "timer_label")]
 script = ExtResource("1_k70rq")
 timer_gradient = SubResource("Gradient_6u8cl")
+time_timer = NodePath("TimerTimer")
 life_timer = NodePath("LifeTimer")
 timer_bar = NodePath("BGColor/MarginContainer/TimerBar")
 wind_momma = NodePath("WindMomma")
 player = NodePath("Player")
+player_goal = NodePath("PlayerGoal")
+gameover_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/GAMEOVER")
+multiplier_label = NodePath("BGColor/MarginContainer/Multiplier")
+timer_label = NodePath("BGColor/MarginContainer/Time")
+
+[node name="TimerTimer" type="Timer" parent="."]
+autostart = true
 
 [node name="LifeTimer" type="Timer" parent="."]
 wait_time = 12.0
@@ -57,7 +65,7 @@ player = NodePath("../Player")
 player_goal = NodePath("../PlayerGoal")
 life_timer = NodePath("../LifeTimer")
 multiplier_label = NodePath("../BGColor/MarginContainer/Multiplier")
-score_label = NodePath("../BGColor/MarginContainer/CenterContainer/Score")
+score_label = NodePath("../BGColor/MarginContainer/CenterContainer/VBoxContainer/Score")
 timer_bar = NodePath("../BGColor/MarginContainer/TimerBar")
 
 [node name="BGColor" type="PanelContainer" parent="."]
@@ -72,6 +80,21 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+
+[node name="Time" type="RichTextLabel" parent="BGColor/MarginContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[wave]00:00"
+fit_content = true
+autowrap_mode = 0
 
 [node name="Multiplier" type="RichTextLabel" parent="BGColor/MarginContainer"]
 clip_contents = false
@@ -91,7 +114,25 @@ autowrap_mode = 0
 [node name="CenterContainer" type="CenterContainer" parent="BGColor/MarginContainer"]
 layout_mode = 2
 
-[node name="Score" type="RichTextLabel" parent="BGColor/MarginContainer/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="BGColor/MarginContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="GAMEOVER" type="RichTextLabel" parent="BGColor/MarginContainer/CenterContainer/VBoxContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[center][shake rate=16 level=12]GAME OVER!"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Score" type="RichTextLabel" parent="BGColor/MarginContainer/CenterContainer/VBoxContainer"]
 clip_contents = false
 layout_mode = 2
 theme_override_colors/default_color = Color(0.501961, 0.501961, 0.501961, 1)
@@ -101,7 +142,7 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_fonts/normal_font = ExtResource("2_3642g")
 theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
-text = "[shake rate=10 level=24]0"
+text = "[center][shake rate=10 level=24]0"
 fit_content = true
 autowrap_mode = 0
 
@@ -170,6 +211,7 @@ volume_db = -5.0
 autoplay = true
 bus = &"music"
 
+[connection signal="timeout" from="TimerTimer" to="." method="_on_timer_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
 [connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]
 [connection signal="collected" from="PlayerGoal" to="ScoreHandler" method="_on_player_goal_collected"]

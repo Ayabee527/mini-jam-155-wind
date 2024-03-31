@@ -38,6 +38,7 @@ scale_curve = SubResource("CurveTexture_73uqj")
 color = Color(0, 1, 0, 1)
 
 [node name="Bomb" type="RigidBody2D" node_paths=PackedStringArray("shape", "collision_shape", "owie_collision", "explode_particles") groups=["owies"]]
+collision_layer = 16
 physics_material_override = SubResource("PhysicsMaterial_3ih2u")
 gravity_scale = 0.0
 script = ExtResource("1_vaw8o")

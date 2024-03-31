@@ -1,23 +1,18 @@
 shader_type canvas_item;
 
-uniform float num_lines = 20.;
-uniform float y_threshold: hint_range(0.0, 1.0) = 0.5;
-uniform vec4 line_color_a: source_color = vec4(1.);
-uniform vec4 line_color_b: source_color = vec4(0., 0., 0., 1.0);
+// Ranges from 0 to 1 over the course of the transition.
+// We use this to actually animate the shader.
+uniform float progress : hint_range(0, 1);
+
+// Size of each diamond, in pixels.
+uniform float diamondPixelSize = 10.0;
 
 void fragment() {
-	vec2 tiled_uv = vec2(fract(UV.x * num_lines / 2.), UV.y);
-	if (tiled_uv.x < 0.5){
-		if(tiled_uv.y < y_threshold){
-			COLOR = line_color_a;
-		} else {
-			COLOR = vec4(0.0);
-		}
-	} else {
-		if (tiled_uv.y > 1. - y_threshold){
-			COLOR = line_color_b;
-		} else {
-			COLOR = vec4(0.0);
-		}
+	float xFraction = fract(FRAGCOORD.x / diamondPixelSize);
+	float yFraction = fract(FRAGCOORD.y / diamondPixelSize);
+	float xDistance = abs(xFraction - 0.5);
+	float yDistance = abs(yFraction - 0.5);
+	if (xDistance + yDistance + UV.x + UV.y > progress * 4.0) {
+		discard;
 	}
 }

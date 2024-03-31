@@ -47,20 +47,7 @@ func explode() -> void:
 		)
 		get_tree().current_scene.add_child(bullet)
 	
-	constant_force = Vector2.ZERO
-	linear_velocity = Vector2.ZERO
-	set_deferred("freeze", true)
-	
-	shape.modulate = Color.GREEN
-	explode_particles.restart()
-	
-	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.set_parallel()
-	tween.tween_property(
-		shape, "modulate:a",
-		0.0, explode_particles.lifetime
-	)
-	tween.play()
+	die()
 
 func die() -> void:
 	owie_collision.set_deferred("disabled", true)
@@ -89,6 +76,7 @@ func _on_explode_particles_finished() -> void:
 
 
 func _on_owie_body_entered(body: Node2D) -> void:
+	print("wha")
 	body = body as Player
 	body.apply_central_impulse(
 		global_position.direction_to(body.global_position) * body.linear_velocity.length()

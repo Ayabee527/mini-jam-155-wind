@@ -61,7 +61,7 @@ func set_score(new_score: int):
 	last_score = score
 
 func increment_score(new_score: int):
-	score_label.text = "[shake rate=10 level=24]"
+	score_label.text = "[center][shake rate=10 level=24]"
 	score_label.text += str(new_score)
 
 func set_multiplier(new_multiplier: float) -> void:
@@ -71,10 +71,10 @@ func set_multiplier(new_multiplier: float) -> void:
 func _on_player_goal_collected() -> void:
 	combo += 1
 	if combo > 1:
-		score += (100 * (1.0 + (combo * 0.1))) * multiplier
+		score += (100 * (1.0 + (combo * 0.25))) * multiplier
 		multiplier += 1.0 * (1.0 + (combo * 0.25))
 
 
 func _on_player_hurt() -> void:
 	multiplier = 0.0
-	score -= 75 * combo
+	score -= 100 * (1.0 * (1.0 + (combo * 0.25)))

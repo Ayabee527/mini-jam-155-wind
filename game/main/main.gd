@@ -1,16 +1,26 @@
 extends Node2D
 
+signal game_over()
+
 @export var timer_gradient: Gradient
 
+@export var time_timer: Timer
 @export var life_timer: Timer
 @export var timer_bar: TextureProgressBar
 @export var wind_momma: WindMomma
 @export var player: Player
+@export var player_goal: PlayerGoal
+
+@export var gameover_label: RichTextLabel
+@export var multiplier_label: RichTextLabel
+@export var timer_label: RichTextLabel
 
 var tween: Tween
 var window_velocity: Vector2 = Vector2.ZERO
 
 var window: Window
+
+var time_alive: int = 0
 
 func _ready() -> void:
 	window = get_window()
@@ -54,6 +64,20 @@ func bump_window(direction: Vector2) -> void:
 	wind_momma.wind_direction = direction.normalized()
 	#wind_momma.wind_direction += ( direction.normalized() * 2.0 )
 
+func over_game() -> void:
+	time_timer.stop()
+	player.die()
+	player_goal.die()
+	
+	gameover_label.show()
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.set_parallel()
+	tween.tween_property(
+		multiplier_label, "modulate:a",
+		0.0, 5.0
+	)
+	tween.play()
+
 func _on_player_bumped_wall(direction: Vector2) -> void:
 	wind_momma.wind_speed += direction.length()
 	#wind_momma.wind_speed *= 1.01
@@ -72,10 +96,41 @@ func _on_player_goal_collected() -> void:
 
 func _on_life_timer_timeout() -> void:
 	print("GAME OVER!!!")
+	over_game()
 
 
 func _on_player_hurt() -> void:
-	if life_timer.time_left - 3 > 0:
-		life_timer.start(life_timer.time_left - 3)
+	if life_timer.time_left - 1 > 0:
+		life_timer.start(life_timer.time_left - 1)
 	else:
 		life_timer.start(0.05)
+
+func get_time_text() -> String:
+	var text: String = "00:00"
+	
+	var minutes: int = 0
+	var seconds: int = 0
+	
+	seconds = time_alive % 60
+	minutes = time_alive / 60
+	print(time_alive, ", ", minutes, ", ", seconds)
+	
+	var minute_text: String = "00"
+	if minutes < 10:
+		minute_text = "0" + str(minutes)
+	else:
+		minute_text = str(minutes)
+	
+	var second_text: String = "00"
+	if seconds < 10:
+		second_text = "0" + str(seconds)
+	else:
+		second_text = str(seconds)
+	
+	text = minute_text + ":" + second_text
+	
+	return text
+
+func _on_timer_timer_timeout() -> void:
+	time_alive += 1
+	timer_label.text = "[wave]" + get_time_text()

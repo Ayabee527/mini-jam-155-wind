@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvopkx5b76dd6"]
+[gd_scene load_steps=17 format=3 uid="uid://bvopkx5b76dd6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_0evvo"]
 [ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="2_ruvyn"]
 [ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="3_1tkx3"]
 [ext_resource type="AudioStream" uid="uid://ombi0lwi7cik" path="res://assets/sounds/ouch.wav" id="4_1afhd"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="5_vldiu"]
+[ext_resource type="AudioStream" uid="uid://ds8emyev6w6pm" path="res://assets/sounds/explod.wav" id="6_et28p"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_brsdm"]
 bounce = 0.75
@@ -31,7 +33,33 @@ streams_count = 1
 stream_0/stream = ExtResource("4_1afhd")
 stream_0/weight = 1.0
 
-[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("bump_sound", "ouch_sound") groups=["player"]]
+[sub_resource type="Curve" id="Curve_uk8qn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_pvwyv"]
+curve = SubResource("Curve_uk8qn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ybfwt"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+damping_min = 50.0
+damping_max = 150.0
+scale_min = 0.05
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_pvwyv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fq2kk"]
+random_pitch = 1.5
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("6_et28p")
+stream_0/weight = 1.0
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("bump_sound", "ouch_sound", "shape", "collision", "bumper_collision", "owie_collision", "die_particles", "explode_sound") groups=["player"]]
 collision_layer = 18
 collision_mask = 5
 mass = 2.0
@@ -43,6 +71,12 @@ constant_torque = 50.0
 script = ExtResource("1_0evvo")
 bump_sound = NodePath("Bump")
 ouch_sound = NodePath("Ouch")
+shape = NodePath("Shape")
+collision = NodePath("CollisionShape2D")
+bumper_collision = NodePath("Bumper/CollisionShape2D")
+owie_collision = NodePath("OwieDetector/CollisionShape2D")
+die_particles = NodePath("DieParticles")
+explode_sound = NodePath("Explod")
 
 [node name="Trail" parent="." instance=ExtResource("3_1tkx3")]
 width = 12.0
@@ -79,6 +113,21 @@ bus = &"sfx"
 stream = SubResource("AudioStreamRandomizer_cv0ua")
 volume_db = 10.0
 pitch_scale = 0.5
+bus = &"sfx"
+
+[node name="DieParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_ybfwt")
+texture = ExtResource("5_vldiu")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+
+[node name="Explod" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_fq2kk")
+volume_db = -5.0
+pitch_scale = 0.25
 bus = &"sfx"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

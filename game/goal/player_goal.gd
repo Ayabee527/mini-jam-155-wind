@@ -22,6 +22,9 @@ signal collected()
 @export var stun_timer: Timer
 @export var shape: Polygon2D
 
+@export var collision: CollisionShape2D
+@export var player_collision: CollisionShape2D
+
 @export var collect_particles: GPUParticles2D
 
 @export var explod_sound: AudioStreamPlayer
@@ -97,6 +100,16 @@ func explode() -> void:
 			dir * speed
 		)
 		get_tree().current_scene.add_child(hazard)
+
+func die() -> void:
+	collision.set_deferred("disabled", true)
+	player_collision.set_deferred("disabled", true)
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.set_parallel()
+	tween.tween_property(
+		shape, "modulate",
+		Color(1, 1, 1, 0), 5.0
+	)
 
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:

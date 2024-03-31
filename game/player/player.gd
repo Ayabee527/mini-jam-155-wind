@@ -10,6 +10,13 @@ signal bumped_wall(direction: Vector2)
 @export var bump_sound: AudioStreamPlayer
 @export var ouch_sound: AudioStreamPlayer
 
+@export var shape: Polygon2D
+@export var collision: CollisionShape2D
+@export var bumper_collision: CollisionShape2D
+@export var owie_collision: CollisionShape2D
+@export var die_particles: GPUParticles2D
+@export var explode_sound: AudioStreamPlayer
+
 func _ready() -> void:
 	pass
 
@@ -29,6 +36,17 @@ func get_move_dir() -> Vector2:
 		"move_left", "move_right",
 		"move_up", "move_down"
 	)
+
+func die() -> void:
+	collision.set_deferred("disabled", true)
+	owie_collision.set_deferred("disabled", true)
+	bumper_collision.set_deferred("disabled", true)
+	
+	set_deferred("freeze", true)
+	
+	shape.hide()
+	die_particles.restart()
+	explode_sound.play()
 
 func _on_bumper_body_entered(body: Node2D) -> void:
 	emit_signal("bumped_wall", linear_velocity)
