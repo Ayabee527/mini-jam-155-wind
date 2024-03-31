@@ -16,6 +16,8 @@ func _ready() -> void:
 	wind_momma = get_tree().get_first_node_in_group("wind_momma")
 	wind_momma.wind_updated.connect(update_wind)
 	
+	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
+	
 	angular_velocity = randf_range(-TAU, TAU)
 	
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)

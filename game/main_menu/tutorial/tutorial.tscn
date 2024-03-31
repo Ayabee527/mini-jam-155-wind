@@ -1,0 +1,252 @@
+[gd_scene load_steps=18 format=3 uid="uid://b4a0wjfuk22rj"]
+
+[ext_resource type="Script" path="res://main_menu/tutorial/tutorial.gd" id="1_7qpvw"]
+[ext_resource type="FontFile" uid="uid://gaye3ibwfthw" path="res://assets/fonts/fibberish.ttf" id="1_hqtc7"]
+[ext_resource type="Texture2D" uid="uid://bc5kkbyknqa0o" path="res://assets/textures/bar-under.png" id="2_dgkef"]
+[ext_resource type="Texture2D" uid="uid://ckf3axdyd60bj" path="res://assets/textures/bar-fill.png" id="3_7jobm"]
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="4_o7v0s"]
+[ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="5_jykvy"]
+[ext_resource type="AudioStream" uid="uid://bxulnxxri6way" path="res://assets/music/lil-guy-doing-big-things.ogg" id="7_h0mxc"]
+[ext_resource type="Script" path="res://main/WindMomma.gd" id="8_iyr6o"]
+[ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="9_21uk6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k3o1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7c2k2"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cnbb"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axj6e"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cv7as"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cvnov"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_w1ufg"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jsjcu"]
+
+[node name="Tutorial" type="Node2D" node_paths=PackedStringArray("text_label", "score_label", "player", "player_goal", "wind_momma")]
+script = ExtResource("1_7qpvw")
+text_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/TEXT")
+score_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/Score")
+player = NodePath("Player")
+player_goal = NodePath("PlayerGoal")
+wind_momma = NodePath("WindMomma")
+
+[node name="BGColor" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4k3o1")
+
+[node name="MarginContainer" type="MarginContainer" parent="BGColor"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Time" type="RichTextLabel" parent="BGColor/MarginContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("1_hqtc7")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[wave]00:00"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Multiplier" type="RichTextLabel" parent="BGColor/MarginContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("1_hqtc7")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[wave]x1.5"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="BGColor/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BGColor/MarginContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="TEXT" type="RichTextLabel" parent="BGColor/MarginContainer/CenterContainer/VBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("1_hqtc7")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]WASD TO MOVE!"
+fit_content = true
+
+[node name="Score" type="RichTextLabel" parent="BGColor/MarginContainer/CenterContainer/VBoxContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_colors/font_shadow_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("1_hqtc7")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[center][shake rate=10 level=24]0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="TimerBar" type="TextureProgressBar" parent="BGColor/MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_vertical = 8
+max_value = 12.0
+step = 0.01
+value = 12.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("2_dgkef")
+texture_progress = ExtResource("3_7jobm")
+
+[node name="Retry" type="Button" parent="BGColor/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("4_o7v0s")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_7c2k2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7cnbb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_axj6e")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7cnbb")
+text = "RETRY?"
+
+[node name="Back" type="Button" parent="BGColor/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("4_o7v0s")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_7c2k2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7cnbb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_axj6e")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7cnbb")
+text = "MENU?
+"
+
+[node name="WallLeft" type="StaticBody2D" parent="."]
+position = Vector2(3, 128)
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
+shape = SubResource("WorldBoundaryShape2D_cv7as")
+
+[node name="WallUp" type="StaticBody2D" parent="."]
+position = Vector2(128, 3)
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallUp"]
+shape = SubResource("WorldBoundaryShape2D_cvnov")
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2(253, 128)
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
+shape = SubResource("WorldBoundaryShape2D_w1ufg")
+
+[node name="WallDown" type="StaticBody2D" parent="."]
+position = Vector2(128, 253)
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDown"]
+shape = SubResource("WorldBoundaryShape2D_jsjcu")
+
+[node name="Player" parent="." instance=ExtResource("5_jykvy")]
+position = Vector2(128, 160)
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_h0mxc")
+autoplay = true
+bus = &"music"
+
+[node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player", "player_goal") groups=["wind_momma"]]
+script = ExtResource("8_iyr6o")
+gust_count = 50
+player = NodePath("../Player")
+player_goal = NodePath("../PlayerGoal")
+
+[node name="FunnyTimer" type="Timer" parent="WindMomma"]
+wait_time = 10.0
+autostart = true
+
+[node name="PlayerGoal" parent="." instance=ExtResource("9_21uk6")]
+visible = false
+position = Vector2(-65, 41)
+
+[connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]
+[connection signal="timeout" from="WindMomma/FunnyTimer" to="WindMomma" method="_on_funny_timer_timeout"]
+[connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]

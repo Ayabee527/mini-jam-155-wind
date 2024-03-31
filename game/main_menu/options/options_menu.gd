@@ -7,6 +7,7 @@ func _ready() -> void:
 	window_move_butt.button_pressed = Global.window_movement
 
 func _on_back_pressed() -> void:
+	DataLoader.save_data()
 	SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
