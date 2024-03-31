@@ -1,5 +1,6 @@
 extends Node
 
+signal score_updating()
 signal score_updated(new_score: int)
 
 @export var timer_multiplier_curve: Curve
@@ -56,6 +57,8 @@ func get_timer_multiplier() -> float:
 
 func set_score(new_score: int):
 	score = max(0, new_score)
+	score_updating.emit()
+	
 	var tween = create_tween()
 	tween.tween_method(
 		increment_score, last_score, score, 1.0

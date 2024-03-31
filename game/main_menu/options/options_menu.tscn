@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cmamu5udwoaqb"]
+[gd_scene load_steps=16 format=3 uid="uid://cmamu5udwoaqb"]
 
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_age2a"]
 [ext_resource type="Script" path="res://main_menu/options/options_menu.gd" id="1_y0nrf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ca1aefaxi8xp7" path="res://assets/textures/check.png" id="2_tmccf"]
 [ext_resource type="Texture2D" uid="uid://b7ouovbvxenb0" path="res://assets/textures/notcheck.png" id="3_gp2vc"]
 [ext_resource type="AudioStream" uid="uid://bxulnxxri6way" path="res://assets/music/lil-guy-doing-big-things.ogg" id="6_n7p4d"]
+[ext_resource type="AudioStream" uid="uid://bigqmw32qq7sh" path="res://assets/sounds/2up.wav" id="7_s25g6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw356"]
 bg_color = Color(0, 0, 0, 1)
@@ -83,7 +84,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="OptionsMenu" type="PanelContainer"]
+[node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("window_move_butt", "sound")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -91,6 +92,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tw356")
 script = ExtResource("1_y0nrf")
+window_move_butt = NodePath("MarginContainer/CenterContainer/VBoxContainer/WindowMove/CheckButton")
+sound = NodePath("Sound")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -181,8 +184,15 @@ text = "BACK"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_n7p4d")
-volume_db = -20.0
+volume_db = -5.0
 autoplay = true
 bus = &"music"
 
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_s25g6")
+bus = &"sfx"
+
+[connection signal="toggled" from="MarginContainer/CenterContainer/VBoxContainer/WindowMove/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="confirm_volume" from="MarginContainer/CenterContainer/VBoxContainer/Master/VolumeSlider" to="." method="_on_volume_slider_confirm_volume"]
+[connection signal="confirm_volume" from="MarginContainer/CenterContainer/VBoxContainer/Sound/VolumeSlider" to="." method="_on_volume_slider_confirm_volume"]
 [connection signal="pressed" from="MarginContainer/Back" to="." method="_on_back_pressed"]

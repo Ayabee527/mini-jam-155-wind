@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=9 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
+[ext_resource type="Script" path="res://main_menu/data_loader.gd" id="2_6rupi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -48,7 +49,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="MainMenu" type="PanelContainer"]
+[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("data_loader")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -56,6 +57,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jdj60")
 script = ExtResource("1_4r7go")
+data_loader = NodePath("DataLoader")
+
+[node name="DataLoader" type="Node" parent="."]
+script = ExtResource("2_6rupi")
 
 [node name="WindHolder" type="Node2D" parent="."]
 script = ExtResource("1_d3t3r")

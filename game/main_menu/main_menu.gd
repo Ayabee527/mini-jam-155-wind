@@ -1,9 +1,15 @@
 extends PanelContainer
 
+@export var data_loader: DataLoader
+
 func _ready() -> void:
+	data_loader.load_data()
+	data_loader.save_data()
+	
 	SceneSwitcher.switch_in()
 
 func _on_quit_pressed() -> void:
+	data_loader.save_data()
 	get_tree().quit()
 
 

@@ -24,6 +24,7 @@ var window: Window
 
 var time_alive: int = 0
 var game_overed: bool = false
+var updating_score: bool = false
 
 func _ready() -> void:
 	window = get_window()
@@ -33,9 +34,10 @@ func _process(delta: float) -> void:
 		1.0 - (life_timer.time_left / 12.0)
 	)
 	
-	window_velocity = window_velocity.move_toward(Vector2.ZERO, 50.0 * delta)
-	
-	window.position += Vector2i(window_velocity * delta)
+	if Global.window_movement:
+		window_velocity = window_velocity.move_toward(Vector2.ZERO, 50.0 * delta)
+		
+		window.position += Vector2i(window_velocity * delta)
 	
 	contain_window()
 
@@ -61,7 +63,8 @@ func contain_window() -> void:
 		window_velocity.y *= bounce_factor
 
 func bump_window(direction: Vector2) -> void:
-	window_velocity += direction * 0.5
+	if Global.window_movement:
+		window_velocity += direction * 0.5
 	
 	wind_momma.wind_speed *= direction.dot(wind_momma.wind_direction)
 	wind_momma.wind_direction = direction.normalized()
@@ -80,6 +83,9 @@ func over_game() -> void:
 		0.0, 5.0
 	)
 	tween.play()
+	
+	if not updating_score:
+		allow_escape()
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
 	wind_momma.wind_speed += direction.length()
@@ -140,21 +146,26 @@ func _on_timer_timer_timeout() -> void:
 	timer_label.text = "[wave]" + get_time_text()
 
 
+func allow_escape() -> void:
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.set_parallel()
+	tween.tween_property(
+		retry_butt, "modulate:a",
+		1.0, 1.0
+	).from(0.0)
+	tween.tween_property(
+		back_butt, "modulate:a",
+		1.0, 1.0
+	).from(0.0)
+	retry_butt.show()
+	back_butt.show()
+	tween.play()
+
 func _on_score_handler_score_updated(new_score: int) -> void:
+	Global.latest_score = new_score
+	
 	if game_overed:
-		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tween.set_parallel()
-		tween.tween_property(
-			retry_butt, "modulate:a",
-			1.0, 1.0
-		).from(0.0)
-		tween.tween_property(
-			back_butt, "modulate:a",
-			1.0, 1.0
-		).from(0.0)
-		retry_butt.show()
-		back_butt.show()
-		tween.play()
+		allow_escape()
 
 
 func _on_retry_pressed() -> void:
@@ -163,3 +174,7 @@ func _on_retry_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")
+
+
+func _on_score_handler_score_updating() -> void:
+	updating_score = true

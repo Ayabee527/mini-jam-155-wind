@@ -280,6 +280,7 @@ bus = &"music"
 [connection signal="timeout" from="TimerTimer" to="." method="_on_timer_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
 [connection signal="score_updated" from="ScoreHandler" to="." method="_on_score_handler_score_updated"]
+[connection signal="score_updating" from="ScoreHandler" to="." method="_on_score_handler_score_updating"]
 [connection signal="pressed" from="BGColor/MarginContainer/Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="BGColor/MarginContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]
