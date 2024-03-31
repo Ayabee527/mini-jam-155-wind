@@ -11,15 +11,18 @@
 			"uuid": "0fdd5149-32fa-4530-8183-3ab246f94a9b",
 			"title": "Todo",
 			"tasks": [
-				"52d85e91-7ffe-4038-8f26-0b93bdb2b50d",
+				"bf1bdef3-efd0-4344-9a30-4ee55eba9c4b",
 				"30fd3ea0-4dd3-4787-b0a8-8e3c3332b7e9",
-				"477476fa-43ae-440d-be9c-0a31b25bd867"
+				"0807bfac-bbad-41f0-89dc-8b4fa5b6862c",
+				"1f819b17-122a-481c-a54a-176e45589ee9"
 			]
 		},
 		{
 			"uuid": "ad73f86c-e742-426e-9009-59f506be9e75",
 			"title": "Doing",
-			"tasks": []
+			"tasks": [
+				"477476fa-43ae-440d-be9c-0a31b25bd867"
+			]
 		},
 		{
 			"uuid": "9ad08e5a-bbe9-402b-b134-af80db443ea9",
@@ -30,7 +33,8 @@
 				"886cddf1-da0d-4269-9931-e3550c25c3b5",
 				"13b90420-1702-4bff-a115-74c989fc30b3",
 				"24fd64b8-f57f-450a-b6ef-7f1b89ee00ca",
-				"d5b4af0e-5790-4271-9be3-d9430634dd40"
+				"d5b4af0e-5790-4271-9be3-d9430634dd40",
+				"52d85e91-7ffe-4038-8f26-0b93bdb2b50d"
 			]
 		}
 	],
@@ -94,6 +98,27 @@
 		{
 			"uuid": "477476fa-43ae-440d-be9c-0a31b25bd867",
 			"title": "Main Menu",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "bf1bdef3-efd0-4344-9a30-4ee55eba9c4b",
+			"title": "Game Over",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "0807bfac-bbad-41f0-89dc-8b4fa5b6862c",
+			"title": "HTML Export",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "1f819b17-122a-481c-a54a-176e45589ee9",
+			"title": "Windows Export",
 			"description": "",
 			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
 			"steps": []
