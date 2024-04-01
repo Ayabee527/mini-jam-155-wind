@@ -1,5 +1,7 @@
 extends PanelContainer
 
+@export var quit_butt: Button
+
 @export var last_score: Label
 @export var high_score: Label
 @export var last_time: Label
@@ -7,6 +9,9 @@ extends PanelContainer
 
 func _ready() -> void:
 	DataLoader.load_data()
+	
+	if OS.has_feature("web"):
+		quit_butt.hide()
 	
 	last_score.text = "last "
 	if str(Global.latest_score).length() < 6:
@@ -51,8 +56,9 @@ func get_time_text(time_alive: int) -> String:
 	return text
 
 func _on_quit_pressed() -> void:
-	DataLoader.save_data()
-	get_tree().quit()
+	if not OS.has_feature("web"):
+		DataLoader.save_data()
+		get_tree().quit()
 
 
 func _on_play_pressed() -> void:
