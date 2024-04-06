@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cmamu5udwoaqb"]
+[gd_scene load_steps=22 format=3 uid="uid://cmamu5udwoaqb"]
 
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_age2a"]
 [ext_resource type="Script" path="res://main_menu/options/options_menu.gd" id="1_y0nrf"]
@@ -115,7 +115,10 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(1, 1, 1, 1)
 
-[node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "window_move_butt", "mouse_control_butt", "master_volume", "sound_volume", "move_keybinds", "sound")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0blcx"]
+bg_color = Color(0, 0, 0, 0.878431)
+
+[node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "window_move_butt", "mouse_control_butt", "master_volume", "sound_volume", "move_keybinds", "keybind_buttons", "awaiting_input", "sound")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -129,6 +132,8 @@ mouse_control_butt = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBo
 master_volume = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Master/VolumeSlider")
 sound_volume = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound/VolumeSlider")
 move_keybinds = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight")]
+keybind_buttons = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight/KeybindButton")]
+awaiting_input = NodePath("AwaitingInput")
 sound = NodePath("Sound")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -310,6 +315,22 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 10
 input_action = "move_right"
+
+[node name="AwaitingInput" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0blcx")
+
+[node name="CenterContainer" type="CenterContainer" parent="AwaitingInput"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AwaitingInput/CenterContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_age2a")
+theme_override_font_sizes/font_size = 8
+text = "PRESS A BUTTON TO
+SET AS YOUR KEYBIND!"
+horizontal_alignment = 1
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_s25g6")

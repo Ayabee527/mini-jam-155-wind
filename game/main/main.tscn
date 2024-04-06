@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=28 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
@@ -30,6 +30,42 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ty4sl"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yveu"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4nml7"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wpfxu"]
 content_margin_left = 8.0
@@ -81,7 +117,7 @@ normal = Vector2(-1, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koyjs"]
 bg_color = Color(0, 0, 0, 0.501961)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "score_handler", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "score_handler", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt", "pause_butt")]
 script = ExtResource("1_k70rq")
 timer_gradient = SubResource("Gradient_6u8cl")
 time_timer = NodePath("TimerTimer")
@@ -96,6 +132,7 @@ multiplier_label = NodePath("BGColor/MarginContainer/Multiplier")
 timer_label = NodePath("BGColor/MarginContainer/Time")
 retry_butt = NodePath("BGColor/MarginContainer/Retry")
 back_butt = NodePath("BGColor/MarginContainer/Back")
+pause_butt = NodePath("BGColor/MarginContainer/Pause")
 
 [node name="TimerTimer" type="Timer" parent="."]
 autostart = true
@@ -126,6 +163,18 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+
+[node name="Pause" type="Button" parent="BGColor/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_ty4sl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2yveu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4nml7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_2yveu")
+text = "pause"
 
 [node name="Time" type="RichTextLabel" parent="BGColor/MarginContainer"]
 clip_contents = false
@@ -159,6 +208,7 @@ autowrap_mode = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="BGColor/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BGColor/MarginContainer/CenterContainer"]
 layout_mode = 2
@@ -280,7 +330,6 @@ autostart = true
 
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_nku0o")
-volume_db = -5.0
 autoplay = true
 bus = &"music"
 
@@ -373,17 +422,19 @@ text = "Restart"
 [node name="PauseMusik" type="AudioStreamPlayer" parent="UI/PauseMenu"]
 process_mode = 2
 stream = ExtResource("12_ag7pa")
-volume_db = -5.0
+autoplay = true
 bus = &"music"
 
 [node name="OptionsMenu" parent="UI" instance=ExtResource("13_jsisu")]
 process_mode = 3
 visible = false
 
+[connection signal="game_over" from="." to="UI/PauseMenu" method="_on_main_game_over"]
 [connection signal="timeout" from="TimerTimer" to="." method="_on_timer_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
 [connection signal="score_updated" from="ScoreHandler" to="." method="_on_score_handler_score_updated"]
 [connection signal="score_updating" from="ScoreHandler" to="." method="_on_score_handler_score_updating"]
+[connection signal="pressed" from="BGColor/MarginContainer/Pause" to="UI/PauseMenu" method="_on_pause_pressed"]
 [connection signal="pressed" from="BGColor/MarginContainer/Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="BGColor/MarginContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="collected" from="PlayerGoal" to="." method="_on_player_goal_collected"]

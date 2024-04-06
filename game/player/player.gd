@@ -32,10 +32,16 @@ func _physics_process(delta: float) -> void:
 		)
 
 func get_move_dir() -> Vector2:
-	return Input.get_vector(
-		"move_left", "move_right",
-		"move_up", "move_down"
-	)
+	if Global.mouse_control:
+		if global_position.distance_to(get_global_mouse_position()) < 16.0:
+			return Vector2.ZERO
+		else:
+			return global_position.direction_to(get_global_mouse_position())
+	else:
+		return Input.get_vector(
+			"move_left", "move_right",
+			"move_up", "move_down"
+		)
 
 func die() -> void:
 	collision.set_deferred("disabled", true)

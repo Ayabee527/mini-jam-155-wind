@@ -94,7 +94,7 @@ func explode() -> void:
 		var hazard: RigidBody2D = HAZARDS[hazard_name].instantiate()
 		hazard.global_position = global_position
 		var ang_offset = randf_range(-PI/4, PI/4)
-		var dir := linear_velocity.normalized().rotated(ang_offset)
+		var dir := linear_velocity.normalized().rotated(PI).rotated(ang_offset)
 		var speed := randf_range(50, 150)
 		hazard.apply_central_impulse(
 			dir * speed
@@ -115,7 +115,6 @@ func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if stun_timer.is_stopped():
 			combo += 1
-			explode()
 			
 			stun_timer.start()
 			show_collect()
@@ -126,6 +125,7 @@ func _on_player_zone_body_entered(body: Node2D) -> void:
 			)
 			apply_central_impulse(dir_to_player.rotated(PI) * 500.0)
 			body.apply_central_impulse(dir_to_player * 750.0)
+			explode()
 
 
 func _on_move_timer_timeout() -> void:

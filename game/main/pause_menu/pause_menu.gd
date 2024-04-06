@@ -2,6 +2,8 @@ extends PanelContainer
 
 @export var options_menu: OptionsMenu
 
+var game_overed: bool = false
+
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape"):
 		if get_tree().paused:
@@ -10,12 +12,14 @@ func _process(delta: float) -> void:
 			pause()
 
 func pause() -> void:
-	get_tree().paused = true
-	show()
+	if not game_overed:
+		get_tree().paused = true
+		show()
 
 func unpause() -> void:
-	get_tree().paused = false
-	hide()
+	if not game_overed:
+		get_tree().paused = false
+		hide()
 
 
 func _on_resume_pressed() -> void:
@@ -38,3 +42,11 @@ func _on_restart_pressed() -> void:
 
 func _on_options_menu_confirmed() -> void:
 	options_menu.hide()
+
+
+func _on_pause_pressed() -> void:
+	pause()
+
+
+func _on_main_game_over() -> void:
+	game_overed = true

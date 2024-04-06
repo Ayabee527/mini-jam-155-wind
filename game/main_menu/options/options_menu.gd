@@ -12,17 +12,37 @@ signal confirmed()
 @export var move_keybinds: Array[HBoxContainer]
 @export var keybind_buttons: Array[KeybindButton]
 
+@export var awaiting_input: PanelContainer
+
 @export var sound: AudioStreamPlayer
 
 func _ready() -> void:
 	initialize()
 
 func initialize() -> void:
+	DataLoader.load_config()
 	window_move_butt.button_pressed = Global.window_movement
 	mouse_control_butt.button_pressed = Global.mouse_control
 	
 	for keybind: HBoxContainer in move_keybinds:
 		keybind.visible = not Global.mouse_control
+	
+	for keybind: KeybindButton in keybind_buttons:
+		keybind.update_text()
+	
+	for keybind: KeybindButton in keybind_buttons:
+		keybind.waiting.connect(
+			func():
+				awaiting_input.show()
+		)
+	
+	for keybind: KeybindButton in keybind_buttons:
+		keybind.accepted.connect(
+			func():
+				awaiting_input.hide()
+				for other_keybind: KeybindButton in keybind_buttons:
+					other_keybind.update_text()
+		)
 	
 	back_butt.pressed.connect(_on_back_pressed)
 	window_move_butt.toggled.connect(_on_window_butt_toggled)
@@ -32,7 +52,7 @@ func initialize() -> void:
 	sound_volume.confirm_volume.connect(_on_volume_slider_confirm_volume)
 
 func _on_back_pressed() -> void:
-	DataLoader.save_data()
+	DataLoader.save_config()
 	confirmed.emit()
 
 

@@ -17,6 +17,7 @@ signal game_over()
 @export var timer_label: RichTextLabel
 @export var retry_butt: Button
 @export var back_butt: Button
+@export var pause_butt: Button
 
 var tween: Tween
 var window_velocity: Vector2 = Vector2.ZERO
@@ -85,7 +86,15 @@ func over_game() -> void:
 		multiplier_label, "modulate:a",
 		0.0, 5.0
 	)
+	tween.tween_property(
+		pause_butt, "modulate:a",
+		0.0, 5.0
+	)
 	tween.play()
+	tween.finished.connect(
+		func():
+			pause_butt.hide()
+	)
 	
 	if not updating_score:
 		Global.latest_time = time_alive

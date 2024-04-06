@@ -10,7 +10,7 @@ extends PanelContainer
 @export var options_menu: OptionsMenu
 
 func _ready() -> void:
-	DataLoader.load_data()
+	DataLoader.load_config()
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()
@@ -59,7 +59,7 @@ func get_time_text(time_alive: int) -> String:
 
 func _on_quit_pressed() -> void:
 	if not OS.has_feature("web"):
-		DataLoader.save_data()
+		DataLoader.save_config()
 		get_tree().quit()
 
 

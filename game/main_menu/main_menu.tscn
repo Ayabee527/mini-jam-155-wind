@@ -59,10 +59,10 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jdj60")
 script = ExtResource("1_4r7go")
 quit_butt = NodePath("CenterContainer/VBoxContainer/VBoxContainer/Quit")
-last_score = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Score")
-high_score = NodePath("MarginContainer/VBoxContainer/HBoxContainer/HiScore")
-last_time = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Time")
-high_time = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/HiTime")
+last_score = NodePath("MarginContainer/VBoxContainer/Scores/Score")
+high_score = NodePath("MarginContainer/VBoxContainer/Scores/HiScore")
+last_time = NodePath("MarginContainer/VBoxContainer/Times/Time")
+high_time = NodePath("MarginContainer/VBoxContainer/Times/HiTime")
 options_menu = NodePath("OptionsMenu")
 
 [node name="WindHolder" type="Node2D" parent="."]
@@ -146,11 +146,11 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Scores" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Score" type="Label" parent="MarginContainer/VBoxContainer/Scores"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -159,7 +159,7 @@ theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
 text = "last 000000 "
 
-[node name="Slash" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Slash" type="Label" parent="MarginContainer/VBoxContainer/Scores"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 0
@@ -169,7 +169,7 @@ theme_override_font_sizes/font_size = 8
 text = "vs"
 horizontal_alignment = 1
 
-[node name="HiScore" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HiScore" type="Label" parent="MarginContainer/VBoxContainer/Scores"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
@@ -179,11 +179,11 @@ theme_override_font_sizes/font_size = 8
 text = "000000 high"
 horizontal_alignment = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Times" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/Times"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -192,7 +192,7 @@ theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
 text = "00:00"
 
-[node name="HiTime" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="HiTime" type="Label" parent="MarginContainer/VBoxContainer/Times"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
@@ -201,6 +201,24 @@ theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
 text = "00:00"
 horizontal_alignment = 2
+
+[node name="Version" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "version 1.0.1"
+
+[node name="Credits" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "made by pixemisti"
 
 [node name="OptionsMenu" parent="." instance=ExtResource("4_y87sg")]
 visible = false

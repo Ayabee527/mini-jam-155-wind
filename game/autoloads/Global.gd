@@ -19,10 +19,10 @@ func set_latest_score(new_score: int) -> void:
 	if latest_score > high_score:
 		high_score = latest_score
 		high_time = latest_time
-		DataLoader.save_data()
+		DataLoader.save_config()
 		return
 	
 	if latest_score == high_score:
 		if latest_time < high_time:
 			high_time = latest_time
-			DataLoader.save_data()
+			DataLoader.save_config()
