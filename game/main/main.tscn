@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=25 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://ckf3axdyd60bj" path="res://assets/textures/bar-fill.png" id="4_eqekf"]
 [ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="5_nku0o"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="6_5e1ef"]
+[ext_resource type="Script" path="res://main/pause_menu/pause_menu.gd" id="11_wt1qf"]
+[ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="12_ag7pa"]
+[ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="13_jsisu"]
 
 [sub_resource type="Gradient" id="Gradient_6u8cl"]
 offsets = PackedFloat32Array(0, 0.24, 0.25, 0.5, 1)
@@ -74,6 +77,9 @@ normal = Vector2(0, 1)
 normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1og74"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koyjs"]
+bg_color = Color(0, 0, 0, 0.501961)
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "score_handler", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt")]
 script = ExtResource("1_k70rq")
@@ -278,6 +284,102 @@ volume_db = -5.0
 autoplay = true
 bus = &"music"
 
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" type="PanelContainer" parent="UI" node_paths=PackedStringArray("options_menu")]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_koyjs")
+script = ExtResource("11_wt1qf")
+options_menu = NodePath("../OptionsMenu")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/PauseMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
+text = "RESUME"
+
+[node name="Menu" type="Button" parent="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
+text = "TO MENU"
+
+[node name="paused" type="RichTextLabel" parent="UI/PauseMenu/CenterContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center][rainbow][wave amp=64 freq=2.5]paused"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Options" type="Button" parent="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
+text = "OPTIONS"
+
+[node name="Restart" type="Button" parent="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
+text = "Restart"
+
+[node name="PauseMusik" type="AudioStreamPlayer" parent="UI/PauseMenu"]
+process_mode = 2
+stream = ExtResource("12_ag7pa")
+volume_db = -5.0
+bus = &"music"
+
+[node name="OptionsMenu" parent="UI" instance=ExtResource("13_jsisu")]
+process_mode = 3
+visible = false
+
 [connection signal="timeout" from="TimerTimer" to="." method="_on_timer_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
 [connection signal="score_updated" from="ScoreHandler" to="." method="_on_score_handler_score_updated"]
@@ -290,3 +392,8 @@ bus = &"music"
 [connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
 [connection signal="hurt" from="Player" to="ScoreHandler" method="_on_player_hurt"]
 [connection signal="timeout" from="WindMomma/FunnyTimer" to="WindMomma" method="_on_funny_timer_timeout"]
+[connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Resume" to="UI/PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Menu" to="UI/PauseMenu" method="_on_menu_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2/Options" to="UI/PauseMenu" method="_on_options_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2/Restart" to="UI/PauseMenu" method="_on_restart_pressed"]
+[connection signal="confirmed" from="UI/OptionsMenu" to="UI/PauseMenu" method="_on_options_menu_confirmed"]

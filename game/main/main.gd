@@ -22,12 +22,14 @@ var tween: Tween
 var window_velocity: Vector2 = Vector2.ZERO
 
 var window: Window
+var used_screen: int = -1
 
 var time_alive: int = 0
 var game_overed: bool = false
 var updating_score: bool = false
 
 func _ready() -> void:
+	used_screen = DisplayServer.get_primary_screen()
 	window = get_window()
 
 func _process(delta: float) -> void:
@@ -44,7 +46,7 @@ func _process(delta: float) -> void:
 
 func contain_window() -> void:
 	var bounce_factor: float = -0.9
-	var screen_size: Vector2i = DisplayServer.screen_get_size()
+	var screen_size: Vector2i = DisplayServer.screen_get_usable_rect(used_screen).size
 	var window_size: Vector2i = window.size
 	
 	if window.position.x < 0:
@@ -168,6 +170,8 @@ func _on_score_handler_score_updated(new_score: int) -> void:
 	updating_score = false
 	
 	if game_overed:
+		Global.latest_time = time_alive
+		Global.latest_score = score_handler.score
 		allow_escape()
 
 

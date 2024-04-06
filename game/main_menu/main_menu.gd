@@ -7,6 +7,8 @@ extends PanelContainer
 @export var last_time: Label
 @export var high_time: Label
 
+@export var options_menu: OptionsMenu
+
 func _ready() -> void:
 	DataLoader.load_data()
 	
@@ -70,4 +72,8 @@ func _on_tutorial_pressed() -> void:
 
 
 func _on_options_pressed() -> void:
-	SceneSwitcher.switch_to("res://main_menu/options/options_menu.tscn")
+	options_menu.show()
+
+
+func _on_options_menu_confirmed() -> void:
+	options_menu.hide()

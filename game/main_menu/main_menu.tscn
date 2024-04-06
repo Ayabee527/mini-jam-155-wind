@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=10 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
 [ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="4_wm8vi"]
+[ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="4_y87sg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -49,7 +50,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "last_score", "high_score", "last_time", "high_time")]
+[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "last_score", "high_score", "last_time", "high_time", "options_menu")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -62,6 +63,7 @@ last_score = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Score")
 high_score = NodePath("MarginContainer/VBoxContainer/HBoxContainer/HiScore")
 last_time = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Time")
 high_time = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/HiTime")
+options_menu = NodePath("OptionsMenu")
 
 [node name="WindHolder" type="Node2D" parent="."]
 script = ExtResource("1_d3t3r")
@@ -200,6 +202,10 @@ theme_override_font_sizes/font_size = 8
 text = "00:00"
 horizontal_alignment = 2
 
+[node name="OptionsMenu" parent="." instance=ExtResource("4_y87sg")]
+visible = false
+layout_mode = 2
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_wm8vi")
 autoplay = true
@@ -210,3 +216,4 @@ bus = &"music"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]

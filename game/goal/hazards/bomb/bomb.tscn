@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="2_ch18f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ih2u"]
+rough = true
 bounce = 0.75
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i2ojj"]
@@ -41,6 +42,9 @@ color = Color(0, 1, 0, 1)
 collision_layer = 16
 physics_material_override = SubResource("PhysicsMaterial_3ih2u")
 gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+constant_torque = -100.0
 script = ExtResource("1_vaw8o")
 shape = NodePath("Shape")
 collision_shape = NodePath("CollisionShape2D")

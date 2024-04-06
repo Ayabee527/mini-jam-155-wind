@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://dosvh0m2w4f47"]
+
+[ext_resource type="Script" path="res://main_menu/options/keybind_button.gd" id="1_dkho3"]
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_nme17"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lpnc0"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrhld"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fci8x"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[node name="KeybindButton" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_nme17")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_lpnc0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mrhld")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fci8x")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mrhld")
+script = ExtResource("1_dkho3")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
