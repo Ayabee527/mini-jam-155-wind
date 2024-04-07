@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://bkrq4ylg38dpf"]
+
+[ext_resource type="Script" path="res://goal/hazards/barrier/barrier.gd" id="1_yl5kw"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="2_usrfo"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="3_a0nul"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oafr4"]
+rough = true
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qh7tg"]
+radius = 3.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lw3i"]
+size = Vector2(1024, 8)
+
+[sub_resource type="Curve" id="Curve_ysivt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hxrta"]
+curve = SubResource("Curve_ysivt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mdb6y"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 16.0
+emission_ring_radius = 16.0
+emission_ring_inner_radius = 16.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+tangential_accel_min = 10.0
+tangential_accel_max = 10.0
+scale_min = 0.05
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_hxrta")
+color = Color(0, 1, 0, 1)
+
+[node name="Barrier" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "barrier_collision", "barrier_line", "explode_particles", "freeze_timer") groups=["owies"]]
+collision_layer = 16
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_oafr4")
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("1_yl5kw")
+shape = NodePath("Shape")
+trail = NodePath("Trail")
+collision_shape = NodePath("CollisionShape2D")
+barrier_collision = NodePath("Barrier/BarrierCollision")
+barrier_line = NodePath("BarrierLine")
+explode_particles = NodePath("ExplodeParticles")
+freeze_timer = NodePath("FreezeTimer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qh7tg")
+
+[node name="BarrierLine" type="Line2D" parent="."]
+points = PackedVector2Array(-512, 0, 512, 0)
+width = 0.0
+
+[node name="Barrier" type="StaticBody2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+
+[node name="BarrierCollision" type="CollisionShape2D" parent="Barrier"]
+shape = SubResource("RectangleShape2D_5lw3i")
+disabled = true
+
+[node name="Shape" type="Node2D" parent="."]
+
+[node name="Center" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(-2, 0, -3, -3, 0, -2, 3, -3, 2, 0, 3, 3, 0, 2, -3, 3)
+
+[node name="Spike" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(3, 0, 4, -2, 24, 0, 4, 2)
+
+[node name="Spike2" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(-3, 0, -4, -2, -20, 0, -4, 2)
+
+[node name="Spike3" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(0, -3, 2, -4, 0, -8, -2, -4)
+
+[node name="Spike4" type="Polygon2D" parent="Shape"]
+polygon = PackedVector2Array(0, 3, 2, 4, 0, 8, -2, 4)
+
+[node name="Trail" parent="." instance=ExtResource("2_usrfo")]
+gradient = null
+
+[node name="ExplodeParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_mdb6y")
+texture = ExtResource("3_a0nul")
+one_shot = true
+explosiveness = 1.0
+
+[node name="FreezeTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="ExplodeParticles" to="." method="_on_explode_particles_finished"]
+[connection signal="timeout" from="FreezeTimer" to="." method="_on_freeze_timer_timeout"]
