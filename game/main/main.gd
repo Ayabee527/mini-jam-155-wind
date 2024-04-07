@@ -30,8 +30,8 @@ var game_overed: bool = false
 var updating_score: bool = false
 
 func _ready() -> void:
-	used_screen = DisplayServer.get_primary_screen()
 	window = get_window()
+	used_screen = DisplayServer.window_get_current_screen(window.get_window_id())
 
 func _process(delta: float) -> void:
 	timer_bar.tint_progress = timer_gradient.sample(
@@ -47,23 +47,24 @@ func _process(delta: float) -> void:
 
 func contain_window() -> void:
 	var bounce_factor: float = -0.9
+	var screen_origin: Vector2i = DisplayServer.screen_get_usable_rect(used_screen).position
 	var screen_size: Vector2i = DisplayServer.screen_get_usable_rect(used_screen).size
 	var window_size: Vector2i = window.size
 	
-	if window.position.x < 0:
-		window.position.x = 0
+	if window.position.x < screen_origin.x:
+		window.position.x = screen_origin.x
 		window_velocity.x *= bounce_factor
 	
-	if window.position.y < 0:
-		window.position.y = 0
+	if window.position.y < screen_origin.y:
+		window.position.y = screen_origin.y
 		window_velocity.y *= bounce_factor
 	
-	if window.position.x > screen_size.x - window_size.x:
-		window.position.x = screen_size.x - window_size.x
+	if window.position.x > screen_origin.x + (screen_size.x - window_size.x):
+		window.position.x = screen_origin.x + (screen_size.x - window_size.x)
 		window_velocity.x *= bounce_factor
 	
-	if window.position.y > screen_size.y - window_size.y:
-		window.position.y = screen_size.y - window_size.y
+	if window.position.y > screen_origin.y + (screen_size.y - window_size.y):
+		window.position.y = screen_origin.y + (screen_size.y - window_size.y)
 		window_velocity.y *= bounce_factor
 
 func bump_window(direction: Vector2) -> void:
