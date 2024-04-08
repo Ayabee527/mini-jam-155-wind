@@ -5,6 +5,7 @@ extends RigidBody2D
 @export var collision_shape: CollisionShape2D
 @export var barrier_collision: CollisionShape2D
 @export var barrier_line: Line2D
+@export var barrier_preview: Line2D
 
 @export var explode_particles: GPUParticles2D
 @export var freeze_timer: Timer
@@ -65,6 +66,10 @@ func freeze_barrier() -> void:
 		8, 0.33
 	).from(0.0)
 	tween.play()
+	tween.finished.connect(
+		func():
+			barrier_preview.hide()
+	)
 
 func update_wind(direction: Vector2, speed: float) -> void:
 	add_constant_central_force(direction * speed)

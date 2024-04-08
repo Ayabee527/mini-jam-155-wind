@@ -39,7 +39,7 @@ scale_max = 0.1
 scale_curve = SubResource("CurveTexture_hxrta")
 color = Color(0, 1, 0, 1)
 
-[node name="Barrier" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "barrier_collision", "barrier_line", "explode_particles", "freeze_timer") groups=["owies"]]
+[node name="Barrier" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "barrier_collision", "barrier_line", "barrier_preview", "explode_particles", "freeze_timer") groups=["owies"]]
 collision_layer = 16
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_oafr4")
@@ -52,6 +52,7 @@ trail = NodePath("Trail")
 collision_shape = NodePath("CollisionShape2D")
 barrier_collision = NodePath("Barrier/BarrierCollision")
 barrier_line = NodePath("BarrierLine")
+barrier_preview = NodePath("BarrierPreview")
 explode_particles = NodePath("ExplodeParticles")
 freeze_timer = NodePath("FreezeTimer")
 
@@ -61,6 +62,11 @@ shape = SubResource("CircleShape2D_qh7tg")
 [node name="BarrierLine" type="Line2D" parent="."]
 points = PackedVector2Array(-512, 0, 512, 0)
 width = 0.0
+
+[node name="BarrierPreview" type="Line2D" parent="."]
+points = PackedVector2Array(-512, 0, 512, 0)
+width = 8.0
+default_color = Color(1, 1, 1, 0.25098)
 
 [node name="Barrier" type="StaticBody2D" parent="."]
 collision_layer = 32
@@ -99,6 +105,7 @@ one_shot = true
 explosiveness = 1.0
 
 [node name="FreezeTimer" type="Timer" parent="."]
+wait_time = 1.5
 one_shot = true
 autostart = true
 
