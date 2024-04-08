@@ -94,7 +94,11 @@ autowrap_mode = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Tutorial" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Tutorial" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
@@ -104,7 +108,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "TUTORIAL"
 
-[node name="Play" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
@@ -114,7 +118,11 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "PLAY!"
 
-[node name="Options" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Options" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
@@ -124,8 +132,19 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "OPTIONS?"
 
+[node name="Achieves" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "Achievements"
+
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
@@ -230,8 +249,8 @@ autoplay = true
 bus = &"music"
 
 [connection signal="timeout" from="WindHolder/WindTimer" to="WindHolder" method="_on_wind_timer_timeout"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer/Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]

@@ -23,6 +23,7 @@ config/windows_native_icon="res://assets/textures/icon.ico"
 SceneSwitcher="*res://autoloads/SceneSwitcher.tscn"
 Global="*res://autoloads/Global.gd"
 DataLoader="*res://autoloads/data_loader.gd"
+AchievementHandler="*res://autoloads/AchievementHandler.gd"
 
 [display]
 
