@@ -100,6 +100,10 @@ func over_game() -> void:
 	if not updating_score:
 		Global.latest_time = time_alive
 		Global.latest_score = score_handler.score
+		
+		AchievementHandler.score = score_handler.score
+		AchievementHandler.check_game_over()
+		
 		allow_escape()
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
@@ -182,6 +186,10 @@ func _on_score_handler_score_updated(new_score: int) -> void:
 	if game_overed:
 		Global.latest_time = time_alive
 		Global.latest_score = score_handler.score
+		
+		AchievementHandler.score = score_handler.score
+		AchievementHandler.check_game_over()
+		
 		allow_escape()
 
 
