@@ -12,6 +12,7 @@ extends PanelContainer
 
 func _ready() -> void:
 	DataLoader.load_config()
+	AchievementHandler.load_achievements()
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()

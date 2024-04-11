@@ -82,6 +82,8 @@ func over_game() -> void:
 	player.die()
 	player_goal.die()
 	
+	game_over.emit()
+	
 	gameover_label.show()
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.set_parallel()

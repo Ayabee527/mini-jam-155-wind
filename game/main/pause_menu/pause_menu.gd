@@ -6,10 +6,11 @@ var game_overed: bool = false
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape"):
-		if get_tree().paused:
-			unpause()
-		else:
-			pause()
+		if not game_overed:
+			if get_tree().paused:
+				unpause()
+			else:
+				pause()
 
 func pause() -> void:
 	if not game_overed:
@@ -49,4 +50,5 @@ func _on_pause_pressed() -> void:
 
 
 func _on_main_game_over() -> void:
+	print("no more pause")
 	game_overed = true

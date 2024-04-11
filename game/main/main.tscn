@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=30 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
@@ -8,8 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://bc5kkbyknqa0o" path="res://assets/textures/bar-under.png" id="3_tn14n"]
 [ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="4_5fkus"]
 [ext_resource type="Texture2D" uid="uid://ckf3axdyd60bj" path="res://assets/textures/bar-fill.png" id="4_eqekf"]
+[ext_resource type="Script" path="res://main/achieve_popper/achieve_popper.gd" id="5_0pqu5"]
 [ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="5_nku0o"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="6_5e1ef"]
+[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="6_ugof1"]
 [ext_resource type="Script" path="res://main/pause_menu/pause_menu.gd" id="11_wt1qf"]
 [ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="12_ag7pa"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="13_jsisu"]
@@ -122,7 +124,7 @@ script = ExtResource("1_k70rq")
 timer_gradient = SubResource("Gradient_6u8cl")
 time_timer = NodePath("TimerTimer")
 life_timer = NodePath("LifeTimer")
-timer_bar = NodePath("BGColor/MarginContainer/TimerBar")
+timer_bar = NodePath("BGColor/MarginContainer/VBoxContainer/TimerBar")
 wind_momma = NodePath("WindMomma")
 player = NodePath("Player")
 player_goal = NodePath("PlayerGoal")
@@ -149,7 +151,7 @@ player_goal = NodePath("../PlayerGoal")
 life_timer = NodePath("../LifeTimer")
 multiplier_label = NodePath("../BGColor/MarginContainer/Multiplier")
 score_label = NodePath("../BGColor/MarginContainer/CenterContainer/VBoxContainer/Score")
-timer_bar = NodePath("../BGColor/MarginContainer/TimerBar")
+timer_bar = NodePath("../BGColor/MarginContainer/VBoxContainer/TimerBar")
 
 [node name="BGColor" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(256, 256)
@@ -242,7 +244,22 @@ text = "[center][shake rate=10 level=24]0"
 fit_content = true
 autowrap_mode = 0
 
-[node name="TimerBar" type="TextureProgressBar" parent="BGColor/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="BGColor/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="AchievePopper" type="VBoxContainer" parent="BGColor/MarginContainer/VBoxContainer" node_paths=PackedStringArray("achieve_sound")]
+layout_mode = 2
+script = ExtResource("5_0pqu5")
+achieve_sound = NodePath("Achieve")
+
+[node name="Achieve" type="AudioStreamPlayer" parent="BGColor/MarginContainer/VBoxContainer/AchievePopper"]
+stream = ExtResource("6_ugof1")
+volume_db = -5.0
+pitch_scale = 2.0
+bus = &"sfx"
+
+[node name="TimerBar" type="TextureProgressBar" parent="BGColor/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_vertical = 8

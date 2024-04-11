@@ -1,14 +1,19 @@
 extends Node
 
 var ACHIEVEMENTS = {
-	"Very Nice!": {
+	"First Of Many!": {
 		"completed": false,
-		"description": "Hit the goal 69 times in an endless run.",
+		"description": "End your first endless run.",
 	},
 	
 	"Voluntary Celibate!": {
 		"completed": false,
 		"description": "Don't hit the goal once in an endless run.",
+	},
+	
+	"Okay You're Pretty Bad!": {
+		"completed": false,
+		"description": "Finish an endless run with less than 1k score.",
 	},
 	
 	"Okay, You're Pretty Good!": {
@@ -41,23 +46,20 @@ var ACHIEVEMENTS = {
 		"description": "Get a 200k+ score endless run.",
 	},
 	
-	"Okay You're Pretty Bad!": {
-		"completed": false,
-		"description": "Finish an endless run with less than 1k score.",
-	},
-	
 	"They're In The Walls!": {
 		"completed": false,
-		"description": "Hit the goal 10 times without touching the edges.",
+		"description": "Hit the goal 5 times without touching the edges.",
 	},
 	
-	"First Of Many!": {
+	"Very Nice!": {
 		"completed": false,
-		"description": "End your first endless run.",
-	}
+		"description": "Hit the goal 69 times in an endless run.",
+	},
 }
 
-signal achievement_complete(name: String)
+var ACHIEVEMENT_KEYS: Array
+
+signal achievement_complete(name: String, description: String)
 
 const SAVE_PATH = "user://achievements.cfg"
 const VARAIBLE_SECTION = "TRACKERS"
@@ -67,13 +69,16 @@ const ACHIEVEMENT_SECTION = "ACHIEVEMENTS"
 var ball_hits: int = 0:
 	set(new_ball_hits):
 		ball_hits = new_ball_hits
-		if ball_hits == 10:
+		if ball_hits == 6:
 			if wall_hits == 0:
-				complete("Very Nice!")
+				complete("They're In The Walls!")
 		if ball_hits == 70:
-			complete("They're In The Walls!")
+			complete("Very Nice!")
 var score: int = 0
 var wall_hits: int = 0
+
+func _ready() -> void:
+	ACHIEVEMENT_KEYS = ACHIEVEMENTS.keys()
 
 func reset_run_bounds() -> void:
 	score = 0
@@ -98,10 +103,26 @@ func load_achievements() -> void:
 	
 	if Global.high_score > 0:
 		complete("First Of Many!")
+	
+	if Global.high_score < 1000:
+		complete("Okay You're Pretty Bad!")
+	
+	if Global.high_score >= 25_000:
+		complete("Okay, You're Pretty Good!")
+	if Global.high_score >= 50_000:
+		complete("Okay, You're Very Good!")
+	if Global.high_score >= 75_000:
+		complete("Okay, You're Too Good!")
+	if Global.high_score >= 100_000:
+		complete("Okay, You Can Stop Now!")
+	if Global.high_score >= 150_000:
+		complete("Tryhard!")
+	if Global.high_score >= 200_000:
+		complete("Maybe You Should Go Outside!")
 
 func complete(achievement: String) -> void:
 	if not ACHIEVEMENTS[achievement]["completed"]:
-		achievement_complete.emit(achievement)
+		achievement_complete.emit(achievement, ACHIEVEMENTS[achievement]["description"])
 		ACHIEVEMENTS[achievement]["completed"] = true
 		save_achievements()
 

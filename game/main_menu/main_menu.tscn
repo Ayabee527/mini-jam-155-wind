@@ -1,11 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=13 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
+[ext_resource type="Script" path="res://main/achieve_popper/achieve_popper.gd" id="4_osxwd"]
 [ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="4_wm8vi"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="4_y87sg"]
 [ext_resource type="PackedScene" uid="uid://c24up3gigjdps" path="res://main_menu/achievement_menu/achieves_menu.tscn" id="5_1e1bo"]
+[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="5_cp7sa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -240,6 +242,18 @@ theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
 text = "made by pixemisti"
+
+[node name="AchievePopper" type="VBoxContainer" parent="MarginContainer" node_paths=PackedStringArray("achieve_sound")]
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("4_osxwd")
+achieve_sound = NodePath("Achieve")
+
+[node name="Achieve" type="AudioStreamPlayer" parent="MarginContainer/AchievePopper"]
+stream = ExtResource("5_cp7sa")
+volume_db = -5.0
+pitch_scale = 2.0
+bus = &"sfx"
 
 [node name="OptionsMenu" parent="." instance=ExtResource("4_y87sg")]
 visible = false
