@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 
 func get_move_dir() -> Vector2:
 	if Global.mouse_control:
-		if global_position.distance_to(get_global_mouse_position()) < 16.0:
+		if global_position.distance_to(get_global_mouse_position()) < 32.0:
 			return Vector2.ZERO
 		else:
 			return global_position.direction_to(get_global_mouse_position())

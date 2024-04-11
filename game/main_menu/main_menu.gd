@@ -66,7 +66,7 @@ func _on_quit_pressed() -> void:
 
 
 func _on_play_pressed() -> void:
-	SceneSwitcher.switch_to("res://main/main.tscn")
+	SceneSwitcher.switch_to("res://endless/endless.tscn")
 
 
 func _on_tutorial_pressed() -> void:

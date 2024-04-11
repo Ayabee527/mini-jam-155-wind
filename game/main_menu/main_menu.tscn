@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_of1rs"]
-[ext_resource type="Script" path="res://main/achieve_popper/achieve_popper.gd" id="4_osxwd"]
+[ext_resource type="Script" path="res://endless/achieve_popper/achieve_popper.gd" id="4_osxwd"]
 [ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="4_wm8vi"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="4_y87sg"]
 [ext_resource type="PackedScene" uid="uid://c24up3gigjdps" path="res://main_menu/achievement_menu/achieves_menu.tscn" id="5_1e1bo"]

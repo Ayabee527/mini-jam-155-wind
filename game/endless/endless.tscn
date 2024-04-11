@@ -1,20 +1,20 @@
 [gd_scene load_steps=30 format=3 uid="uid://3r620wirfx5j"]
 
-[ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="1_8r0be"]
-[ext_resource type="Script" path="res://main/main.gd" id="1_k70rq"]
-[ext_resource type="Script" path="res://main/score_handler.gd" id="2_2wxyd"]
-[ext_resource type="FontFile" uid="uid://gaye3ibwfthw" path="res://assets/fonts/fibberish.ttf" id="2_3642g"]
-[ext_resource type="Script" path="res://main/WindMomma.gd" id="3_3bs31"]
-[ext_resource type="Texture2D" uid="uid://bc5kkbyknqa0o" path="res://assets/textures/bar-under.png" id="3_tn14n"]
-[ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="4_5fkus"]
-[ext_resource type="Texture2D" uid="uid://ckf3axdyd60bj" path="res://assets/textures/bar-fill.png" id="4_eqekf"]
-[ext_resource type="Script" path="res://main/achieve_popper/achieve_popper.gd" id="5_0pqu5"]
-[ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="5_nku0o"]
-[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="6_5e1ef"]
-[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="6_ugof1"]
-[ext_resource type="Script" path="res://main/pause_menu/pause_menu.gd" id="11_wt1qf"]
-[ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="12_ag7pa"]
-[ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="13_jsisu"]
+[ext_resource type="Script" path="res://endless/endless.gd" id="1_c1edh"]
+[ext_resource type="Script" path="res://endless/score_handler.gd" id="2_dssv2"]
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="3_0smea"]
+[ext_resource type="FontFile" uid="uid://gaye3ibwfthw" path="res://assets/fonts/fibberish.ttf" id="4_6xmpa"]
+[ext_resource type="Script" path="res://endless/achieve_popper/achieve_popper.gd" id="5_7r63p"]
+[ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="6_m02un"]
+[ext_resource type="Texture2D" uid="uid://bc5kkbyknqa0o" path="res://assets/textures/bar-under.png" id="7_0lcwl"]
+[ext_resource type="Texture2D" uid="uid://ckf3axdyd60bj" path="res://assets/textures/bar-fill.png" id="8_y6hv5"]
+[ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="9_ccjvh"]
+[ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="10_bxptl"]
+[ext_resource type="Script" path="res://endless/WindMomma.gd" id="11_ffql8"]
+[ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="12_dbrpj"]
+[ext_resource type="Script" path="res://endless/pause_menu/pause_menu.gd" id="13_nyes4"]
+[ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="14_ubk2e"]
+[ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="15_2210x"]
 
 [sub_resource type="Gradient" id="Gradient_6u8cl"]
 offsets = PackedFloat32Array(0, 0.24, 0.25, 0.5, 1)
@@ -119,8 +119,8 @@ normal = Vector2(-1, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koyjs"]
 bg_color = Color(0, 0, 0, 0.501961)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "score_handler", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt", "pause_butt")]
-script = ExtResource("1_k70rq")
+[node name="Endless" type="Node2D" node_paths=PackedStringArray("time_timer", "life_timer", "timer_bar", "wind_momma", "player", "player_goal", "score_handler", "gameover_label", "multiplier_label", "timer_label", "retry_butt", "back_butt", "pause_butt")]
+script = ExtResource("1_c1edh")
 timer_gradient = SubResource("Gradient_6u8cl")
 time_timer = NodePath("TimerTimer")
 life_timer = NodePath("LifeTimer")
@@ -144,7 +144,7 @@ wait_time = 12.0
 one_shot = true
 
 [node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("player", "player_goal", "life_timer", "multiplier_label", "score_label", "timer_bar")]
-script = ExtResource("2_2wxyd")
+script = ExtResource("2_dssv2")
 timer_multiplier_curve = SubResource("Curve_it4fr")
 player = NodePath("../Player")
 player_goal = NodePath("../PlayerGoal")
@@ -170,7 +170,7 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_ty4sl")
 theme_override_styles/hover = SubResource("StyleBoxFlat_2yveu")
@@ -186,7 +186,7 @@ size_flags_vertical = 0
 theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_fonts/normal_font = ExtResource("4_6xmpa")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[wave]00:00"
@@ -201,7 +201,7 @@ size_flags_vertical = 0
 theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_fonts/normal_font = ExtResource("4_6xmpa")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[wave]x1.5"
@@ -223,7 +223,7 @@ theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_fonts/normal_font = ExtResource("4_6xmpa")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[center][shake rate=16 level=12]GAME OVER!"
@@ -237,7 +237,7 @@ theme_override_colors/default_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_colors/font_shadow_color = Color(0.25098, 0.25098, 0.25098, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_fonts/normal_font = ExtResource("4_6xmpa")
 theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
 text = "[center][shake rate=10 level=24]0"
@@ -250,11 +250,11 @@ size_flags_vertical = 8
 
 [node name="AchievePopper" type="VBoxContainer" parent="BGColor/MarginContainer/VBoxContainer" node_paths=PackedStringArray("achieve_sound")]
 layout_mode = 2
-script = ExtResource("5_0pqu5")
+script = ExtResource("5_7r63p")
 achieve_sound = NodePath("Achieve")
 
 [node name="Achieve" type="AudioStreamPlayer" parent="BGColor/MarginContainer/VBoxContainer/AchievePopper"]
-stream = ExtResource("6_ugof1")
+stream = ExtResource("6_m02un")
 volume_db = -5.0
 pitch_scale = 2.0
 bus = &"sfx"
@@ -271,15 +271,15 @@ stretch_margin_left = 1
 stretch_margin_top = 1
 stretch_margin_right = 1
 stretch_margin_bottom = 1
-texture_under = ExtResource("3_tn14n")
-texture_progress = ExtResource("4_eqekf")
+texture_under = ExtResource("7_0lcwl")
+texture_progress = ExtResource("8_y6hv5")
 
 [node name="Retry" type="Button" parent="BGColor/MarginContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
@@ -292,7 +292,7 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
@@ -329,14 +329,14 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDown"]
 shape = SubResource("WorldBoundaryShape2D_1og74")
 
-[node name="PlayerGoal" parent="." instance=ExtResource("4_5fkus")]
+[node name="PlayerGoal" parent="." instance=ExtResource("9_ccjvh")]
 position = Vector2(128, 128)
 
-[node name="Player" parent="." instance=ExtResource("1_8r0be")]
+[node name="Player" parent="." instance=ExtResource("10_bxptl")]
 position = Vector2(128, 128)
 
 [node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player", "player_goal") groups=["wind_momma"]]
-script = ExtResource("3_3bs31")
+script = ExtResource("11_ffql8")
 gust_count = 50
 player = NodePath("../Player")
 player_goal = NodePath("../PlayerGoal")
@@ -346,7 +346,7 @@ wait_time = 10.0
 autostart = true
 
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_nku0o")
+stream = ExtResource("12_dbrpj")
 autoplay = true
 bus = &"music"
 
@@ -361,7 +361,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_koyjs")
-script = ExtResource("11_wt1qf")
+script = ExtResource("13_nyes4")
 options_menu = NodePath("../OptionsMenu")
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/PauseMenu"]
@@ -378,7 +378,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
@@ -390,7 +390,7 @@ text = "RESUME"
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
@@ -401,7 +401,7 @@ text = "TO MENU"
 [node name="paused" type="RichTextLabel" parent="UI/PauseMenu/CenterContainer/VBoxContainer"]
 clip_contents = false
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("2_3642g")
+theme_override_fonts/normal_font = ExtResource("4_6xmpa")
 theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 text = "[center][rainbow][wave amp=64 freq=2.5]paused"
@@ -416,7 +416,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
@@ -428,7 +428,7 @@ text = "OPTIONS"
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("6_5e1ef")
+theme_override_fonts/font = ExtResource("3_0smea")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_wpfxu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
@@ -438,11 +438,11 @@ text = "Restart"
 
 [node name="PauseMusik" type="AudioStreamPlayer" parent="UI/PauseMenu"]
 process_mode = 2
-stream = ExtResource("12_ag7pa")
+stream = ExtResource("14_ubk2e")
 autoplay = true
 bus = &"music"
 
-[node name="OptionsMenu" parent="UI" instance=ExtResource("13_jsisu")]
+[node name="OptionsMenu" parent="UI" instance=ExtResource("15_2210x")]
 process_mode = 3
 visible = false
 

@@ -46,8 +46,8 @@ folder_colors={
 "res://assets/": "green",
 "res://autoloads/": "yellow",
 "res://components/": "gray",
+"res://endless/": "purple",
 "res://goal/": "teal",
-"res://main/": "purple",
 "res://main_menu/": "purple",
 "res://player/": "teal",
 "res://wind_gust/": "gray"

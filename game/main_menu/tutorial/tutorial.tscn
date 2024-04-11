@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="4_o7v0s"]
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="5_jykvy"]
 [ext_resource type="AudioStream" uid="uid://bxulnxxri6way" path="res://assets/music/lil-guy-doing-big-things.ogg" id="7_h0mxc"]
-[ext_resource type="Script" path="res://main/WindMomma.gd" id="8_iyr6o"]
+[ext_resource type="Script" path="res://endless/WindMomma.gd" id="8_iyr6o"]
 [ext_resource type="PackedScene" uid="uid://j5ampglym1at" path="res://goal/player_goal.tscn" id="9_21uk6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k3o1"]
