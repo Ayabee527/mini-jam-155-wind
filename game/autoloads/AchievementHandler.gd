@@ -64,6 +64,7 @@ signal achievement_complete(name: String, description: String)
 const SAVE_PATH = "user://achievements.cfg"
 const VARAIBLE_SECTION = "TRACKERS"
 const ACHIEVEMENT_SECTION = "ACHIEVEMENTS"
+const SAVE_PASSWORD = "SiLLY :3"
 
 # RUN-BOUND VARIABLES
 var ball_hits: int = 0:
@@ -90,11 +91,11 @@ func save_achievements() -> void:
 	
 	config.set_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
 	
-	config.save(SAVE_PATH)
+	config.save_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
 
 func load_achievements() -> void:
 	var config = ConfigFile.new()
-	var error = config.load(SAVE_PATH)
+	var error = config.load_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
 	
 	if error != OK:
 		return

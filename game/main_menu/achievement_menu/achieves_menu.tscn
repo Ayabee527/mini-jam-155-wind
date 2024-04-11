@@ -114,7 +114,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_4ehnk")
 text = "BACK"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(192, 128)
+custom_minimum_size = Vector2(208, 128)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -124,6 +124,8 @@ horizontal_scroll_mode = 0
 
 [node name="AchievesHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="AchieveBox" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" instance=ExtResource("3_pfn8s")]
 layout_mode = 2
