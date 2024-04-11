@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://ue6kx8p6gr14"]
+
+[ext_resource type="Script" path="res://main_menu/achievement_menu/achievement_slot/achieve_box.gd" id="1_uig3s"]
+[ext_resource type="Texture2D" uid="uid://bf0gcvauc601h" path="res://assets/textures/trophy.png" id="2_ja1d0"]
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="3_x7v2h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5m22l"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[node name="AchieveBox" type="PanelContainer" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker")]
+theme_override_styles/panel = SubResource("StyleBoxFlat_5m22l")
+script = ExtResource("1_uig3s")
+icon = NodePath("HBoxContainer/Icon")
+name_label = NodePath("HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("Blocker")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("2_ja1d0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_x7v2h")
+theme_override_font_sizes/font_size = 8
+text = "ACHIEVEMENT"
+autowrap_mode = 3
+
+[node name="Description" type="Label" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("3_x7v2h")
+theme_override_font_sizes/font_size = 8
+text = "DESCRIPTION THINGY"
+autowrap_mode = 3
+
+[node name="Blocker" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0, 0, 0, 0.74902)

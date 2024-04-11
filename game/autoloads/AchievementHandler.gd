@@ -54,18 +54,10 @@ var ACHIEVEMENTS = {
 	"First Of Many!": {
 		"completed": false,
 		"description": "End your first endless run.",
-	},
-	
-	"Go-Getter!": {
-		"completed": false,
-		"description": "Get a new highscore 5 times.",
-	},
-	
-	"Achievement Achiever!": {
-		"completed": false,
-		"description": "Unlock all achievements.",
-	},
+	}
 }
+
+signal achievement_complete(name: String)
 
 const SAVE_PATH = "user://achievements.cfg"
 const VARAIBLE_SECTION = "TRACKERS"
@@ -75,19 +67,21 @@ const ACHIEVEMENT_SECTION = "ACHIEVEMENTS"
 var ball_hits: int = 0:
 	set(new_ball_hits):
 		ball_hits = new_ball_hits
+		if ball_hits == 10:
+			if wall_hits == 0:
+				complete("Very Nice!")
 		if ball_hits == 70:
-			complete_very_nice()
+			complete("They're In The Walls!")
 var score: int = 0
+var wall_hits: int = 0
 
-# PERSISTENT VARIABLES
-
-func save_persistents(config: ConfigFile) -> void:
-	pass
+func reset_run_bounds() -> void:
+	score = 0
+	wall_hits = 0
+	ball_hits = 0
 
 func save_achievements() -> void:
 	var config = ConfigFile.new()
-	
-	save_persistents(config)
 	
 	config.set_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
 	
@@ -99,15 +93,20 @@ func load_achievements() -> void:
 	
 	if error != OK:
 		return
+	
+	ACHIEVEMENTS = config.get_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
+	
+	if Global.high_score > 0:
+		complete("First Of Many!")
 
 func complete(achievement: String) -> void:
-	ACHIEVEMENTS[achievement]["completed"] = true
+	if not ACHIEVEMENTS[achievement]["completed"]:
+		achievement_complete.emit(achievement)
+		ACHIEVEMENTS[achievement]["completed"] = true
+		save_achievements()
 
 func uncomplete(achievement: String) -> void:
 	ACHIEVEMENTS[achievement]["completed"] = false
-
-func complete_very_nice() -> void:
-	complete("Very Nice!")
 	save_achievements()
 
 func check_game_over() -> void:
@@ -129,3 +128,6 @@ func check_game_over() -> void:
 		complete("Tryhard!")
 	if score >= 200_000:
 		complete("Maybe You Should Go Outside!")
+	
+	if Global.high_score > 0:
+		complete("First Of Many!")

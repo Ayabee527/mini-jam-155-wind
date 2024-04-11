@@ -32,6 +32,8 @@ var updating_score: bool = false
 func _ready() -> void:
 	window = get_window()
 	used_screen = DisplayServer.window_get_current_screen(window.get_window_id())
+	
+	AchievementHandler.reset_run_bounds()
 
 func _process(delta: float) -> void:
 	timer_bar.tint_progress = timer_gradient.sample(
@@ -107,6 +109,8 @@ func over_game() -> void:
 		allow_escape()
 
 func _on_player_bumped_wall(direction: Vector2) -> void:
+	AchievementHandler.wall_hits += 1
+	
 	wind_momma.wind_speed += direction.length()
 	#wind_momma.wind_speed *= 1.01
 	
@@ -116,6 +120,8 @@ func _on_player_bumped_wall(direction: Vector2) -> void:
 
 
 func _on_player_goal_collected() -> void:
+	AchievementHandler.ball_hits += 1
+	
 	life_timer.start(12)
 	wind_momma.wind_speed = 0.0
 	bump_window(player.linear_velocity * 1.25)

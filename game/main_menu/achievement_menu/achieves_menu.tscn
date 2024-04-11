@@ -1,0 +1,160 @@
+[gd_scene load_steps=13 format=3 uid="uid://c24up3gigjdps"]
+
+[ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_2yekd"]
+[ext_resource type="Script" path="res://main_menu/achievement_menu/achieves_menu.gd" id="1_7fe5a"]
+[ext_resource type="PackedScene" uid="uid://ue6kx8p6gr14" path="res://main_menu/achievement_menu/achievement_slot/achieve_box.tscn" id="3_pfn8s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_am6a0"]
+bg_color = Color(0, 0, 0, 0.941176)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fo5q6"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ehnk"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6fjx2"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5liv8"]
+bg_color = Color(0.501961, 0.501961, 0.501961, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8777"]
+bg_color = Color(0.74902, 0.74902, 0.74902, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghktc"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_1bb6o"]
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_5liv8")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_a8777")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_ghktc")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yng4p"]
+
+[node name="AchievesMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "achieves_holder")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_am6a0")
+script = ExtResource("1_7fe5a")
+back_butt = NodePath("MarginContainer/VBoxContainer/Back")
+achieves_holder = NodePath("MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_2yekd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_fo5q6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4ehnk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6fjx2")
+theme_override_styles/focus = SubResource("StyleBoxFlat_4ehnk")
+text = "BACK"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(192, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme = SubResource("Theme_1bb6o")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yng4p")
+horizontal_scroll_mode = 0
+
+[node name="AchievesHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="AchieveBox" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+
+[node name="AchieveBox2" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../AchieveBox/Blocker")
+
+[node name="AchieveBox3" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../AchieveBox/Blocker")
+
+[node name="AchieveBox4" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../AchieveBox/Blocker")
+
+[node name="AchieveBox5" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../AchieveBox/Blocker")
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

@@ -8,6 +8,7 @@ extends PanelContainer
 @export var high_time: Label
 
 @export var options_menu: OptionsMenu
+@export var achieves_menu: AchievesMenu
 
 func _ready() -> void:
 	DataLoader.load_config()
@@ -77,3 +78,11 @@ func _on_options_pressed() -> void:
 
 func _on_options_menu_confirmed() -> void:
 	options_menu.hide()
+
+
+func _on_achieves_pressed() -> void:
+	achieves_menu.show()
+
+
+func _on_achieves_menu_back() -> void:
+	achieves_menu.hide()
