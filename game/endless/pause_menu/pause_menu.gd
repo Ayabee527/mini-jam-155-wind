@@ -18,7 +18,7 @@ func pause() -> void:
 		show()
 
 func unpause() -> void:
-	if not game_overed:
+	if not game_overed and not options_menu.visible:
 		get_tree().paused = false
 		hide()
 

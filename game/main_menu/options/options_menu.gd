@@ -12,15 +12,22 @@ signal confirmed()
 @export var move_keybinds: Array[HBoxContainer]
 @export var keybind_buttons: Array[KeybindButton]
 
+@export var volume_sliders: Array[VolumeSlider]
+
 @export var awaiting_input: PanelContainer
 
 @export var sound: AudioStreamPlayer
 
 func _ready() -> void:
-	initialize()
+	owner.ready.connect(initialize)
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("escape"):
+		if not awaiting_input.visible:
+			DataLoader.save_config()
+			confirmed.emit()
 
 func initialize() -> void:
-	DataLoader.load_config()
 	window_move_butt.button_pressed = Global.window_movement
 	mouse_control_butt.button_pressed = Global.mouse_control
 	
@@ -43,6 +50,9 @@ func initialize() -> void:
 				for other_keybind: KeybindButton in keybind_buttons:
 					other_keybind.update_text()
 		)
+	
+	for slider: VolumeSlider in volume_sliders:
+		slider.initialize_volume()
 	
 	back_butt.pressed.connect(_on_back_pressed)
 	window_move_butt.toggled.connect(_on_window_butt_toggled)

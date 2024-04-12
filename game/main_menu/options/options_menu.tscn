@@ -118,7 +118,7 @@ border_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0blcx"]
 bg_color = Color(0, 0, 0, 0.878431)
 
-[node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "window_move_butt", "mouse_control_butt", "master_volume", "sound_volume", "move_keybinds", "keybind_buttons", "awaiting_input", "sound")]
+[node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "window_move_butt", "mouse_control_butt", "master_volume", "sound_volume", "move_keybinds", "keybind_buttons", "volume_sliders", "awaiting_input", "sound")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -133,6 +133,7 @@ master_volume = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxCont
 sound_volume = NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound/VolumeSlider")
 move_keybinds = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight")]
 keybind_buttons = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveUp/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveLeft/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveDown/KeybindButton"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/MoveRight/KeybindButton")]
+volume_sliders = [NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Master/VolumeSlider"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Sound/VolumeSlider"), NodePath("MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/Music/VolumeSlider")]
 awaiting_input = NodePath("AwaitingInput")
 sound = NodePath("Sound")
 

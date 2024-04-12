@@ -10,7 +10,7 @@ signal back()
 @export var achieves_holder: VBoxContainer
 
 func _ready() -> void:
-	initialize()
+	owner.ready.connect(initialize)
 
 func initialize():
 	AchievementHandler.load_achievements()

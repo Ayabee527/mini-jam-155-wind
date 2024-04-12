@@ -94,42 +94,43 @@ func load_config() -> void:
 	if error != OK:
 		return
 	
-	for user in config.get_sections():
-		AudioServer.set_bus_volume_db(
-			AudioServer.get_bus_index("Master"),
-			config.get_value(user, "master_volume")
-		)
-		AudioServer.set_bus_volume_db(
-			AudioServer.get_bus_index("sfx"),
-			config.get_value(user, "sound_volume")
-		)
-		AudioServer.set_bus_volume_db(
-			AudioServer.get_bus_index("music"),
-			config.get_value(user, "music_volume")
-		)
+	AudioServer.set_bus_volume_db(
+		AudioServer.get_bus_index("Master"),
+		config.get_value(USER_NAME, "master_volume")
+	)
+	AudioServer.set_bus_volume_db(
+		AudioServer.get_bus_index("sfx"),
+		config.get_value(USER_NAME, "sound_volume")
+	)
+	print(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("music")))
+	AudioServer.set_bus_volume_db(
+		AudioServer.get_bus_index("music"),
+		config.get_value(USER_NAME, "music_volume")
+	)
+	print(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("music")), ", ", config.get_value(USER_NAME, "music_volume"))
 		
-		Global.window_movement = config.get_value(user, "window_movement")
-		Global.mouse_control = config.get_value(user, "mouse_control")
-		Global.high_score = config.get_value(user, "high_score")
-		Global.high_time = config.get_value(user, "high_time")
-		
-		var move_up_keybinds = config.get_value(user, "move_up_keybinds")
-		var move_left_keybinds = config.get_value(user, "move_left_keybinds")
-		var move_down_keybinds = config.get_value(user, "move_down_keybinds")
-		var move_right_keybinds = config.get_value(user, "move_right_keybinds")
-		
-		InputMap.action_erase_events("move_up")
-		for event: InputEvent in move_up_keybinds:
-			InputMap.action_add_event("move_up", event)
-		
-		InputMap.action_erase_events("move_left")
-		for event: InputEvent in move_left_keybinds:
-			InputMap.action_add_event("move_left", event)
-		
-		InputMap.action_erase_events("move_down")
-		for event: InputEvent in move_down_keybinds:
-			InputMap.action_add_event("move_down", event)
-		
-		InputMap.action_erase_events("move_right")
-		for event: InputEvent in move_right_keybinds:
-			InputMap.action_add_event("move_right", event)
+	Global.window_movement = config.get_value(USER_NAME, "window_movement")
+	Global.mouse_control = config.get_value(USER_NAME, "mouse_control")
+	Global.high_score = config.get_value(USER_NAME, "high_score")
+	Global.high_time = config.get_value(USER_NAME, "high_time")
+	
+	var move_up_keybinds = config.get_value(USER_NAME, "move_up_keybinds")
+	var move_left_keybinds = config.get_value(USER_NAME, "move_left_keybinds")
+	var move_down_keybinds = config.get_value(USER_NAME, "move_down_keybinds")
+	var move_right_keybinds = config.get_value(USER_NAME, "move_right_keybinds")
+	
+	InputMap.action_erase_events("move_up")
+	for event: InputEvent in move_up_keybinds:
+		InputMap.action_add_event("move_up", event)
+	
+	InputMap.action_erase_events("move_left")
+	for event: InputEvent in move_left_keybinds:
+		InputMap.action_add_event("move_left", event)
+	
+	InputMap.action_erase_events("move_down")
+	for event: InputEvent in move_down_keybinds:
+		InputMap.action_add_event("move_down", event)
+	
+	InputMap.action_erase_events("move_right")
+	for event: InputEvent in move_right_keybinds:
+		InputMap.action_add_event("move_right", event)

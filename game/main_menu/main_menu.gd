@@ -12,7 +12,7 @@ extends PanelContainer
 
 func _ready() -> void:
 	DataLoader.load_config()
-	AchievementHandler.load_achievements()
+	#AchievementHandler.load_achievements()
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()
@@ -63,7 +63,6 @@ func _on_quit_pressed() -> void:
 	if not OS.has_feature("web"):
 		DataLoader.save_config()
 		get_tree().quit()
-
 
 func _on_play_pressed() -> void:
 	SceneSwitcher.switch_to("res://endless/endless.tscn")
