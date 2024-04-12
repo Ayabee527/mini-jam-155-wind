@@ -18,12 +18,14 @@ signal confirmed()
 
 @export var sound: AudioStreamPlayer
 
+var hogging_input: bool = false
+
 func _ready() -> void:
 	owner.ready.connect(initialize)
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape"):
-		if not awaiting_input.visible:
+		if not hogging_input:
 			DataLoader.save_config()
 			confirmed.emit()
 
@@ -40,6 +42,7 @@ func initialize() -> void:
 	for keybind: KeybindButton in keybind_buttons:
 		keybind.waiting.connect(
 			func():
+				hogging_input = true
 				awaiting_input.show()
 		)
 	
@@ -49,6 +52,9 @@ func initialize() -> void:
 				awaiting_input.hide()
 				for other_keybind: KeybindButton in keybind_buttons:
 					other_keybind.update_text()
+				await get_tree().process_frame
+				await get_tree().process_frame
+				hogging_input = false
 		)
 	
 	for slider: VolumeSlider in volume_sliders:
