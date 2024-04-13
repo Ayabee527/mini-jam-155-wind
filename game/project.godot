@@ -45,8 +45,9 @@ enabled=PackedStringArray("res://addons/crt_script_editor/plugin.cfg", "res://ad
 folder_colors={
 "res://assets/": "green",
 "res://autoloads/": "yellow",
+"res://bullet_hell/": "orange",
 "res://components/": "gray",
-"res://endless/": "purple",
+"res://endless/": "orange",
 "res://goal/": "teal",
 "res://main_menu/": "purple",
 "res://player/": "teal",

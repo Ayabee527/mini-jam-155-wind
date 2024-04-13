@@ -102,13 +102,11 @@ func load_config() -> void:
 		AudioServer.get_bus_index("sfx"),
 		config.get_value(USER_NAME, "sound_volume")
 	)
-	print(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("music")))
 	AudioServer.set_bus_volume_db(
 		AudioServer.get_bus_index("music"),
 		config.get_value(USER_NAME, "music_volume")
 	)
-	print(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("music")), ", ", config.get_value(USER_NAME, "music_volume"))
-		
+	
 	Global.window_movement = config.get_value(USER_NAME, "window_movement")
 	Global.mouse_control = config.get_value(USER_NAME, "mouse_control")
 	Global.high_score = config.get_value(USER_NAME, "high_score")

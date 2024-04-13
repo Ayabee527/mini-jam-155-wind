@@ -154,6 +154,7 @@ score_label = NodePath("../BGColor/MarginContainer/CenterContainer/VBoxContainer
 timer_bar = NodePath("../BGColor/MarginContainer/VBoxContainer/TimerBar")
 
 [node name="BGColor" type="PanelContainer" parent="."]
+clip_contents = true
 custom_minimum_size = Vector2(256, 256)
 offset_right = 40.0
 offset_bottom = 40.0
@@ -209,6 +210,7 @@ fit_content = true
 autowrap_mode = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="BGColor/MarginContainer"]
+clip_contents = true
 layout_mode = 2
 mouse_filter = 2
 

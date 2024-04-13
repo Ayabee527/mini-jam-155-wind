@@ -32,17 +32,20 @@ func _process(delta: float) -> void:
 	
 	multiplier += get_timer_multiplier() * delta * 0.75
 	multiplier += get_speed_multiplier() * delta * 0.75
-	multiplier = lerp(multiplier, 1.0, 0.75 * delta)
+	multiplier = lerp(multiplier, 1.0, (multiplier / 25.0) * delta)
+	#multiplier = move_toward(multiplier, 1.0, 3.75 * delta)
+	
+	multiplier = clamp(multiplier, 0.0, 50.0)
 
 func get_speed_multiplier() -> float:
 	var multi: float = 0
 	
 	multi = max(
-		player.linear_velocity.length() / (player.speed * 0.5),
+		player.linear_velocity.length() / (player.speed * 0.25),
 		0
 	)
 	multi += max(
-		player_goal.linear_velocity.length() / 250.0,
+		player_goal.linear_velocity.length() / 210.0,
 		0
 	)
 	
@@ -83,7 +86,7 @@ func _on_player_goal_collected() -> void:
 	combo += 1
 	if combo > 1:
 		score += (100 * (1.0 + (combo * 0.25))) * multiplier
-		multiplier += 1.0 * (1.0 + (combo * 0.25))
+		multiplier *= 2.0
 
 
 func _on_player_hurt() -> void:
