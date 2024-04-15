@@ -9,6 +9,7 @@ extends PanelContainer
 
 @export var options_menu: OptionsMenu
 @export var achieves_menu: AchievesMenu
+@export var mode_menu: PanelContainer
 
 func _ready() -> void:
 	DataLoader.load_config()
@@ -65,7 +66,7 @@ func _on_quit_pressed() -> void:
 		get_tree().quit()
 
 func _on_play_pressed() -> void:
-	SceneSwitcher.switch_to("res://endless/endless.tscn")
+	mode_menu.show()
 
 
 func _on_tutorial_pressed() -> void:

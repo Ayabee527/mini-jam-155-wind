@@ -116,8 +116,8 @@ func _on_player_bumped_wall(direction: Vector2) -> void:
 	wind_momma.wind_speed += direction.length()
 	#wind_momma.wind_speed *= 1.01
 	
-	if abs( wind_momma.wind_direction.dot(direction.normalized()) ) > -0.5:
-		wind_momma.wind_direction = direction.normalized()
+	#if abs( wind_momma.wind_direction.dot(direction.normalized()) ) > -0.5:
+	wind_momma.wind_direction = direction.normalized()
 	#bump_window(direction)
 
 

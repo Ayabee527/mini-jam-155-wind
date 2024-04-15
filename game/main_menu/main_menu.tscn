@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=16 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="4_y87sg"]
 [ext_resource type="PackedScene" uid="uid://c24up3gigjdps" path="res://main_menu/achievement_menu/achieves_menu.tscn" id="5_1e1bo"]
 [ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="5_cp7sa"]
+[ext_resource type="Script" path="res://main_menu/mode_menu.gd" id="8_2jq52"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -53,7 +54,22 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "last_score", "high_score", "last_time", "high_time", "options_menu", "achieves_menu")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oyjb"]
+bg_color = Color(0, 0, 0, 0.87451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dfhj"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "last_score", "high_score", "last_time", "high_time", "options_menu", "achieves_menu", "mode_menu")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -68,6 +84,7 @@ last_time = NodePath("MarginContainer/VBoxContainer/Times/Time")
 high_time = NodePath("MarginContainer/VBoxContainer/Times/HiTime")
 options_menu = NodePath("OptionsMenu")
 achieves_menu = NodePath("AchievesMenu")
+mode_menu = NodePath("ModeMenu")
 
 [node name="WindHolder" type="Node2D" parent="."]
 script = ExtResource("1_d3t3r")
@@ -263,6 +280,99 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[node name="ModeMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("description_label")]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3oyjb")
+script = ExtResource("8_2jq52")
+description_label = NodePath("MarginContainer/VBoxContainer/dESCRIPTION")
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "Back"
+
+[node name="dESCRIPTION" type="RichTextLabel" parent="ModeMenu/MarginContainer/VBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/default_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_colors/font_shadow_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("1_of1rs")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[wave amp=16 freq=25][center]CHOOSE A GAMEMODE!"
+fit_content = true
+scroll_active = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="Endless" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "Endless"
+
+[node name="BulletHell" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "Bullet Hell"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="RougeLike" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_5dfhj")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+disabled = true
+text = "rogue-lite"
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_wm8vi")
 autoplay = true
@@ -276,3 +386,13 @@ bus = &"music"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
 [connection signal="back" from="AchievesMenu" to="." method="_on_achieves_menu_back"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/Back" to="ModeMenu" method="_on_back_pressed"]
+[connection signal="mouse_entered" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Endless" to="ModeMenu" method="_on_endless_mouse_entered"]
+[connection signal="mouse_exited" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Endless" to="ModeMenu" method="_on_endless_mouse_exited"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Endless" to="ModeMenu" method="_on_endless_pressed"]
+[connection signal="mouse_entered" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/BulletHell" to="ModeMenu" method="_on_bullet_hell_mouse_entered"]
+[connection signal="mouse_exited" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/BulletHell" to="ModeMenu" method="_on_bullet_hell_mouse_exited"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/BulletHell" to="ModeMenu" method="_on_bullet_hell_pressed"]
+[connection signal="mouse_entered" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/RougeLike" to="ModeMenu" method="_on_rouge_like_mouse_entered"]
+[connection signal="mouse_exited" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/RougeLike" to="ModeMenu" method="_on_rouge_like_mouse_exited"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/RougeLike" to="ModeMenu" method="_on_rouge_like_pressed"]
