@@ -53,7 +53,7 @@ var ACHIEVEMENTS = {
 	
 	"Very Nice!": {
 		"completed": false,
-		"description": "Hit the goal 69 times in an endless run.",
+		"description": "Game over with 69 in your score.",
 	},
 }
 
@@ -73,8 +73,6 @@ var ball_hits: int = 0:
 		if ball_hits == 6:
 			if wall_hits == 0:
 				complete("They're In The Walls!")
-		if ball_hits == 70:
-			complete("Very Nice!")
 var score: int = 0
 var wall_hits: int = 0
 
@@ -120,6 +118,9 @@ func load_achievements() -> void:
 		complete("Tryhard!")
 	if Global.high_score >= 200_000:
 		complete("Maybe You Should Go Outside!")
+	
+	if str(Global.high_score).contains("69"):
+		complete("Very Nice!")
 
 func complete(achievement: String) -> void:
 	if not ACHIEVEMENTS[achievement]["completed"]:
@@ -150,6 +151,9 @@ func check_game_over() -> void:
 		complete("Tryhard!")
 	if score >= 200_000:
 		complete("Maybe You Should Go Outside!")
+	
+	if str(score).contains("69"):
+		complete("Very Nice!")
 	
 	if Global.high_score > 0:
 		complete("First Of Many!")
