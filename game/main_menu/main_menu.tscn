@@ -100,7 +100,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jdj60")
 script = ExtResource("1_4r7go")
-quit_butt = NodePath("CenterContainer/VBoxContainer/VBoxContainer/Quit")
+quit_butt = NodePath("CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Quit")
 last_score = NodePath("MarginContainer/VBoxContainer/Scores/Score")
 high_score = NodePath("MarginContainer/VBoxContainer/Scores/HiScore")
 last_time = NodePath("MarginContainer/VBoxContainer/Times/Time")
@@ -160,7 +160,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-text = "PLAY!"
+text = "PLAY"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -174,7 +174,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-text = "OPTIONS?"
+text = "OPTIONS"
 
 [node name="Achieves" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -186,7 +186,11 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "Achievements"
 
-[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Stats" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("1_of1rs")
@@ -195,7 +199,18 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-text = "DON'T PLAY!"
+text = "Stats"
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
+text = "DON'T PLAY"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -409,7 +424,7 @@ layout_mode = 2
 size_flags_vertical = 2
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
-text = "BULLET-HELL"
+text = "BULLET HELL"
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer"]
@@ -496,7 +511,7 @@ bus = &"music"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Achieves" to="." method="_on_achieves_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Quit" to="." method="_on_quit_pressed"]
 [connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
 [connection signal="back" from="AchievesMenu" to="." method="_on_achieves_menu_back"]
 [connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/Endless" to="ModeMenu" method="_on_endless_pressed"]
