@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=29 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="Script" path="res://endless/endless.gd" id="1_c1edh"]
 [ext_resource type="Script" path="res://endless/score_handler.gd" id="2_dssv2"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://endless/WindMomma.gd" id="11_ffql8"]
 [ext_resource type="AudioStream" uid="uid://baiesrhjxoyw6" path="res://assets/music/throw-caution-to-the-wind.ogg" id="12_dbrpj"]
 [ext_resource type="Script" path="res://endless/pause_menu/pause_menu.gd" id="13_nyes4"]
-[ext_resource type="AudioStream" uid="uid://cujcp3l4en5m4" path="res://assets/music/wind-of-change.ogg" id="14_ubk2e"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="15_2210x"]
 
 [sub_resource type="Gradient" id="Gradient_6u8cl"]
@@ -348,13 +347,14 @@ wait_time = 10.0
 autostart = true
 
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("12_dbrpj")
 autoplay = true
 bus = &"music"
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="PauseMenu" type="PanelContainer" parent="UI" node_paths=PackedStringArray("options_menu")]
+[node name="PauseMenu" type="PanelContainer" parent="UI" node_paths=PackedStringArray("options_menu", "music")]
 process_mode = 3
 visible = false
 anchors_preset = 15
@@ -365,6 +365,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_koyjs")
 script = ExtResource("13_nyes4")
 options_menu = NodePath("../OptionsMenu")
+music = NodePath("../../BGMusic")
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/PauseMenu"]
 layout_mode = 2
@@ -437,12 +438,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_nwkxi")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s6kcy")
 theme_override_styles/focus = SubResource("StyleBoxFlat_nwkxi")
 text = "Restart"
-
-[node name="PauseMusik" type="AudioStreamPlayer" parent="UI/PauseMenu"]
-process_mode = 2
-stream = ExtResource("14_ubk2e")
-autoplay = true
-bus = &"music"
 
 [node name="OptionsMenu" parent="UI" instance=ExtResource("15_2210x")]
 visible = false

@@ -1,6 +1,7 @@
 extends PanelContainer
 
 @export var options_menu: OptionsMenu
+@export var music: AudioStreamPlayer
 
 var game_overed: bool = false
 
@@ -16,11 +17,15 @@ func pause() -> void:
 	if not game_overed:
 		get_tree().paused = true
 		show()
+		music.volume_db = linear_to_db(1.0)
+		music.pitch_scale = 0.5
 
 func unpause() -> void:
 	if not game_overed and not options_menu.visible:
 		get_tree().paused = false
 		hide()
+		music.volume_db = linear_to_db(1.0)
+		music.pitch_scale = 1.0
 
 
 func _on_resume_pressed() -> void:
