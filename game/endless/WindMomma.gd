@@ -57,9 +57,3 @@ func set_wind_direction(new_direction: Vector2) -> void:
 	
 	#player.constant_force = wind_direction * wind_speed / 5.0
 	player_goal.constant_force = (wind_direction * wind_speed)
-
-
-func _on_funny_timer_timeout() -> void:
-	return
-	wind_direction = Vector2.from_angle(TAU * randf())
-	wind_speed = randf_range(player.speed * 0.5, player.speed * 0.75) * 5.0

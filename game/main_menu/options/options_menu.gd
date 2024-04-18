@@ -19,12 +19,13 @@ signal confirmed()
 @export var sound: AudioStreamPlayer
 
 var hogging_input: bool = false
+var connected: bool = false
 
 func _ready() -> void:
 	owner.ready.connect(initialize)
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("escape"):
+	if Input.is_action_just_pressed("escape") and visible:
 		if not hogging_input:
 			DataLoader.save_config()
 			confirmed.emit()
@@ -39,33 +40,37 @@ func initialize() -> void:
 	for keybind: KeybindButton in keybind_buttons:
 		keybind.update_text()
 	
-	for keybind: KeybindButton in keybind_buttons:
-		keybind.waiting.connect(
-			func():
-				hogging_input = true
-				awaiting_input.show()
-		)
-	
-	for keybind: KeybindButton in keybind_buttons:
-		keybind.accepted.connect(
-			func():
-				awaiting_input.hide()
-				for other_keybind: KeybindButton in keybind_buttons:
-					other_keybind.update_text()
-				await get_tree().process_frame
-				await get_tree().process_frame
-				hogging_input = false
-		)
-	
 	for slider: VolumeSlider in volume_sliders:
 		slider.initialize_volume()
 	
-	back_butt.pressed.connect(_on_back_pressed)
-	window_move_butt.toggled.connect(_on_window_butt_toggled)
-	mouse_control_butt.toggled.connect(_on_mouse_butt_toggled)
+	if not connected:
+		for keybind: KeybindButton in keybind_buttons:
+			keybind.waiting.connect(
+				func():
+					hogging_input = true
+					awaiting_input.show()
+			)
+		
+		for keybind: KeybindButton in keybind_buttons:
+			keybind.accepted.connect(
+				func():
+					awaiting_input.hide()
+					for other_keybind: KeybindButton in keybind_buttons:
+						other_keybind.update_text()
+					await get_tree().process_frame
+					await get_tree().process_frame
+					hogging_input = false
+			)
+		
+		back_butt.pressed.connect(_on_back_pressed)
+		window_move_butt.toggled.connect(_on_window_butt_toggled)
+		mouse_control_butt.toggled.connect(_on_mouse_butt_toggled)
+		
+		master_volume.confirm_volume.connect(_on_volume_slider_confirm_volume)
+		sound_volume.confirm_volume.connect(_on_volume_slider_confirm_volume)
 	
-	master_volume.confirm_volume.connect(_on_volume_slider_confirm_volume)
-	sound_volume.confirm_volume.connect(_on_volume_slider_confirm_volume)
+	if not connected:
+		connected = true
 
 func _on_back_pressed() -> void:
 	DataLoader.save_config()

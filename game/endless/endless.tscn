@@ -445,7 +445,6 @@ autoplay = true
 bus = &"music"
 
 [node name="OptionsMenu" parent="UI" instance=ExtResource("15_2210x")]
-process_mode = 3
 visible = false
 
 [connection signal="game_over" from="." to="UI/PauseMenu" method="_on_main_game_over"]

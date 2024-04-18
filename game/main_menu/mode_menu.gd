@@ -10,7 +10,7 @@ func _on_endless_pressed() -> void:
 
 
 func _on_bullet_hell_pressed() -> void:
-	print("bullet hel")
+	SceneSwitcher.switch_to("res://bullet_hell/bullethell.tscn")
 
 
 func _on_rogue_lite_pressed() -> void:

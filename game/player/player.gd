@@ -4,6 +4,7 @@ extends RigidBody2D
 signal hurt()
 signal bumped_wall(direction: Vector2)
 
+@export var friction: float = 2.0
 @export var speed: float = 1000.0
 
 @export_group("Inner Dependencies")
@@ -28,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		)
 	else:
 		apply_central_force(
-			linear_velocity.rotated(PI) * 2.0
+			linear_velocity.rotated(PI) * friction
 		)
 
 func get_move_dir() -> Vector2:

@@ -119,6 +119,7 @@ border_color = Color(1, 1, 1, 1)
 bg_color = Color(0, 0, 0, 0.878431)
 
 [node name="OptionsMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "window_move_butt", "mouse_control_butt", "master_volume", "sound_volume", "move_keybinds", "keybind_buttons", "volume_sliders", "awaiting_input", "sound")]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
