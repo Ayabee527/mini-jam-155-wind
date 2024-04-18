@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=25 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
@@ -57,17 +57,40 @@ border_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oyjb"]
 bg_color = Color(0, 0, 0, 0.87451)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dfhj"]
-content_margin_left = 8.0
-content_margin_top = 8.0
-content_margin_right = 8.0
-content_margin_bottom = 8.0
-bg_color = Color(1, 1, 1, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_extpj"]
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.501961, 0.501961, 0.501961, 1)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u48kh"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_payqm"]
+bg_color = Color(1, 1, 1, 0.25098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0vn64"]
+bg_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3a0h8"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kehc6"]
+bg_color = Color(1, 1, 1, 0.25098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72t3i"]
+bg_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2an2t"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0i15"]
+bg_color = Color(1, 1, 1, 0.25098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wrpi"]
+bg_color = Color(1, 1, 1, 0.501961)
 
 [node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "last_score", "high_score", "last_time", "high_time", "options_menu", "achieves_menu", "mode_menu")]
 anchors_preset = 15
@@ -280,98 +303,188 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="ModeMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("description_label")]
+[node name="ModeMenu" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3oyjb")
 script = ExtResource("8_2jq52")
-description_label = NodePath("MarginContainer/VBoxContainer/dESCRIPTION")
 
 [node name="MarginContainer" type="MarginContainer" parent="ModeMenu"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer"]
-layout_mode = 2
-
-[node name="Back" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="ModeMenu/MarginContainer"]
+custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("1_of1rs")
-theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
-theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-text = "Back"
+theme_override_font_sizes/font_size = 16
+text = "CHOOSE YOUR GAMEMODE!"
+horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="dESCRIPTION" type="RichTextLabel" parent="ModeMenu/MarginContainer/VBoxContainer"]
-clip_contents = false
-custom_minimum_size = Vector2(160, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 6
-theme_override_colors/default_color = Color(0.501961, 0.501961, 0.501961, 1)
-theme_override_colors/font_shadow_color = Color(0.25098, 0.25098, 0.25098, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/line_separation = 8
-theme_override_fonts/normal_font = ExtResource("1_of1rs")
-theme_override_font_sizes/normal_font_size = 16
-bbcode_enabled = true
-text = "[wave amp=16 freq=25][center]CHOOSE A GAMEMODE!"
-fit_content = true
-scroll_active = false
+size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Endless" type="PanelContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_extpj")
+
+[node name="Endless" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_u48kh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_payqm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0vn64")
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Name" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "ENDLESS"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "RACK UP YOUR HIGHSCORE!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BulletHell" type="PanelContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_extpj")
+
+[node name="BulletHell" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3a0h8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kehc6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_72t3i")
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Name" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "BULLET-HELL"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "SURVIVE AN ONSLAUGHT!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="RogueLite" type="PanelContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color(0.25098, 0.25098, 0.25098, 1)
+custom_minimum_size = Vector2(108, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_extpj")
+
+[node name="RogueLite" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2an2t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_w0i15")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6wrpi")
+disabled = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Name" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "Rogue-Lite"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "COMING SOON!!!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Back" type="Button" parent="ModeMenu/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 8
-
-[node name="Endless" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-text = "Endless"
-
-[node name="BulletHell" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_of1rs")
-theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
-theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-text = "Bullet Hell"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 8
-
-[node name="RougeLike" type="Button" parent="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_of1rs")
-theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxFlat_cxlch")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g825x")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_5dfhj")
-theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
-disabled = true
-text = "rogue-lite"
+text = "BACK"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_wm8vi")
@@ -386,13 +499,7 @@ bus = &"music"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
 [connection signal="back" from="AchievesMenu" to="." method="_on_achieves_menu_back"]
-[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/Back" to="ModeMenu" method="_on_back_pressed"]
-[connection signal="mouse_entered" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Endless" to="ModeMenu" method="_on_endless_mouse_entered"]
-[connection signal="mouse_exited" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Endless" to="ModeMenu" method="_on_endless_mouse_exited"]
-[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Endless" to="ModeMenu" method="_on_endless_pressed"]
-[connection signal="mouse_entered" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/BulletHell" to="ModeMenu" method="_on_bullet_hell_mouse_entered"]
-[connection signal="mouse_exited" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/BulletHell" to="ModeMenu" method="_on_bullet_hell_mouse_exited"]
-[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/BulletHell" to="ModeMenu" method="_on_bullet_hell_pressed"]
-[connection signal="mouse_entered" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/RougeLike" to="ModeMenu" method="_on_rouge_like_mouse_entered"]
-[connection signal="mouse_exited" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/RougeLike" to="ModeMenu" method="_on_rouge_like_mouse_exited"]
-[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/RougeLike" to="ModeMenu" method="_on_rouge_like_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless/Endless" to="ModeMenu" method="_on_endless_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/BulletHell" to="ModeMenu" method="_on_bullet_hell_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/RogueLite" to="ModeMenu" method="_on_rogue_lite_pressed"]
+[connection signal="pressed" from="ModeMenu/MarginContainer/Back" to="ModeMenu" method="_on_back_pressed"]
