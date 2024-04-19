@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://dukoklh1ovyrc"]
+
+[ext_resource type="Script" path="res://bullet_hell/goal/bullet_hell_goal.gd" id="1_6swtt"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="1_tv4ga"]
+[ext_resource type="AudioStream" uid="uid://bu3x6qlggbhka" path="res://assets/sounds/wewewewe.wav" id="3_b4x47"]
+[ext_resource type="AudioStream" uid="uid://d0i67nhh1aq0o" path="res://assets/sounds/3up.wav" id="4_qq36h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hkmxs"]
+rough = true
+bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_1o00w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wr4b0"]
+curve = SubResource("Curve_1o00w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c0kus"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 22.0
+emission_ring_radius = 22.0
+emission_ring_inner_radius = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_wr4b0")
+color = Color(0, 1, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nk0qm"]
+size = Vector2(28, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0unou"]
+radius = 23.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wmi7r"]
+random_pitch = 1.15
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("3_b4x47")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1ngn"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("4_qq36h")
+stream_0/weight = 1.0
+
+[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("shape", "ring", "player_zone_collision", "collect_sound", "ready_sound")]
+collision_layer = 16
+physics_material_override = SubResource("PhysicsMaterial_hkmxs")
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+constant_torque = 200.0
+script = ExtResource("1_6swtt")
+shape = NodePath("Shape")
+ring = NodePath("Ring")
+player_zone_collision = NodePath("PlayerZone/CollisionShape2D")
+collect_sound = NodePath("Collect")
+ready_sound = NodePath("Ready")
+
+[node name="Ring" type="GPUParticles2D" parent="."]
+amount = 250
+process_material = SubResource("ParticleProcessMaterial_c0kus")
+texture = ExtResource("1_tv4ga")
+
+[node name="Shape" type="Polygon2D" parent="."]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(-14, -8, -12, -12, -8, -14, -1, -12, 0, -4, 1, -12, 8, -14, 12, -12, 14, -8, 12, -1, 4, 0, 12, 1, 14, 8, 12, 12, 8, 14, 1, 13, 0, 4, -1, 13, -8, 14, -12, 12, -14, 8, -13, 1, -4, 0, -13, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nk0qm")
+
+[node name="PlayerZone" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerZone"]
+shape = SubResource("CircleShape2D_0unou")
+
+[node name="Collect" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_wmi7r")
+bus = &"sfx"
+
+[node name="Ready" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_k1ngn")
+bus = &"sfx"
+
+[connection signal="body_entered" from="PlayerZone" to="." method="_on_player_zone_body_entered"]

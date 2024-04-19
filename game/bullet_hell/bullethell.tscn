@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://016rars81dag"]
+[gd_scene load_steps=29 format=3 uid="uid://016rars81dag"]
 
 [ext_resource type="Script" path="res://bullet_hell/bullethell.gd" id="1_n4gij"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_wb326"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bvopkx5b76dd6" path="res://player/player.tscn" id="5_rso7v"]
 [ext_resource type="Script" path="res://endless/WindMomma.gd" id="6_doykb"]
 [ext_resource type="AudioStream" uid="uid://dw54f4giu733f" path="res://assets/music/eye-of-the-hurricane.ogg" id="7_65o8f"]
+[ext_resource type="PackedScene" uid="uid://dukoklh1ovyrc" path="res://bullet_hell/goal/bullet_hell_goal.tscn" id="7_an886"]
 [ext_resource type="Script" path="res://endless/pause_menu/pause_menu.gd" id="8_rci5j"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="10_28kbx"]
 
@@ -20,6 +21,9 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5p5k5"]
+bg_color = Color(0, 1, 0, 0.501961)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8j3p"]
 content_margin_left = 8.0
@@ -143,8 +147,10 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("timer_label")]
+[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label")]
 script = ExtResource("1_n4gij")
+collect_panel = NodePath("BGColor/CollectPanel")
+death_bar = NodePath("BGColor/DeathBar")
 timer_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/Time")
 
 [node name="SurviveTimer" type="Timer" parent="."]
@@ -165,6 +171,11 @@ fill_mode = 3
 nine_patch_stretch = true
 texture_progress = ExtResource("2_5nrrn")
 tint_progress = Color(1, 0, 0, 0.501961)
+
+[node name="CollectPanel" type="Panel" parent="BGColor"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5p5k5")
 
 [node name="MarginContainer" type="MarginContainer" parent="BGColor"]
 layout_mode = 2
@@ -291,6 +302,9 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDown"]
 shape = SubResource("WorldBoundaryShape2D_7p3yd")
 
+[node name="BulletHellGoal" parent="." instance=ExtResource("7_an886")]
+position = Vector2(128, 128)
+
 [node name="Player" parent="." instance=ExtResource("5_rso7v")]
 position = Vector2(128, 128)
 friction = 10.0
@@ -397,6 +411,7 @@ visible = false
 
 [connection signal="timeout" from="SurviveTimer" to="." method="_on_survive_timer_timeout"]
 [connection signal="pressed" from="BGColor/MarginContainer/Pause" to="UI/PauseMenu" method="_on_pause_pressed"]
+[connection signal="collected" from="BulletHellGoal" to="." method="_on_bullet_hell_goal_collected"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Resume" to="UI/PauseMenu" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Menu" to="UI/PauseMenu" method="_on_menu_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2/Options" to="UI/PauseMenu" method="_on_options_pressed"]

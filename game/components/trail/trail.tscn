@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bw8338ilrtcwc"]
+[gd_scene load_steps=3 format=3 uid="uid://bw8338ilrtcwc"]
 
 [ext_resource type="Script" path="res://components/trail/trail.gd" id="1_1dudj"]
 
@@ -6,14 +6,9 @@
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Gradient" id="Gradient_afclg"]
-offsets = PackedFloat32Array(0, 0.533333, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.533333, 1, 1, 1, 1)
-
 [node name="Trail" type="Line2D"]
 width = 2.0
 width_curve = SubResource("Curve_xthph")
-gradient = SubResource("Gradient_afclg")
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2

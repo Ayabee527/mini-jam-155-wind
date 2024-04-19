@@ -1,10 +1,19 @@
 extends Node2D
 
+@export var collect_panel: Panel
+@export var death_bar: TextureProgressBar
 @export var timer_label: RichTextLabel
 
 var death_value: float = 0.0
 
 var time_alive: int = 0
+
+func collect_goal() -> void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(
+		collect_panel, "modulate:a", 0.0, 1.0
+	).from(1.0)
 
 func get_time_text() -> String:
 	var text: String = "00:00"
@@ -34,3 +43,7 @@ func get_time_text() -> String:
 func _on_survive_timer_timeout() -> void:
 	time_alive += 1
 	timer_label.text = "[center][shake rate=10 level=8][wave]" + get_time_text()
+
+
+func _on_bullet_hell_goal_collected() -> void:
+	collect_goal()
