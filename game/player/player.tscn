@@ -80,7 +80,6 @@ explode_sound = NodePath("Explod")
 
 [node name="Trail" parent="." instance=ExtResource("3_1tkx3")]
 width = 12.0
-gradient = null
 
 [node name="Shape" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4, 7, 0, 6, -4, 7, -7, 4, -6, 0)

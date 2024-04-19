@@ -94,7 +94,6 @@ polygon = PackedVector2Array(0, -3, 2, -4, 0, -8, -2, -4)
 polygon = PackedVector2Array(0, 3, 2, 4, 0, 8, -2, 4)
 
 [node name="Trail" parent="." instance=ExtResource("2_usrfo")]
-gradient = null
 
 [node name="ExplodeParticles" type="GPUParticles2D" parent="."]
 emitting = false

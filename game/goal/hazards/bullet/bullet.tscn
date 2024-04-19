@@ -65,7 +65,6 @@ bump_sound = NodePath("Bump")
 [node name="Trail" parent="." instance=ExtResource("2_dwsrf")]
 modulate = Color(1, 0, 0, 1)
 width = 4.0
-gradient = null
 
 [node name="Shape" type="Polygon2D" parent="."]
 color = Color(1, 0, 0, 1)

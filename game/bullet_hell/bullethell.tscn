@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://016rars81dag"]
+[gd_scene load_steps=31 format=3 uid="uid://016rars81dag"]
 
 [ext_resource type="Script" path="res://bullet_hell/bullethell.gd" id="1_n4gij"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_wb326"]
@@ -11,7 +11,9 @@
 [ext_resource type="AudioStream" uid="uid://dw54f4giu733f" path="res://assets/music/eye-of-the-hurricane.ogg" id="7_65o8f"]
 [ext_resource type="PackedScene" uid="uid://dukoklh1ovyrc" path="res://bullet_hell/goal/bullet_hell_goal.tscn" id="7_an886"]
 [ext_resource type="Script" path="res://endless/pause_menu/pause_menu.gd" id="8_rci5j"]
+[ext_resource type="Script" path="res://bullet_hell/enemy_handler.gd" id="9_xsndm"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="10_28kbx"]
+[ext_resource type="PackedScene" uid="uid://5ey5xirm8gah" path="res://bullet_hell/enemies/goober/goober.tscn" id="14_n1jtj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banhl"]
 bg_color = Color(0, 0, 0, 1)
@@ -308,6 +310,18 @@ position = Vector2(128, 128)
 [node name="Player" parent="." instance=ExtResource("5_rso7v")]
 position = Vector2(128, 128)
 friction = 10.0
+
+[node name="EnemyHandler" type="Node2D" parent="."]
+script = ExtResource("9_xsndm")
+
+[node name="Goober" parent="EnemyHandler" instance=ExtResource("14_n1jtj")]
+position = Vector2(313, 83)
+
+[node name="Goober2" parent="EnemyHandler" instance=ExtResource("14_n1jtj")]
+position = Vector2(-59, 132)
+
+[node name="Goober3" parent="EnemyHandler" instance=ExtResource("14_n1jtj")]
+position = Vector2(128, 285)
 
 [node name="WindMomma" type="Node2D" parent="." groups=["wind_momma"]]
 script = ExtResource("6_doykb")
