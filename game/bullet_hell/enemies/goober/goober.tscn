@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://5ey5xirm8gah"]
+[gd_scene load_steps=21 format=3 uid="uid://5ey5xirm8gah"]
 
 [ext_resource type="Script" path="res://bullet_hell/enemies/goober/goober.gd" id="1_3o1gh"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_85xb7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://bullet_hell/enemies/goober/states/charge_up.gd" id="4_t3a6m"]
 [ext_resource type="Script" path="res://bullet_hell/enemies/goober/states/fire.gd" id="5_ymon6"]
 [ext_resource type="AudioStream" uid="uid://cj22thlejgkgk" path="res://assets/sounds/saw-bounce.wav" id="6_qm7nk"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/goober/states/died.gd" id="7_l661q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vwrpc"]
 rough = true
@@ -30,11 +31,11 @@ curve = SubResource("Curve_7yros")
 particle_flag_disable_z = true
 emission_shape = 1
 emission_sphere_radius = 2.0
-spread = 0.0
+spread = 15.0
 initial_velocity_max = 50.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.01
-scale_max = 0.05
+scale_min = 0.02
+scale_max = 0.1
 scale_curve = SubResource("CurveTexture_p45wa")
 
 [sub_resource type="Curve" id="Curve_kuxwl"]
@@ -51,26 +52,47 @@ spread = 15.0
 initial_velocity_min = 25.0
 initial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.01
-scale_max = 0.05
+scale_min = 0.02
+scale_max = 0.1
 scale_curve = SubResource("CurveTexture_vqqk3")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7g8jo"]
-size = Vector2(24, 16)
+[sub_resource type="CircleShape2D" id="CircleShape2D_lwwfg"]
+radius = 8.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmpf4"]
-size = Vector2(24, 16)
+[sub_resource type="Curve" id="Curve_bmde7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[node name="Goober" type="RigidBody2D" node_paths=PackedStringArray("bullet_spawner", "bullet_charge", "thruster")]
+[sub_resource type="CurveTexture" id="CurveTexture_pvwyv"]
+curve = SubResource("Curve_bmde7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nnfe4"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+damping_min = 50.0
+damping_max = 150.0
+scale_min = 0.05
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_pvwyv")
+
+[node name="Goober" type="RigidBody2D" node_paths=PackedStringArray("state_machine", "shape", "bullet_spawner", "bullet_charge", "thruster", "collision_shape", "die_particles") groups=["enemies"]]
 collision_layer = 16
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_vwrpc")
 gravity_scale = 0.0
 max_contacts_reported = 4
 contact_monitor = true
 script = ExtResource("1_3o1gh")
-bullet_spawner = NodePath("BulletSpawner")
-bullet_charge = NodePath("BulletSpawner/Charge")
-thruster = NodePath("Tail/Thruster")
+state_machine = NodePath("StateMachine")
+shape = NodePath("Shape")
+bullet_spawner = NodePath("Shape/BulletSpawner")
+bullet_charge = NodePath("Shape/BulletSpawner/Charge")
+thruster = NodePath("Shape/Tail/Thruster")
+collision_shape = NodePath("CollisionShape2D")
+die_particles = NodePath("DieParticles")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_85xb7")
@@ -100,15 +122,18 @@ one_shot = true
 stream = SubResource("AudioStreamRandomizer_518vd")
 bus = &"sfx"
 
+[node name="Died" type="Node" parent="StateMachine"]
+script = ExtResource("7_l661q")
+
 [node name="Shape" type="Polygon2D" parent="."]
-modulate = Color(1, 0, 0, 1)
+modulate = Color(1, 1, 0, 1)
 polygon = PackedVector2Array(0, -8, -8, 0, 0, 8, 12, 2, 9, 2, 7, 0, 9, -2, 12, -2)
 
-[node name="Fill" type="Polygon2D" parent="Shape"]
+[node name="Eye" type="Polygon2D" parent="Shape"]
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, -6, -6, 0, 0, 6, 6, 0)
 
-[node name="Pupil" type="Polygon2D" parent="Shape/Fill"]
+[node name="Pupil" type="Polygon2D" parent="Shape/Eye"]
 polygon = PackedVector2Array(1, -2, -1, 0, 1, 2, 3, 0)
 
 [node name="Fin1" type="Polygon2D" parent="Shape"]
@@ -117,36 +142,45 @@ polygon = PackedVector2Array(-8, 1, -12, 4, -4, 5)
 [node name="Fin2" type="Polygon2D" parent="Shape"]
 polygon = PackedVector2Array(-8, -1, -12, -4, -4, -5)
 
-[node name="BulletSpawner" type="Marker2D" parent="."]
+[node name="BulletSpawner" type="Marker2D" parent="Shape"]
 position = Vector2(10, 0)
 
-[node name="Charge" type="GPUParticles2D" parent="BulletSpawner"]
-modulate = Color(1, 0, 0, 1)
+[node name="Charge" type="GPUParticles2D" parent="Shape/BulletSpawner"]
+modulate = Color(1, 1, 0, 1)
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_6k2ns")
 texture = ExtResource("2_g3k4c")
 
-[node name="Tail" type="Marker2D" parent="."]
+[node name="Tail" type="Marker2D" parent="Shape"]
 position = Vector2(-9, 0)
 
-[node name="Thruster" type="GPUParticles2D" parent="Tail"]
-modulate = Color(1, 0, 0, 1)
+[node name="Thruster" type="GPUParticles2D" parent="Shape/Tail"]
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_6yxfn")
 texture = ExtResource("2_g3k4c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_7g8jo")
+shape = SubResource("CircleShape2D_lwwfg")
+disabled = true
 
-[node name="Owie" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 2
+[node name="EnterNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-12, -8, 8, 16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Owie"]
-shape = SubResource("RectangleShape2D_cmpf4")
+[node name="DieParticles" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_nnfe4")
+texture = ExtResource("2_g3k4c")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-256, -256, 512, 512)
 
 [connection signal="body_exited" from="." to="StateMachine/Fire" method="_on_goober_body_exited"]
 [connection signal="timeout" from="StateMachine/ChargeUp/ChargeTimer" to="StateMachine/ChargeUp" method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Fire/StunTimer" to="StateMachine/Fire" method="_on_stun_timer_timeout"]
+[connection signal="screen_entered" from="EnterNotifier" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_entered" from="EnterNotifier" to="StateMachine/Approach" method="_on_enter_notifier_screen_entered"]

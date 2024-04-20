@@ -1,8 +1,9 @@
 extends RigidBody2D
 
 signal collected()
+signal activated()
 
-@export var stun_time: float = 15.0
+@export var stun_time: float = 10.0
 
 @export_group("Inner Dependencies")
 @export var shape: Polygon2D
@@ -36,6 +37,7 @@ func collect() -> void:
 	shape.color = Color.GREEN
 	ring.emitting = true
 	player_zone_collision.set_deferred("disabled", false)
+	activated.emit()
 
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:

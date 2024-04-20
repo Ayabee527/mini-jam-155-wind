@@ -36,6 +36,8 @@ func fire() -> void:
 	enemy.angular_velocity = 0.0
 	stun_timer.start()
 
+func exit() -> void:
+	stun_timer.stop()
 
 func _on_goober_body_exited(body: Node) -> void:
 	if is_active:

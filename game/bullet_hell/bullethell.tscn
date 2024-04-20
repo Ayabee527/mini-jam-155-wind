@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://endless/pause_menu/pause_menu.gd" id="8_rci5j"]
 [ext_resource type="Script" path="res://bullet_hell/enemy_handler.gd" id="9_xsndm"]
 [ext_resource type="PackedScene" uid="uid://cmamu5udwoaqb" path="res://main_menu/options/options_menu.tscn" id="10_28kbx"]
-[ext_resource type="PackedScene" uid="uid://5ey5xirm8gah" path="res://bullet_hell/enemies/goober/goober.tscn" id="14_n1jtj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banhl"]
 bg_color = Color(0, 0, 0, 1)
@@ -110,6 +109,12 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7p3yd"]
 
+[sub_resource type="Curve2D" id="Curve2D_kf37y"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -32, -32, 0, 0, 0, 0, 288, -32, 0, 0, 0, 0, 288, 288, 0, 0, 0, 0, -32, 288, 0, 0, 0, 0, -32, -32)
+}
+point_count = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lrdf"]
 bg_color = Color(0, 0, 0, 0.501961)
 
@@ -167,7 +172,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_banhl")
 
 [node name="DeathBar" type="TextureProgressBar" parent="BGColor"]
 layout_mode = 2
-max_value = 1.0
 step = 0.001
 fill_mode = 3
 nine_patch_stretch = true
@@ -310,18 +314,22 @@ position = Vector2(128, 128)
 [node name="Player" parent="." instance=ExtResource("5_rso7v")]
 position = Vector2(128, 128)
 friction = 10.0
+speed = 1500.0
 
-[node name="EnemyHandler" type="Node2D" parent="."]
+[node name="EnemyHandler" type="Node2D" parent="." node_paths=PackedStringArray("enemy_spawner", "projectile_spawner")]
 script = ExtResource("9_xsndm")
+enemy_spawner = NodePath("SpawnerPath/EnemySpawner")
+projectile_spawner = NodePath("ProjectileSpawner")
 
-[node name="Goober" parent="EnemyHandler" instance=ExtResource("14_n1jtj")]
-position = Vector2(313, 83)
+[node name="SpawnerPath" type="Path2D" parent="EnemyHandler"]
+curve = SubResource("Curve2D_kf37y")
 
-[node name="Goober2" parent="EnemyHandler" instance=ExtResource("14_n1jtj")]
-position = Vector2(-59, 132)
+[node name="EnemySpawner" type="PathFollow2D" parent="EnemyHandler/SpawnerPath"]
+position = Vector2(-32, -32)
+rotates = false
 
-[node name="Goober3" parent="EnemyHandler" instance=ExtResource("14_n1jtj")]
-position = Vector2(128, 285)
+[node name="ProjectileSpawner" type="Marker2D" parent="EnemyHandler"]
+position = Vector2(128, 128)
 
 [node name="WindMomma" type="Node2D" parent="." groups=["wind_momma"]]
 script = ExtResource("6_doykb")
@@ -426,6 +434,8 @@ visible = false
 [connection signal="timeout" from="SurviveTimer" to="." method="_on_survive_timer_timeout"]
 [connection signal="pressed" from="BGColor/MarginContainer/Pause" to="UI/PauseMenu" method="_on_pause_pressed"]
 [connection signal="collected" from="BulletHellGoal" to="." method="_on_bullet_hell_goal_collected"]
+[connection signal="collected" from="BulletHellGoal" to="EnemyHandler" method="_on_bullet_hell_goal_collected"]
+[connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Resume" to="UI/PauseMenu" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Menu" to="UI/PauseMenu" method="_on_menu_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2/Options" to="UI/PauseMenu" method="_on_options_pressed"]

@@ -2,6 +2,8 @@ extends GooberEnemyState
 
 @export var approach_speed: float = 150.0
 
+var can_charge: bool = false
+
 func enter(_msg:={}) -> void:
 	enemy.thruster.emitting = true
 
@@ -24,7 +26,12 @@ func physics_update(delta: float) -> void:
 			Vector2.from_angle(enemy.global_rotation) * approach_speed
 		)
 	else:
-		state_machine.transition_to("ChargeUp")
+		if can_charge:
+			state_machine.transition_to("ChargeUp")
 
 func exit() -> void:
 	enemy.thruster.emitting = false
+
+
+func _on_enter_notifier_screen_entered() -> void:
+	can_charge = true

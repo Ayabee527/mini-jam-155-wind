@@ -18,6 +18,7 @@ func physics_update(delta: float) -> void:
 	)
 
 func exit() -> void:
+	charge_timer.stop()
 	enemy.bullet_charge.emitting = false
 
 func _on_charge_timer_timeout() -> void:
