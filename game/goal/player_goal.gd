@@ -47,6 +47,7 @@ func _physics_process(delta: float) -> void:
 	apply_central_force(velocity)
 
 func update_wind(direction: Vector2, speed: float) -> void:
+	constant_force = Vector2.ZERO
 	add_constant_central_force(direction * speed)
 
 func show_collect() -> void:
