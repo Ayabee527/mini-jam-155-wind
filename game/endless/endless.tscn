@@ -342,10 +342,6 @@ gust_count = 50
 player = NodePath("../Player")
 player_goal = NodePath("../PlayerGoal")
 
-[node name="FunnyTimer" type="Timer" parent="WindMomma"]
-wait_time = 10.0
-autostart = true
-
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("12_dbrpj")
@@ -455,7 +451,6 @@ visible = false
 [connection signal="bumped_wall" from="Player" to="." method="_on_player_bumped_wall"]
 [connection signal="hurt" from="Player" to="." method="_on_player_hurt"]
 [connection signal="hurt" from="Player" to="ScoreHandler" method="_on_player_hurt"]
-[connection signal="timeout" from="WindMomma/FunnyTimer" to="WindMomma" method="_on_funny_timer_timeout"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Resume" to="UI/PauseMenu" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer/Menu" to="UI/PauseMenu" method="_on_menu_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/CenterContainer/VBoxContainer/HBoxContainer2/Options" to="UI/PauseMenu" method="_on_options_pressed"]

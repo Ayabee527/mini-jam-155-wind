@@ -37,7 +37,7 @@ stream_0/weight = 1.0
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_korsv"]
+[sub_resource type="CurveTexture" id="CurveTexture_s4e2j"]
 curve = SubResource("Curve_uk8qn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ybfwt"]
@@ -50,7 +50,7 @@ damping_min = 50.0
 damping_max = 150.0
 scale_min = 0.05
 scale_max = 0.25
-scale_curve = SubResource("CurveTexture_korsv")
+scale_curve = SubResource("CurveTexture_s4e2j")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fq2kk"]
 random_pitch = 1.5

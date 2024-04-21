@@ -67,6 +67,7 @@ func die() -> void:
 	tween.play()
 
 func update_wind(direction: Vector2, speed: float) -> void:
+	constant_force = Vector2.ZERO
 	add_constant_central_force(direction * speed)
 
 func _on_body_entered(body: Node) -> void:

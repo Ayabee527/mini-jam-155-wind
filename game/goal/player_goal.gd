@@ -37,11 +37,17 @@ var combo: int = 0
 
 var velocity: Vector2
 
+var wind_momma: WindMomma
+
 func _ready() -> void:
-	pass
+	wind_momma = get_tree().get_first_node_in_group("wind_momma")
+	wind_momma.wind_updated.connect(update_wind)
 
 func _physics_process(delta: float) -> void:
 	apply_central_force(velocity)
+
+func update_wind(direction: Vector2, speed: float) -> void:
+	add_constant_central_force(direction * speed)
 
 func show_collect() -> void:
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)

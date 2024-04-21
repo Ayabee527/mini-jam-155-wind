@@ -1,4 +1,4 @@
-class_name WindMomma
+class_name BulletHellWindHandler
 extends Node2D
 
 signal wind_updated(direction: Vector2, speed: float)
@@ -12,10 +12,6 @@ const GUST = preload("res://wind_gust/wind_gust.tscn")
 	set = set_wind_direction
 @export var wind_speed: float = 0:
 	set = set_wind_speed
-
-@export_group("Outer Dependencies")
-@export var player: Player
-@export var player_goal: PlayerGoal
 
 var gusts: Array[WindGust] = []
 

@@ -4,6 +4,8 @@ extends Node2D
 @export var death_bar: TextureProgressBar
 @export var timer_label: RichTextLabel
 
+@export var wind_momma: WindMomma
+
 var death_value: float = 0.0
 
 var time_alive: int = 0
@@ -54,6 +56,9 @@ func _on_survive_timer_timeout() -> void:
 func _on_bullet_hell_goal_collected() -> void:
 	death_value -= 30
 	collect_goal()
+	
+	wind_momma.wind_direction = Vector2.ZERO
+	wind_momma.wind_speed = 0.0
 
 
 func _on_player_hurt() -> void:

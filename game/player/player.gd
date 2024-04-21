@@ -4,6 +4,7 @@ extends RigidBody2D
 signal hurt()
 signal bumped_wall(direction: Vector2)
 
+@export var wind_affection: float = 0.0
 @export var friction: float = 2.0
 @export var speed: float = 1000.0
 
@@ -18,8 +19,11 @@ signal bumped_wall(direction: Vector2)
 @export var die_particles: GPUParticles2D
 @export var explode_sound: AudioStreamPlayer
 
+var wind_momma: WindMomma
+
 func _ready() -> void:
-	pass
+	wind_momma = get_tree().get_first_node_in_group("wind_momma")
+	wind_momma.wind_updated.connect(update_wind)
 
 func _physics_process(delta: float) -> void:
 	var move_dir: Vector2 = get_move_dir()
@@ -31,6 +35,10 @@ func _physics_process(delta: float) -> void:
 		apply_central_force(
 			linear_velocity.rotated(PI) * friction
 		)
+
+func update_wind(direction: Vector2, speed: float) -> void:
+	constant_force = Vector2.ZERO
+	add_constant_central_force(direction * speed * wind_affection)
 
 func get_move_dir() -> Vector2:
 	if Global.mouse_control:

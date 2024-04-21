@@ -154,11 +154,12 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label")]
+[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label", "wind_momma")]
 script = ExtResource("1_n4gij")
 collect_panel = NodePath("BGColor/CollectPanel")
 death_bar = NodePath("BGColor/DeathBar")
 timer_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/Time")
+wind_momma = NodePath("WindMomma")
 
 [node name="SurviveTimer" type="Timer" parent="."]
 autostart = true
@@ -313,6 +314,7 @@ position = Vector2(128, 128)
 
 [node name="Player" parent="." instance=ExtResource("5_rso7v")]
 position = Vector2(128, 128)
+wind_affection = 0.33
 friction = 10.0
 speed = 1500.0
 
@@ -331,15 +333,14 @@ rotates = false
 [node name="ProjectileSpawner" type="Marker2D" parent="EnemyHandler"]
 position = Vector2(128, 128)
 
-[node name="WindMomma" type="Node2D" parent="." groups=["wind_momma"]]
-script = ExtResource("6_doykb")
-gust_count = 50
-
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("7_65o8f")
 autoplay = true
 bus = &"music"
+
+[node name="WindMomma" type="Node2D" parent="." groups=["wind_momma"]]
+script = ExtResource("6_doykb")
 
 [node name="UI" type="CanvasLayer" parent="."]
 

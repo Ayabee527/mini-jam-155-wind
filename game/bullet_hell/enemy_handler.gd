@@ -4,12 +4,13 @@ const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 const SAW = preload("res://goal/hazards/saw/saw.tscn")
 
 const GOOBER = preload("res://bullet_hell/enemies/goober/goober.tscn")
+const FAKER = preload("res://bullet_hell/enemies/bouncer/faker.tscn")
 
 const PROJECTILES = [
 	"BULLET", "SAW",
 ]
 const ENEMIES = [
-	"GOOBER"
+	"GOOBER", "FAKER"
 ]
 
 const HAZARDS = {
@@ -17,13 +18,15 @@ const HAZARDS = {
 	"SAW": SAW,
 	
 	"GOOBER": GOOBER,
+	"FAKER": FAKER,
 }
 
 const COSTS = {
 	"BULLET": 1,
-	"SAW": 6,
+	"SAW": 4,
 	
-	"GOOBER": 2
+	"GOOBER": 2,
+	"FAKER": 4,
 }
 
 @export var extra_spend: int = 3

@@ -1,0 +1,135 @@
+[gd_scene load_steps=17 format=3 uid="uid://doxmiitnf3len"]
+
+[ext_resource type="Script" path="res://bullet_hell/enemies/bouncer/faker.gd" id="1_22ctl"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="2_7ua40"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_aywu4"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/bouncer/states/rushdown.gd" id="3_te0wr"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/bouncer/states/stun.gd" id="4_p7h3h"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="6_xv414"]
+[ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="7_ckjbu"]
+[ext_resource type="AudioStream" uid="uid://ds8emyev6w6pm" path="res://assets/sounds/explod.wav" id="8_sf0w8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e610f"]
+rough = true
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sp0hb"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qboc5"]
+
+[sub_resource type="Curve" id="Curve_keqxn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_korsv"]
+curve = SubResource("Curve_keqxn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ip3o7"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+damping_min = 50.0
+damping_max = 150.0
+scale_min = 0.05
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_korsv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mmk31"]
+random_pitch = 1.5
+random_volume_offset_db = 10.0
+streams_count = 1
+stream_0/stream = ExtResource("7_ckjbu")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uero5"]
+random_pitch = 1.5
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("8_sf0w8")
+stream_0/weight = 1.0
+
+[node name="Faker" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "owie_collision", "die_particles", "bump_sound", "explod_sound") groups=["enemies"]]
+collision_layer = 16
+collision_mask = 3
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_e610f")
+gravity_scale = 0.0
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("1_22ctl")
+shape = NodePath("Shape")
+trail = NodePath("Trail")
+collision_shape = NodePath("CollisionShape2D")
+owie_collision = NodePath("Owie/CollisionShape2D")
+die_particles = NodePath("DieParticles")
+bump_sound = NodePath("Bump")
+explod_sound = NodePath("Explod")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_aywu4")
+initial_state = NodePath("Rushdown")
+
+[node name="Rushdown" type="Node" parent="StateMachine"]
+script = ExtResource("3_te0wr")
+rush_speed = 600.0
+
+[node name="Stun" type="Node" parent="StateMachine" node_paths=PackedStringArray("stun_timer")]
+script = ExtResource("4_p7h3h")
+stun_timer = NodePath("StunTimer")
+
+[node name="StunTimer" type="Timer" parent="StateMachine/Stun"]
+wait_time = 2.5
+one_shot = true
+
+[node name="Trail" parent="." instance=ExtResource("2_7ua40")]
+modulate = Color(1, 0, 0, 1)
+width = 12.0
+
+[node name="Shape" type="Polygon2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-7, -4, -4, -7, 0, -6, 4, -7, 7, -4, 6, 0, 7, 4, 4, 7, 0, 6, -4, 7, -7, 4, -6, 0)
+
+[node name="Fill" type="Polygon2D" parent="Shape"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-5, -3, -3, -5, 0, -4, 3, -5, 5, -3, 4, 0, 5, 3, 3, 5, 0, 4, -3, 5, -5, 3, -4, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_sp0hb")
+disabled = true
+
+[node name="EnterNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-24, -8, 16, 16)
+
+[node name="Owie" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Owie"]
+shape = SubResource("CircleShape2D_qboc5")
+
+[node name="DieParticles" type="GPUParticles2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_ip3o7")
+texture = ExtResource("6_xv414")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+
+[node name="Bump" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_mmk31")
+bus = &"sfx"
+
+[node name="Explod" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_uero5")
+volume_db = -10.0
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="StateMachine/Rushdown" method="_on_faker_body_entered"]
+[connection signal="timeout" from="StateMachine/Stun/StunTimer" to="StateMachine/Stun" method="_on_stun_timer_timeout"]
+[connection signal="screen_entered" from="EnterNotifier" to="." method="_on_enter_notifier_screen_entered"]
