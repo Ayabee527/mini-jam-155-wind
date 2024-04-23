@@ -2,12 +2,14 @@ extends Node2D
 
 const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 const SAW = preload("res://goal/hazards/saw/saw.tscn")
+const BOMB = preload("res://goal/hazards/bomb/bomb.tscn")
+const BARRIER = preload("res://goal/hazards/barrier/barrier.tscn")
 
 const GOOBER = preload("res://bullet_hell/enemies/goober/goober.tscn")
-const FAKER = preload("res://bullet_hell/enemies/bouncer/faker.tscn")
+const FAKER = preload("res://bullet_hell/enemies/faker/faker.tscn")
 
 const PROJECTILES = [
-	"BULLET", "SAW",
+	"BULLET", "SAW", "BOMB", "BARRIER"
 ]
 const ENEMIES = [
 	"GOOBER", "FAKER"
@@ -16,6 +18,8 @@ const ENEMIES = [
 const HAZARDS = {
 	"BULLET": BULLET,
 	"SAW": SAW,
+	"BOMB": BOMB,
+	"BARRIER": BARRIER,
 	
 	"GOOBER": GOOBER,
 	"FAKER": FAKER,
@@ -24,6 +28,8 @@ const HAZARDS = {
 const COSTS = {
 	"BULLET": 1,
 	"SAW": 4,
+	"BOMB": 8,
+	"BARRIER": 10,
 	
 	"GOOBER": 2,
 	"FAKER": 4,
@@ -74,6 +80,8 @@ func spawn_hazards() -> void:
 		if score_out:
 			break
 		
+		if chosen_hazard == "BARRIER":
+			score += 3
 		chosens.append(chosen_hazard)
 		score -= COSTS[chosen_hazard]
 	

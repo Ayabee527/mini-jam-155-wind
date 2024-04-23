@@ -1,10 +1,10 @@
 [gd_scene load_steps=17 format=3 uid="uid://doxmiitnf3len"]
 
-[ext_resource type="Script" path="res://bullet_hell/enemies/bouncer/faker.gd" id="1_22ctl"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/faker/faker.gd" id="1_22ctl"]
 [ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="2_7ua40"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_aywu4"]
-[ext_resource type="Script" path="res://bullet_hell/enemies/bouncer/states/rushdown.gd" id="3_te0wr"]
-[ext_resource type="Script" path="res://bullet_hell/enemies/bouncer/states/stun.gd" id="4_p7h3h"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/faker/states/rushdown.gd" id="3_te0wr"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/faker/states/stun.gd" id="4_p7h3h"]
 [ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="6_xv414"]
 [ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="7_ckjbu"]
 [ext_resource type="AudioStream" uid="uid://ds8emyev6w6pm" path="res://assets/sounds/explod.wav" id="8_sf0w8"]
@@ -76,13 +76,8 @@ initial_state = NodePath("Rushdown")
 script = ExtResource("3_te0wr")
 rush_speed = 600.0
 
-[node name="Stun" type="Node" parent="StateMachine" node_paths=PackedStringArray("stun_timer")]
+[node name="Stun" type="Node" parent="StateMachine"]
 script = ExtResource("4_p7h3h")
-stun_timer = NodePath("StunTimer")
-
-[node name="StunTimer" type="Timer" parent="StateMachine/Stun"]
-wait_time = 2.5
-one_shot = true
 
 [node name="Trail" parent="." instance=ExtResource("2_7ua40")]
 modulate = Color(1, 0, 0, 1)
@@ -131,5 +126,5 @@ bus = &"sfx"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="." to="StateMachine/Rushdown" method="_on_faker_body_entered"]
-[connection signal="timeout" from="StateMachine/Stun/StunTimer" to="StateMachine/Stun" method="_on_stun_timer_timeout"]
+[connection signal="body_entered" from="." to="StateMachine/Stun" method="_on_faker_body_entered"]
 [connection signal="screen_entered" from="EnterNotifier" to="." method="_on_enter_notifier_screen_entered"]

@@ -475,7 +475,7 @@ layout_mode = 2
 size_flags_vertical = 2
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
-text = "Rogue-Lite"
+text = "ARENA"
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/MarginContainer/VBoxContainer"]

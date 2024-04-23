@@ -14,9 +14,19 @@ extends RigidBody2D
 var player: Player
 var dead: bool = false
 
+var wind_momma: WindMomma
+
 func _ready() -> void:
+	wind_momma = get_tree().get_first_node_in_group("wind_momma")
+	wind_momma.wind_updated.connect(update_wind)
+	
+	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
+	
 	player = get_tree().get_first_node_in_group("player")
 
+func update_wind(direction: Vector2, speed: float) -> void:
+	constant_force = Vector2.ZERO
+	add_constant_central_force(direction * speed)
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	collision_shape.set_deferred("disabled", false)

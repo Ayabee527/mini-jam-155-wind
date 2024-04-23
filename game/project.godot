@@ -43,6 +43,7 @@ enabled=PackedStringArray("res://addons/crt_script_editor/plugin.cfg", "res://ad
 [file_customization]
 
 folder_colors={
+"res://arena/": "orange",
 "res://assets/": "green",
 "res://autoloads/": "yellow",
 "res://bullet_hell/": "orange",
