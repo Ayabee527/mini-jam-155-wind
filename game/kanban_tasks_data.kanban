@@ -15,12 +15,18 @@
 		{
 			"uuid": "ad73f86c-e742-426e-9009-59f506be9e75",
 			"title": "Doing",
-			"tasks": []
+			"tasks": [
+				"fa71c1ed-fff1-4e13-b676-51bb39af0ee0",
+				"b11a3e0f-9bee-4165-ba62-686304b83260",
+				"5b79b361-ce26-443a-9bbc-51aa2ce34e0a"
+			]
 		},
 		{
 			"uuid": "9ad08e5a-bbe9-402b-b134-af80db443ea9",
 			"title": "Done",
 			"tasks": [
+				"7dd0dfb9-3531-4d43-9448-fa45b13c3b78",
+				"19a6efbc-6e58-44c1-b141-2eda287beef0",
 				"1f819b17-122a-481c-a54a-176e45589ee9",
 				"75cd7d3c-0c91-4bcf-aced-5828e972d497",
 				"b03c4834-5794-4a18-a6ff-b6a98784c527",
@@ -165,6 +171,41 @@
 		{
 			"uuid": "193ffc6b-d1d2-4b92-adc9-169be02c206e",
 			"title": "Save File Upgrade Stability",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "19a6efbc-6e58-44c1-b141-2eda287beef0",
+			"title": "Magnetize Player Goal to Player",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "7dd0dfb9-3531-4d43-9448-fa45b13c3b78",
+			"title": "Punish Player for not getting goal quick enough",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "fa71c1ed-fff1-4e13-b676-51bb39af0ee0",
+			"title": "Pounder Enemy",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "b11a3e0f-9bee-4165-ba62-686304b83260",
+			"title": "Wind Chime Enemy",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "5b79b361-ce26-443a-9bbc-51aa2ce34e0a",
+			"title": "Vacuum Enemy",
 			"description": "",
 			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
 			"steps": []

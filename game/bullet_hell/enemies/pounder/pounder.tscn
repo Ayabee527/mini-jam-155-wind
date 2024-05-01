@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhmfhkqukom4y"]
+
+[ext_resource type="Script" path="res://bullet_hell/enemies/pounder/pounder.gd" id="1_t20vc"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_epykm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2vui3"]
+rough = true
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r1juk"]
+radius = 5.0
+height = 14.0
+
+[node name="Pounder" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_2vui3")
+gravity_scale = 0.0
+script = ExtResource("1_t20vc")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_epykm")
+
+[node name="Shape" type="Polygon2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-3, -4, 0, -5, 8, 0, 0, 5, -3, 4, -4, 5, -8, 5, -8, 2, -4, 0, -8, -2, -8, -5, -4, -5)
+
+[node name="Fill" type="Polygon2D" parent="Shape"]
+modulate = Color(1, 0, 0, 1)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-3, -3, 0, -4, 6, 0, 0, 4, -3, 3, -4, 4, -7, 4, -7, 3, -2, 0, -7, -3, -7, -4, -4, -4)
+
+[node name="Eye" type="Polygon2D" parent="Shape"]
+modulate = Color(1, 0, 0, 1)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, -3, 4, 0, 0, 3, -1, 0)
+
+[node name="Pupil" type="Polygon2D" parent="Shape/Eye"]
+modulate = Color(1, 0, 0, 1)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(2, -1, 3, 0, 2, 1, 1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_r1juk")

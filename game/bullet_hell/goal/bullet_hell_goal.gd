@@ -14,18 +14,40 @@ signal activated()
 @export var ready_sound: AudioStreamPlayer
 
 var wind_momma: WindMomma
+var player: Player
+
+var active: bool = true
+
+var magnetize: float = 0.0
 
 func _ready() -> void:
 	wind_momma = get_tree().get_first_node_in_group("wind_momma")
 	wind_momma.wind_updated.connect(update_wind)
 	
+	player = get_tree().get_first_node_in_group("player")
+	
 	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
 
+func _physics_process(delta: float) -> void:
+	if active:
+		magnetize += delta
+	
+	magnetize_to_player(delta)
+
 func update_wind(direction: Vector2, speed: float) -> void:
+	return
 	constant_force = Vector2.ZERO
 	add_constant_central_force(direction * speed)
 
+func magnetize_to_player(delta: float) -> void:
+	var dir = global_position.direction_to(player.global_position)
+	constant_force = lerp(
+		constant_force, constant_force + (dir * 500.0 * delta), delta * magnetize
+	)
+
 func collect() -> void:
+	active = false
+	magnetize = 0.0
 	player_zone_collision.set_deferred("disabled", true)
 	ring.emitting = false
 	shape.color = Color.WHITE
@@ -50,6 +72,8 @@ func collect() -> void:
 	ring.emitting = true
 	player_zone_collision.set_deferred("disabled", false)
 	activated.emit()
+	active = true
+
 
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:

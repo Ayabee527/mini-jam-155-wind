@@ -80,7 +80,7 @@ scale_curve = SubResource("CurveTexture_pvwyv")
 
 [node name="Goober" type="RigidBody2D" node_paths=PackedStringArray("state_machine", "shape", "bullet_spawner", "bullet_charge", "thruster", "collision_shape", "die_particles") groups=["enemies"]]
 collision_layer = 16
-collision_mask = 3
+collision_mask = 35
 physics_material_override = SubResource("PhysicsMaterial_vwrpc")
 gravity_scale = 0.0
 max_contacts_reported = 4

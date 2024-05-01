@@ -1,13 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://doxmiitnf3len"]
+[gd_scene load_steps=18 format=3 uid="uid://doxmiitnf3len"]
 
-[ext_resource type="Script" path="res://bullet_hell/enemies/faker/faker.gd" id="1_22ctl"]
-[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="2_7ua40"]
-[ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_aywu4"]
-[ext_resource type="Script" path="res://bullet_hell/enemies/faker/states/rushdown.gd" id="3_te0wr"]
-[ext_resource type="Script" path="res://bullet_hell/enemies/faker/states/stun.gd" id="4_p7h3h"]
-[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="6_xv414"]
-[ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="7_ckjbu"]
-[ext_resource type="AudioStream" uid="uid://ds8emyev6w6pm" path="res://assets/sounds/explod.wav" id="8_sf0w8"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/faker/faker.gd" id="1_1vd0o"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_d0w21"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/faker/states/rushdown.gd" id="3_dvl1r"]
+[ext_resource type="Script" path="res://bullet_hell/enemies/faker/states/stun.gd" id="4_kpcox"]
+[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="5_eyh8w"]
+[ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="6_jlawl"]
+[ext_resource type="AudioStream" uid="uid://bomxwua8k3g27" path="res://assets/sounds/bump.wav" id="7_0wlhq"]
+[ext_resource type="AudioStream" uid="uid://ds8emyev6w6pm" path="res://assets/sounds/explod.wav" id="8_esfnk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_e610f"]
 rough = true
@@ -41,25 +41,28 @@ scale_curve = SubResource("CurveTexture_korsv")
 random_pitch = 1.5
 random_volume_offset_db = 10.0
 streams_count = 1
-stream_0/stream = ExtResource("7_ckjbu")
+stream_0/stream = ExtResource("7_0wlhq")
 stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uero5"]
 random_pitch = 1.5
 random_volume_offset_db = 5.0
 streams_count = 1
-stream_0/stream = ExtResource("8_sf0w8")
+stream_0/stream = ExtResource("8_esfnk")
 stream_0/weight = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o3r1f"]
+radius = 12.0
 
 [node name="Faker" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "owie_collision", "die_particles", "bump_sound", "explod_sound") groups=["enemies"]]
 collision_layer = 16
-collision_mask = 3
+collision_mask = 35
 mass = 2.0
 physics_material_override = SubResource("PhysicsMaterial_e610f")
 gravity_scale = 0.0
 max_contacts_reported = 4
 contact_monitor = true
-script = ExtResource("1_22ctl")
+script = ExtResource("1_1vd0o")
 shape = NodePath("Shape")
 trail = NodePath("Trail")
 collision_shape = NodePath("CollisionShape2D")
@@ -69,17 +72,17 @@ bump_sound = NodePath("Bump")
 explod_sound = NodePath("Explod")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("2_aywu4")
+script = ExtResource("2_d0w21")
 initial_state = NodePath("Rushdown")
 
 [node name="Rushdown" type="Node" parent="StateMachine"]
-script = ExtResource("3_te0wr")
-rush_speed = 600.0
+script = ExtResource("3_dvl1r")
+rush_speed = 300.0
 
 [node name="Stun" type="Node" parent="StateMachine"]
-script = ExtResource("4_p7h3h")
+script = ExtResource("4_kpcox")
 
-[node name="Trail" parent="." instance=ExtResource("2_7ua40")]
+[node name="Trail" parent="." instance=ExtResource("5_eyh8w")]
 modulate = Color(1, 0, 0, 1)
 width = 12.0
 
@@ -110,7 +113,7 @@ modulate = Color(0, 1, 0, 1)
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_ip3o7")
-texture = ExtResource("6_xv414")
+texture = ExtResource("6_jlawl")
 lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
@@ -124,7 +127,14 @@ stream = SubResource("AudioStreamRandomizer_uero5")
 volume_db = -10.0
 bus = &"sfx"
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="Bumper" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 33
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bumper"]
+shape = SubResource("CircleShape2D_o3r1f")
+
 [connection signal="body_entered" from="." to="StateMachine/Rushdown" method="_on_faker_body_entered"]
 [connection signal="body_entered" from="." to="StateMachine/Stun" method="_on_faker_body_entered"]
 [connection signal="screen_entered" from="EnterNotifier" to="." method="_on_enter_notifier_screen_entered"]
+[connection signal="body_entered" from="Bumper" to="." method="_on_bumper_body_entered"]

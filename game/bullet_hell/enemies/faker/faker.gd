@@ -50,8 +50,7 @@ func die() -> void:
 func _on_enter_notifier_screen_entered() -> void:
 	collision_shape.set_deferred("disabled", false)
 
-
-func _on_body_entered(body: Node) -> void:
+func _on_bumper_body_entered(body: Node2D) -> void:
 	bump_sound.play()
 	wind_momma.wind_direction = linear_velocity.normalized()
-	wind_momma.wind_speed += linear_velocity.length() * 0.5
+	wind_momma.wind_speed += 20.0

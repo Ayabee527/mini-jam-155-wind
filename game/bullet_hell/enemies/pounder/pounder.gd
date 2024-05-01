@@ -1,0 +1,2 @@
+class_name PounderEnemy
+extends RigidBody2D

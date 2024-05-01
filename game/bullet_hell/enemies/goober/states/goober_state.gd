@@ -6,4 +6,4 @@ var enemy: GooberEnemy
 func _ready() -> void:
 	await owner.ready
 	enemy = owner as GooberEnemy
-	await(enemy != null)
+	assert(enemy != null)
