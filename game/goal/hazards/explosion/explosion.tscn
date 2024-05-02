@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh476uimtr5v8"]
+
+[ext_resource type="Script" path="res://goal/hazards/explosion/explosion.gd" id="1_6xjse"]
+[ext_resource type="AudioStream" uid="uid://dxvptscwcgyak" path="res://assets/sounds/boom.wav" id="2_7rcv8"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i6sjl"]
+random_pitch = 1.1
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("2_7rcv8")
+stream_0/weight = 1.0
+
+[node name="Explosion" type="Area2D" node_paths=PackedStringArray("final_preview", "current_preview", "explosion_circle", "collision_shape", "explode_sound") groups=["owies"]]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_6xjse")
+final_preview = NodePath("FinalPreview")
+current_preview = NodePath("CurrentPreview")
+explosion_circle = NodePath("ExplosionCircle")
+collision_shape = NodePath("CollisionShape2D")
+explode_sound = NodePath("Explode")
+
+[node name="FinalPreview" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.25098)
+color = Color(1, 0, 0, 1)
+
+[node name="CurrentPreview" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
+color = Color(1, 0, 0, 1)
+
+[node name="ExplosionCircle" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Explode" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_i6sjl")
+volume_db = 15.0
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

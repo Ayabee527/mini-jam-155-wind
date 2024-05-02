@@ -29,8 +29,8 @@ scale_max = 0.1
 scale_curve = SubResource("CurveTexture_wr4b0")
 color = Color(0, 1, 0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nk0qm"]
-size = Vector2(28, 28)
+[sub_resource type="CircleShape2D" id="CircleShape2D_lc0kf"]
+radius = 17.0294
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0unou"]
 radius = 23.0
@@ -73,7 +73,7 @@ color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(-14, -8, -12, -12, -8, -14, -1, -12, 0, -4, 1, -12, 8, -14, 12, -12, 14, -8, 12, -1, 4, 0, 12, 1, 14, 8, 12, 12, 8, 14, 1, 13, 0, 4, -1, 13, -8, 14, -12, 12, -14, 8, -13, 1, -4, 0, -13, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_nk0qm")
+shape = SubResource("CircleShape2D_lc0kf")
 
 [node name="PlayerZone" type="Area2D" parent="."]
 collision_layer = 8

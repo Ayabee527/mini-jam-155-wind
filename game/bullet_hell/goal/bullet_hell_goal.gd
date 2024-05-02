@@ -35,7 +35,6 @@ func _physics_process(delta: float) -> void:
 	magnetize_to_player(delta)
 
 func update_wind(direction: Vector2, speed: float) -> void:
-	return
 	constant_force = Vector2.ZERO
 	add_constant_central_force(direction * speed)
 

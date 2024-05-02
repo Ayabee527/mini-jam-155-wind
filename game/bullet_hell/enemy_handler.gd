@@ -7,12 +7,13 @@ const BARRIER = preload("res://goal/hazards/barrier/barrier.tscn")
 
 const GOOBER = preload("res://bullet_hell/enemies/goober/goober.tscn")
 const FAKER = preload("res://bullet_hell/enemies/faker/faker.tscn")
+const POUNDER = preload("res://bullet_hell/enemies/pounder/pounder.tscn")
 
 const PROJECTILES = [
 	"BULLET", "SAW", "BOMB", "BARRIER"
 ]
 const ENEMIES = [
-	"GOOBER", "FAKER"
+	"GOOBER", "FAKER", "POUNDER"
 ]
 
 const HAZARDS = {
@@ -23,6 +24,7 @@ const HAZARDS = {
 	
 	"GOOBER": GOOBER,
 	"FAKER": FAKER,
+	"POUNDER": POUNDER,
 }
 
 const COSTS = {
@@ -33,6 +35,7 @@ const COSTS = {
 	
 	"GOOBER": 2,
 	"FAKER": 4,
+	"POUNDER": 6,
 }
 
 @export var extra_spend: int = 3
@@ -44,7 +47,7 @@ var progress: int = 0
 
 func clear_hazards() -> void:
 	var owies = get_tree().get_nodes_in_group("owies")
-	for owie: RigidBody2D in owies:
+	for owie in owies:
 		if owie.has_method("die"):
 			owie.die()
 		else:
