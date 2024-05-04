@@ -26,8 +26,8 @@ func _ready() -> void:
 	
 	angular_velocity = randf_range(-TAU, TAU)
 	modulate.a = 0.5
-	shape.modulate.g = 1.0
-	trail.modulate.g = 1.0
+	shape.modulate = Color.YELLOW
+	trail.modulate = Color.YELLOW
 
 func _physics_process(delta: float) -> void:
 	var dir_to_player := global_position.direction_to(player.global_position)
@@ -38,8 +38,8 @@ func _physics_process(delta: float) -> void:
 
 func activate_damage() -> void:
 	modulate.a = 1.0
-	shape.modulate.g = 0.0
-	trail.modulate.g = 0.0
+	shape.modulate = Color.RED
+	trail.modulate = Color.RED
 	owie_collision.set_deferred("disabled", false)
 
 func die() -> void:
@@ -48,10 +48,8 @@ func die() -> void:
 	linear_velocity = Vector2.ZERO
 	set_deferred("freeze", true)
 	
-	shape.modulate.g = 1.0
-	trail.modulate.g = 1.0
-	shape.modulate.r = 0.0
-	trail.modulate.r = 0.0
+	shape.modulate = Color.GREEN
+	trail.modulate = Color.GREEN
 	explode_particles.restart()
 	
 	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -78,6 +76,9 @@ func _on_body_entered(body: Node) -> void:
 	
 	bounces += 1
 	if bounces >= max_bounces:
+		modulate.a = 0.2
+		shape.modulate = Color.YELLOW
+		trail.modulate = Color.YELLOW
 		owie_collision.set_deferred("disabled", true)
 		collision_shape.set_deferred("disabled", true)
 
@@ -100,3 +101,7 @@ func _on_owie_body_entered(body: Node2D) -> void:
 	owie_collision.set_deferred("disabled", true)
 	collision_shape.set_deferred("disabled", true)
 	linear_velocity *= -2
+	
+	modulate.a = 0.2
+	shape.modulate = Color.YELLOW
+	trail.modulate = Color.YELLOW

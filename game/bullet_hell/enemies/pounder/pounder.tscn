@@ -15,7 +15,7 @@ bounce = 1.0
 height = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pkm17"]
-radius = 40.0
+radius = 32.0
 
 [sub_resource type="Curve" id="Curve_1q6o1"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

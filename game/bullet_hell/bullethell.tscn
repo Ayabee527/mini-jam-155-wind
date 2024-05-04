@@ -314,7 +314,7 @@ position = Vector2(128, 128)
 
 [node name="Player" parent="." instance=ExtResource("5_rso7v")]
 position = Vector2(128, 128)
-wind_affection = 0.33
+wind_affection = 0.5
 friction = 10.0
 speed = 1500.0
 

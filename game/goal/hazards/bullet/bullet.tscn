@@ -67,7 +67,7 @@ modulate = Color(1, 0, 0, 1)
 width = 4.0
 
 [node name="Shape" type="Polygon2D" parent="."]
-color = Color(1, 0, 0, 1)
+modulate = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(-6, 0, -2, -2, 0, -6, 2, -2, 6, 0, 2, 2, 0, 6, -2, 2)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
@@ -101,4 +101,5 @@ bus = &"sfx"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="Owie" to="." method="_on_owie_body_entered"]
 [connection signal="finished" from="ExplodeParticles" to="." method="_on_explode_particles_finished"]
