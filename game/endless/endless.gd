@@ -10,7 +10,9 @@ signal game_over()
 @export var wind_momma: WindMomma
 @export var player: Player
 @export var player_goal: PlayerGoal
+@export var bg_music: AudioStreamPlayer
 
+@export var score_label: RichTextLabel
 @export var score_handler: ScoreHandler
 @export var gameover_label: RichTextLabel
 @export var multiplier_label: RichTextLabel
@@ -113,15 +115,24 @@ func over_game() -> void:
 func _on_player_bumped_wall(direction: Vector2) -> void:
 	AchievementHandler.wall_hits += 1
 	
-	wind_momma.wind_speed += direction.length()
-	#wind_momma.wind_speed *= 1.01
-	
-	#if abs( wind_momma.wind_direction.dot(direction.normalized()) ) > -0.5:
-	wind_momma.wind_direction = direction.normalized()
-	#bump_window(direction)
+	if bg_music.playing:
+		wind_momma.wind_speed += direction.length()
+		#wind_momma.wind_speed *= 1.01
+		
+		#if abs( wind_momma.wind_direction.dot(direction.normalized()) ) > -0.5:
+		wind_momma.wind_direction = direction.normalized()
+		#bump_window(direction)
 
 
 func _on_player_goal_collected() -> void:
+	if not bg_music.playing:
+		bg_music.play()
+		score_label.show()
+		multiplier_label.show()
+		timer_label.show()
+		timer_bar.show()
+		time_timer.start()
+	
 	AchievementHandler.ball_hits += 1
 	
 	life_timer.start(12)

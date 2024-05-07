@@ -154,15 +154,17 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label", "wind_momma")]
+[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("collect_panel", "death_bar", "timer_label", "wind_momma", "bg_music", "survive_timer", "player")]
 script = ExtResource("1_n4gij")
 collect_panel = NodePath("BGColor/CollectPanel")
 death_bar = NodePath("BGColor/DeathBar")
 timer_label = NodePath("BGColor/MarginContainer/CenterContainer/VBoxContainer/Time")
 wind_momma = NodePath("WindMomma")
+bg_music = NodePath("BGMusic")
+survive_timer = NodePath("SurviveTimer")
+player = NodePath("Player")
 
 [node name="SurviveTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="BGColor" type="PanelContainer" parent="."]
 clip_contents = true
@@ -227,6 +229,7 @@ fit_content = true
 autowrap_mode = 0
 
 [node name="Time" type="RichTextLabel" parent="BGColor/MarginContainer/CenterContainer/VBoxContainer"]
+visible = false
 clip_contents = false
 layout_mode = 2
 theme_override_colors/default_color = Color(0.501961, 0.501961, 0.501961, 1)
@@ -310,10 +313,10 @@ collision_mask = 16
 shape = SubResource("WorldBoundaryShape2D_7p3yd")
 
 [node name="BulletHellGoal" parent="." instance=ExtResource("7_an886")]
-position = Vector2(128, 128)
+position = Vector2(128, 32)
 
 [node name="Player" parent="." instance=ExtResource("5_rso7v")]
-position = Vector2(128, 128)
+position = Vector2(128, 224)
 wind_affection = 0.5
 friction = 10.0
 speed = 1500.0
@@ -336,7 +339,6 @@ position = Vector2(128, 128)
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("7_65o8f")
-autoplay = true
 bus = &"music"
 
 [node name="WindMomma" type="Node2D" parent="." groups=["wind_momma"]]

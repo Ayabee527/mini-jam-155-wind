@@ -55,6 +55,7 @@ max_contacts_reported = 4
 contact_monitor = true
 constant_torque = -250.0
 script = ExtResource("1_qyles")
+max_bounces = 3
 shape = NodePath("Shape")
 trail = NodePath("Trail")
 collision_shape = NodePath("CollisionShape2D")

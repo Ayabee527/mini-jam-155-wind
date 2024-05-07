@@ -5,6 +5,9 @@ extends Node2D
 @export var timer_label: RichTextLabel
 
 @export var wind_momma: WindMomma
+@export var bg_music: AudioStreamPlayer
+@export var survive_timer: Timer
+@export var player: Player
 
 var death_value: float = 0.0
 
@@ -31,7 +34,8 @@ func _process(delta: float) -> void:
 	death_bar.value = death_value
 	
 	if Global.window_movement:
-		window_velocity = window_velocity.move_toward(Vector2.ZERO, 50.0 * delta)
+		#window_velocity = window_velocity.move_toward(Vector2.ZERO, 50.0 * delta)
+		#center_window(delta)
 		
 		window.position += Vector2i(window_velocity * delta)
 	
@@ -41,9 +45,22 @@ func bump_window(direction: Vector2) -> void:
 	if Global.window_movement:
 		window_velocity += direction * 0.5
 	
-	wind_momma.wind_speed *= direction.dot(wind_momma.wind_direction)
-	wind_momma.wind_direction = direction.normalized()
+	#wind_momma.wind_speed *= direction.dot(wind_momma.wind_direction)
+	#wind_momma.wind_direction = direction.normalized()
 	#wind_momma.wind_direction += ( direction.normalized() * 2.0 )
+
+func center_window(delta: float) -> void:
+	var window_center: Vector2i = DisplayServer.screen_get_usable_rect(
+		used_screen
+	).position + window.position + (window.size / 2)
+	#var absolute_player_position: Vector2i = DisplayServer.screen_get_usable_rect(
+		#used_screen
+	#).position + window.position + Vector2i(player.global_position)
+	#print(window_center, ", ", absolute_player_position)
+	
+	var dir_to_player = Vector2(128, 128).direction_to(Vector2(player.global_position))
+	print(player.global_position, ", ", dir_to_player)
+	window_velocity = window_velocity.move_toward(dir_to_player * 200.0, 150.0 * delta)
 
 func contain_window() -> void:
 	var bounce_factor: float = -0.9
@@ -73,6 +90,9 @@ func collect_goal() -> void:
 	tween.tween_property(
 		collect_panel, "modulate:a", 0.0, 1.0
 	).from(1.0)
+	
+	#bump_window(player.linear_velocity * 1.25)
+	bump_window(Vector2.from_angle(TAU * randf()) * 125.0)
 
 func get_time_text() -> String:
 	var text: String = "00:00"
@@ -105,6 +125,11 @@ func _on_survive_timer_timeout() -> void:
 
 
 func _on_bullet_hell_goal_collected() -> void:
+	if not bg_music.playing:
+		bg_music.play()
+		survive_timer.start()
+		timer_label.show()
+	
 	death_value -= 30
 	collect_goal()
 	

@@ -18,13 +18,15 @@
 			"tasks": [
 				"fa71c1ed-fff1-4e13-b676-51bb39af0ee0",
 				"b11a3e0f-9bee-4165-ba62-686304b83260",
-				"5b79b361-ce26-443a-9bbc-51aa2ce34e0a"
+				"5b79b361-ce26-443a-9bbc-51aa2ce34e0a",
+				"b22aa5ef-eb2d-4899-8874-896d38f90065"
 			]
 		},
 		{
 			"uuid": "9ad08e5a-bbe9-402b-b134-af80db443ea9",
 			"title": "Done",
 			"tasks": [
+				"6af1e6a8-ee08-4f68-9584-cfedfd1f3557",
 				"7dd0dfb9-3531-4d43-9448-fa45b13c3b78",
 				"19a6efbc-6e58-44c1-b141-2eda287beef0",
 				"1f819b17-122a-481c-a54a-176e45589ee9",
@@ -206,6 +208,20 @@
 		{
 			"uuid": "5b79b361-ce26-443a-9bbc-51aa2ce34e0a",
 			"title": "Vacuum Enemy",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "6af1e6a8-ee08-4f68-9584-cfedfd1f3557",
+			"title": "Endless and Bullet Hell Intro",
+			"description": "",
+			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
+			"steps": []
+		},
+		{
+			"uuid": "b22aa5ef-eb2d-4899-8874-896d38f90065",
+			"title": "Endless Mode Projectiles Have Chance To Explode",
 			"description": "",
 			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
 			"steps": []
