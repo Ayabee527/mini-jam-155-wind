@@ -11,12 +11,13 @@ func enter(_msg:={}) -> void:
 	fire()
 
 func fire() -> void:
-	var bullet = BULLET.instantiate()
-	bullet.global_position = enemy.bullet_spawner.global_position
-	bullet.apply_central_impulse(
-		Vector2.from_angle(enemy.global_rotation) * fire_speed
-	)
-	get_tree().current_scene.add_child(bullet)
+	#var bullet = BULLET.instantiate()
+	#bullet.global_position = enemy.bullet_spawner.global_position
+	#bullet.apply_central_impulse(
+		#Vector2.from_angle(enemy.global_rotation) * fire_speed
+	#)
+	#bullet.max_bounces = 2
+	#get_tree().current_scene.add_child(bullet)
 	
 	var side_angle: float = deg_to_rad(15.0)
 	var sides: int = 2
@@ -27,6 +28,7 @@ func fire() -> void:
 		side_bullet.apply_central_impulse(
 			Vector2.from_angle(enemy.global_rotation + offset_ang) * fire_speed
 		)
+		side_bullet.max_bounces = 2
 		get_tree().current_scene.add_child(side_bullet)
 	fire_sound.play()
 	
