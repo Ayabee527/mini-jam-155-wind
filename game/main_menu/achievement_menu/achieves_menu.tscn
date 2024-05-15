@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c24up3gigjdps"]
+[gd_scene load_steps=17 format=3 uid="uid://c24up3gigjdps"]
 
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="1_2yekd"]
 [ext_resource type="Script" path="res://main_menu/achievement_menu/achieves_menu.gd" id="1_7fe5a"]
@@ -48,6 +48,48 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_evb8s"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2s5l"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5p6fu"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bp4vp"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+draw_center = false
+border_width_top = 2
+border_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5liv8"]
 bg_color = Color(0.501961, 0.501961, 0.501961, 1)
 border_width_left = 2
@@ -79,7 +121,7 @@ VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_ghktc")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yng4p"]
 
-[node name="AchievesMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "achieves_holder")]
+[node name="AchievesMenu" type="PanelContainer" node_paths=PackedStringArray("back_butt", "endless_achieves_holder", "bullet_achieves_holder")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -88,7 +130,8 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_am6a0")
 script = ExtResource("1_7fe5a")
 back_butt = NodePath("MarginContainer/VBoxContainer/Back")
-achieves_holder = NodePath("MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder")
+endless_achieves_holder = NodePath("MarginContainer/VBoxContainer/TabContainer/Endless/AchievesHolder")
+bullet_achieves_holder = NodePath("MarginContainer/VBoxContainer/TabContainer/Bullet/AchievesHolder")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -113,7 +156,18 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_6fjx2")
 theme_override_styles/focus = SubResource("StyleBoxFlat_4ehnk")
 text = "BACK"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_2yekd")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_evb8s")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_g2s5l")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_5p6fu")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_evb8s")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bp4vp")
+
+[node name="Endless" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
 custom_minimum_size = Vector2(208, 128)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -122,41 +176,91 @@ theme = SubResource("Theme_1bb6o")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_yng4p")
 horizontal_scroll_mode = 0
 
-[node name="AchievesHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="AchievesHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="AchieveBox" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" instance=ExtResource("3_pfn8s")]
+[node name="AchieveBox" parent="MarginContainer/VBoxContainer/TabContainer/Endless/AchievesHolder" instance=ExtResource("3_pfn8s")]
 layout_mode = 2
 
-[node name="AchieveBox2" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+[node name="AchieveBox2" parent="MarginContainer/VBoxContainer/TabContainer/Endless/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
 layout_mode = 2
 icon = NodePath("../AchieveBox/HBoxContainer/Icon")
 name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
 desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
 blocker = NodePath("../AchieveBox/Blocker")
 
-[node name="AchieveBox3" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+[node name="AchieveBox3" parent="MarginContainer/VBoxContainer/TabContainer/Endless/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
 layout_mode = 2
 icon = NodePath("../AchieveBox/HBoxContainer/Icon")
 name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
 desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
 blocker = NodePath("../AchieveBox/Blocker")
 
-[node name="AchieveBox4" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+[node name="AchieveBox4" parent="MarginContainer/VBoxContainer/TabContainer/Endless/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
 layout_mode = 2
 icon = NodePath("../AchieveBox/HBoxContainer/Icon")
 name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
 desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
 blocker = NodePath("../AchieveBox/Blocker")
 
-[node name="AchieveBox5" parent="MarginContainer/VBoxContainer/ScrollContainer/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+[node name="AchieveBox5" parent="MarginContainer/VBoxContainer/TabContainer/Endless/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
 layout_mode = 2
 icon = NodePath("../AchieveBox/HBoxContainer/Icon")
 name_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Name")
 desc_label = NodePath("../AchieveBox/HBoxContainer/VBoxContainer/Description")
 blocker = NodePath("../AchieveBox/Blocker")
+
+[node name="Bullet" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(208, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme = SubResource("Theme_1bb6o")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yng4p")
+horizontal_scroll_mode = 0
+
+[node name="AchievesHolder" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AchieveBox" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../../../Endless/AchievesHolder/AchieveBox/Blocker")
+
+[node name="AchieveBox2" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../../../Endless/AchievesHolder/AchieveBox/Blocker")
+
+[node name="AchieveBox3" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../../../Endless/AchievesHolder/AchieveBox/Blocker")
+
+[node name="AchieveBox4" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../../../Endless/AchievesHolder/AchieveBox/Blocker")
+
+[node name="AchieveBox5" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/AchievesHolder" node_paths=PackedStringArray("icon", "name_label", "desc_label", "blocker") instance=ExtResource("3_pfn8s")]
+layout_mode = 2
+icon = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/Icon")
+name_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Name")
+desc_label = NodePath("../../../Endless/AchievesHolder/AchieveBox/HBoxContainer/VBoxContainer/Description")
+blocker = NodePath("../../../Endless/AchievesHolder/AchieveBox/Blocker")
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

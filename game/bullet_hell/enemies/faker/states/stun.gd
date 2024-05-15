@@ -13,17 +13,15 @@ func enter(_msg:={}) -> void:
 	enemy.owie_collision.set_deferred("disabled", true)
 	
 	enemy.shape.modulate = Color.YELLOW
-	enemy.trail.modulate = Color.YELLOW
-	enemy.trail.modulate.a = 0.5
-	enemy.trail.modulate.a = 0.5
+	#enemy.trail.modulate = Color.YELLOW
+	#enemy.trail.modulate.a = 0.5
 	await get_tree().create_timer(0.5, false).timeout
 	entered = true
 
 func exit() -> void:
 	enemy.shape.modulate = Color.RED
-	enemy.trail.modulate = Color.RED
-	enemy.trail.modulate.a = 1.0
-	enemy.trail.modulate.a = 1.0
+	#enemy.trail.modulate = Color.RED
+	#enemy.trail.modulate.a = 1.0
 	
 	await get_tree().process_frame
 	enemy.owie_collision.set_deferred("disabled", false)

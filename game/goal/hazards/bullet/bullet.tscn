@@ -46,7 +46,7 @@ streams_count = 1
 stream_0/stream = ExtResource("4_pbqa4")
 stream_0/weight = 1.0
 
-[node name="Bullet" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "collision_shape", "owie_collision", "explode_particles", "bump_sound") groups=["owies"]]
+[node name="Bullet" type="RigidBody2D" node_paths=PackedStringArray("shape", "collision_shape", "owie_collision", "explode_particles", "bump_sound") groups=["owies"]]
 collision_layer = 16
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_473wm")
@@ -57,19 +57,17 @@ constant_torque = -250.0
 script = ExtResource("1_qyles")
 max_bounces = 3
 shape = NodePath("Shape")
-trail = NodePath("Trail")
 collision_shape = NodePath("CollisionShape2D")
 owie_collision = NodePath("Owie/CollisionShape2D")
 explode_particles = NodePath("ExplodeParticles")
 bump_sound = NodePath("Bump")
 
-[node name="Trail" parent="." instance=ExtResource("2_dwsrf")]
-modulate = Color(1, 0, 0, 1)
-width = 4.0
-
 [node name="Shape" type="Polygon2D" parent="."]
 modulate = Color(1, 0, 0, 1)
 polygon = PackedVector2Array(-6, 0, -2, -2, 0, -6, 2, -2, 6, 0, 2, 2, 0, 6, -2, 2)
+
+[node name="Trail" parent="Shape" instance=ExtResource("2_dwsrf")]
+width = 4.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-32, -32, 64, 64)

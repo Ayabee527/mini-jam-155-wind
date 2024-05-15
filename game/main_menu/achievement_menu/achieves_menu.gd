@@ -7,7 +7,8 @@ signal back()
 
 @export var back_butt: Button
 
-@export var achieves_holder: VBoxContainer
+@export var endless_achieves_holder: VBoxContainer
+@export var bullet_achieves_holder: VBoxContainer
 
 func _ready() -> void:
 	owner.ready.connect(initialize)
@@ -15,19 +16,20 @@ func _ready() -> void:
 func initialize():
 	AchievementHandler.load_achievements()
 	spawn_achieves()
+	spawn_bullets()
 
 func _on_back_pressed() -> void:
 	AchievementHandler.save_achievements()
 	emit_signal("back")
 
 func spawn_achieves() -> void:
-	for child in achieves_holder.get_children():
+	for child in endless_achieves_holder.get_children():
 		child.queue_free()
 	
 	var completed: Array[String] = []
 	var uncompleted: Array[String] = []
 	
-	var keys: Array = AchievementHandler.ACHIEVEMENT_KEYS
+	var keys: Array = AchievementHandler.ENDLESS_ACHIEVEMENTS
 	
 	for achievement: String in keys:
 		if AchievementHandler.ACHIEVEMENTS[achievement]["completed"]:
@@ -41,7 +43,7 @@ func spawn_achieves() -> void:
 		achieves_box.achievement_name = achievement
 		achieves_box.achievement_description = AchievementHandler.ACHIEVEMENTS[achievement]["description"]
 		achieves_box.achieved = true
-		achieves_holder.add_child(achieves_box)
+		endless_achieves_holder.add_child(achieves_box)
 	
 	for achievement: String in uncompleted:
 		var achieves_box = ACHIEVES_BOX.instantiate()
@@ -49,8 +51,38 @@ func spawn_achieves() -> void:
 		achieves_box.achievement_name = achievement
 		achieves_box.achievement_description = AchievementHandler.ACHIEVEMENTS[achievement]["description"]
 		achieves_box.achieved = false
-		achieves_holder.add_child(achieves_box)
+		endless_achieves_holder.add_child(achieves_box)
 
+func spawn_bullets() -> void:
+	for child in bullet_achieves_holder.get_children():
+		child.queue_free()
+	
+	var completed: Array[String] = []
+	var uncompleted: Array[String] = []
+	
+	var keys: Array = AchievementHandler.BULLETHELL_ACHIEVEMENTS
+	
+	for achievement: String in keys:
+		if AchievementHandler.ACHIEVEMENTS[achievement]["completed"]:
+			completed.append(achievement)
+		else:
+			uncompleted.append(achievement)
+	
+	for achievement: String in completed:
+		var achieves_box = ACHIEVES_BOX.instantiate()
+		achieves_box.name = achievement
+		achieves_box.achievement_name = achievement
+		achieves_box.achievement_description = AchievementHandler.ACHIEVEMENTS[achievement]["description"]
+		achieves_box.achieved = true
+		bullet_achieves_holder.add_child(achieves_box)
+	
+	for achievement: String in uncompleted:
+		var achieves_box = ACHIEVES_BOX.instantiate()
+		achieves_box.name = achievement
+		achieves_box.achievement_name = achievement
+		achieves_box.achievement_description = AchievementHandler.ACHIEVEMENTS[achievement]["description"]
+		achieves_box.achieved = false
+		bullet_achieves_holder.add_child(achieves_box)
 
 func _on_visibility_changed() -> void:
 	if visible:

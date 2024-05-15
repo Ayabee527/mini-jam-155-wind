@@ -2,13 +2,9 @@ extends PanelContainer
 
 @export var quit_butt: Button
 
-@export var last_score: Label
-@export var high_score: Label
-@export var last_time: Label
-@export var high_time: Label
-
 @export var options_menu: OptionsMenu
 @export var achieves_menu: AchievesMenu
+@export var stats_menu: StatsMenu
 @export var mode_menu: PanelContainer
 
 func _ready() -> void:
@@ -17,21 +13,6 @@ func _ready() -> void:
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()
-	
-	last_score.text = "last "
-	if str(Global.latest_score).length() < 6:
-		for i: int in range(6 - str(Global.latest_score).length()):
-			last_score.text += "0"
-	last_score.text += str(Global.latest_score)
-	last_time.text = get_time_text(Global.latest_time)
-	
-	high_score.text = ""
-	if str(Global.high_score).length() < 6:
-		for i: int in range(6 - str(Global.high_score).length()):
-			high_score.text += "0"
-	high_score.text += str(Global.high_score)
-	high_score.text += " high"
-	high_time.text = get_time_text(Global.high_time)
 	
 	SceneSwitcher.switch_in()
 
@@ -87,3 +68,11 @@ func _on_achieves_pressed() -> void:
 
 func _on_achieves_menu_back() -> void:
 	achieves_menu.hide()
+
+
+func _on_stats_pressed() -> void:
+	stats_menu.show()
+
+
+func _on_stats_menu_back() -> void:
+	stats_menu.hide()

@@ -14,6 +14,8 @@ extends RigidBody2D
 var player: Player
 var dead: bool = false
 
+var dunked: bool = false
+
 var wind_momma: WindMomma
 
 func _ready() -> void:
@@ -33,7 +35,14 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func die() -> void:
 	if not dead:
+		shape.modulate = Color.GREEN
 		collision_shape.set_deferred("disabled", true)
 		die_particles.restart()
 		state_machine.transition_to("Died")
 		dead = true
+
+
+func _on_dunkin_area_entered(area: Area2D) -> void:
+	if dunked:
+		print("DUNKED")
+		AchievementHandler.complete("Straight Up Ballin!")

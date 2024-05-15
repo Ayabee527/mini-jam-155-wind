@@ -3,6 +3,8 @@ extends PounderEnemyState
 @export var dash_speed: float = 250.0
 @export var hunt_timer: Timer
 
+@export var thruster: GPUParticles2D
+
 func enter(_msg:={}) -> void:
 	hunt_timer.start()
 	enemy.look_at(enemy.player.global_position)
@@ -20,6 +22,8 @@ func physics_update(delta: float) -> void:
 
 
 func _on_timer_timeout() -> void:
-	enemy.apply_central_impulse(
-		Vector2.from_angle(enemy.global_rotation) * dash_speed
-	)
+	if not enemy.dead:
+		thruster.restart()
+		enemy.apply_central_impulse(
+			Vector2.from_angle(enemy.global_rotation) * dash_speed
+		)

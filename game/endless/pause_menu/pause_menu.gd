@@ -57,3 +57,8 @@ func _on_pause_pressed() -> void:
 func _on_main_game_over() -> void:
 	print("no more pause")
 	game_overed = true
+
+
+func _on_bullet_hell_game_over() -> void:
+	print("no more pause")
+	game_overed = true

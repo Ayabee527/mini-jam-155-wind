@@ -1,6 +1,8 @@
 extends Node
 
 var ACHIEVEMENTS = {
+	# ENDLESS
+	
 	"First Of Many!": {
 		"completed": false,
 		"description": "End your first endless run.",
@@ -55,7 +57,29 @@ var ACHIEVEMENTS = {
 		"completed": false,
 		"description": "Game over with 69 in your score.",
 	},
+	
+	# BULLET HELL
+	
+	"Straight Up Ballin!": {
+		"completed": false,
+		"description": "Dunk an enemy into the goal."
+	},
+	
+	"": {
+		"completed": false,
+		"description": ""
+	}
 }
+
+const ENDLESS_ACHIEVEMENTS = [
+	"First Of Many!", "Voluntary Celibate!", "Okay You're Pretty Bad!",
+	"Okay, You're Pretty Good!", "Okay, You're Very Good!", "Okay, You're Very Good!",
+	"Okay, You're Too Good!", "Okay, You Can Stop Now!", "Tryhard!",
+	"Maybe You Should Go Outside!", "They're In The Walls!", "Very Nice!"
+]
+const BULLETHELL_ACHIEVEMENTS = [
+	"Straight Up Ballin!"
+]
 
 var ACHIEVEMENT_KEYS: Array
 
@@ -100,26 +124,28 @@ func load_achievements() -> void:
 	
 	ACHIEVEMENTS = config.get_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
 	
-	if Global.high_score > 0:
+	var endless_high = Global.endless_highs[0][0]
+	
+	if endless_high > 0:
 		complete("First Of Many!")
 	
-	if Global.high_score < 1000:
+	if endless_high < 1000:
 		complete("Okay You're Pretty Bad!")
 	
-	if Global.high_score >= 25_000:
+	if endless_high >= 25_000:
 		complete("Okay, You're Pretty Good!")
-	if Global.high_score >= 50_000:
+	if endless_high >= 50_000:
 		complete("Okay, You're Very Good!")
-	if Global.high_score >= 75_000:
+	if endless_high >= 75_000:
 		complete("Okay, You're Too Good!")
-	if Global.high_score >= 100_000:
+	if endless_high >= 100_000:
 		complete("Okay, You Can Stop Now!")
-	if Global.high_score >= 150_000:
+	if endless_high >= 150_000:
 		complete("Tryhard!")
-	if Global.high_score >= 200_000:
+	if endless_high >= 200_000:
 		complete("Maybe You Should Go Outside!")
 	
-	if str(Global.high_score).contains("69"):
+	if str(endless_high).contains("69"):
 		complete("Very Nice!")
 
 func complete(achievement: String) -> void:
@@ -155,5 +181,5 @@ func check_game_over() -> void:
 	if str(score).contains("69"):
 		complete("Very Nice!")
 	
-	if Global.high_score > 0:
+	if Global.endless_highs[0][0] > 0:
 		complete("First Of Many!")

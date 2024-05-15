@@ -1,13 +1,20 @@
 extends Node2D
 
+signal game_over()
+
 @export var collect_panel: Panel
 @export var death_bar: TextureProgressBar
 @export var timer_label: RichTextLabel
+@export var gameover_label: RichTextLabel
+@export var pause_butt: Button
+@export var retry_butt: Button
+@export var back_butt: Button
 
 @export var wind_momma: WindMomma
 @export var bg_music: AudioStreamPlayer
 @export var survive_timer: Timer
 @export var player: Player
+@export var goal: BulletHellGoal
 
 var death_value: float = 0.0
 
@@ -19,15 +26,18 @@ var window: Window
 
 var goal_ready: bool = false
 
+var game_overed: bool = false
+
 func _ready() -> void:
 	window = get_window()
 	used_screen = DisplayServer.window_get_current_screen(window.get_window_id())
 
 func _process(delta: float) -> void:
-	if not goal_ready:
-		death_value -= delta * 2.5
-	else:
-		death_value += delta
+	if not game_overed:
+		if not goal_ready:
+			death_value -= delta * 2.5
+		else:
+			death_value += delta
 	
 	death_value = clamp(death_value, 0.0, 100.0)
 	
@@ -92,7 +102,46 @@ func collect_goal() -> void:
 	).from(1.0)
 	
 	#bump_window(player.linear_velocity * 1.25)
-	bump_window(Vector2.from_angle(TAU * randf()) * 125.0)
+	bump_window(Vector2.from_angle(TAU * randf()) * randf_range(75.0, 150.0))
+
+func over_game() -> void:
+	survive_timer.stop()
+	
+	player.die()
+	goal.die()
+	
+	game_over.emit()
+	
+	gameover_label.show()
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(
+		pause_butt, "modulate:a",
+		0.0, 5.0
+	)
+	tween.play()
+	tween.finished.connect(
+		func():
+			pause_butt.hide()
+	)
+	
+	Global.latest_bullet_time = time_alive
+	
+	allow_escape()
+
+func allow_escape() -> void:
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.set_parallel()
+	tween.tween_property(
+		retry_butt, "modulate:a",
+		1.0, 1.0
+	).from(0.0)
+	tween.tween_property(
+		back_butt, "modulate:a",
+		1.0, 1.0
+	).from(0.0)
+	retry_butt.show()
+	back_butt.show()
+	tween.play()
 
 func get_time_text() -> String:
 	var text: String = "00:00"
@@ -130,19 +179,32 @@ func _on_bullet_hell_goal_collected() -> void:
 		survive_timer.start()
 		timer_label.show()
 	
-	death_value -= 30
-	collect_goal()
-	
-	wind_momma.wind_direction = Vector2.ZERO
-	wind_momma.wind_speed = 0.0
-	
-	goal_ready = false
+	if not game_overed:
+		death_value -= 30
+		collect_goal()
+		
+		wind_momma.wind_direction = Vector2.ZERO
+		wind_momma.wind_speed = 0.0
+		
+		goal_ready = false
 
 
 func _on_player_hurt() -> void:
 	death_value += 20
 	
+	if death_value >= 100:
+		if not game_overed:
+			game_overed = true
+			over_game()
 
 
 func _on_bullet_hell_goal_activated() -> void:
 	goal_ready = true
+
+
+func _on_retry_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
+func _on_back_pressed() -> void:
+	SceneSwitcher.switch_to("res://main_menu/main_menu.tscn")

@@ -1,15 +1,33 @@
-[gd_scene load_steps=13 format=3 uid="uid://dhmfhkqukom4y"]
+[gd_scene load_steps=15 format=3 uid="uid://dhmfhkqukom4y"]
 
 [ext_resource type="Script" path="res://bullet_hell/enemies/pounder/pounder.gd" id="1_t20vc"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_epykm"]
 [ext_resource type="Script" path="res://bullet_hell/enemies/pounder/states/hunt.gd" id="3_4x5pt"]
 [ext_resource type="PackedScene" uid="uid://bh476uimtr5v8" path="res://goal/hazards/explosion/explosion.tscn" id="3_oflo8"]
-[ext_resource type="PackedScene" uid="uid://bw8338ilrtcwc" path="res://components/trail/trail.tscn" id="4_oj75k"]
 [ext_resource type="Texture2D" uid="uid://dmmadcrn8ay1x" path="res://assets/textures/circle-filled.png" id="5_qsosl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2vui3"]
 rough = true
 bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_20jsl"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vqqk3"]
+curve = SubResource("Curve_20jsl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bl1t2"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 30.0
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.02
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_vqqk3")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r1juk"]
 height = 32.0
@@ -42,7 +60,7 @@ scale_max = 0.1
 scale_curve = SubResource("CurveTexture_0x2jr")
 color = Color(0, 1, 0, 1)
 
-[node name="Pounder" type="RigidBody2D" node_paths=PackedStringArray("shape", "trail", "explosion", "collision_shape", "detect_collision", "explode_particles") groups=["owies"]]
+[node name="Pounder" type="RigidBody2D" node_paths=PackedStringArray("shape", "explosion", "collision_shape", "detect_collision", "explode_particles") groups=["owies"]]
 collision_layer = 16
 collision_mask = 33
 mass = 2.0
@@ -52,7 +70,6 @@ max_contacts_reported = 4
 contact_monitor = true
 script = ExtResource("1_t20vc")
 shape = NodePath("Shape")
-trail = NodePath("TrailHolder/Trail")
 explosion = NodePath("Explosion")
 collision_shape = NodePath("CollisionShape2D")
 detect_collision = NodePath("PlayerDetection/CollisionShape2D")
@@ -62,19 +79,12 @@ explode_particles = NodePath("ExplodeParticles")
 script = ExtResource("2_epykm")
 initial_state = NodePath("Hunt")
 
-[node name="Hunt" type="Node" parent="StateMachine" node_paths=PackedStringArray("hunt_timer")]
+[node name="Hunt" type="Node" parent="StateMachine" node_paths=PackedStringArray("hunt_timer", "thruster")]
 script = ExtResource("3_4x5pt")
 hunt_timer = NodePath("Timer")
+thruster = NodePath("../../Shape/Tail/Thruster")
 
 [node name="Timer" type="Timer" parent="StateMachine/Hunt"]
-
-[node name="TrailHolder" type="Marker2D" parent="."]
-position = Vector2(-4, 0)
-
-[node name="Trail" parent="TrailHolder" instance=ExtResource("4_oj75k")]
-modulate = Color(1, 0, 0, 1)
-width = 8.0
-length = 48
 
 [node name="Explosion" parent="." instance=ExtResource("3_oflo8")]
 corners = 4
@@ -97,6 +107,17 @@ polygon = PackedVector2Array(0, -6, 8, 0, 0, 6, -2, 0)
 modulate = Color(1, 0, 0, 1)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(4, -2, 6, 0, 4, 2, 2, 0)
+
+[node name="Tail" type="Marker2D" parent="Shape"]
+position = Vector2(-12, 0)
+
+[node name="Thruster" type="GPUParticles2D" parent="Shape/Tail"]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_bl1t2")
+texture = ExtResource("5_qsosl")
+one_shot = true
+explosiveness = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

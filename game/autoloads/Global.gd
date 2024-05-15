@@ -1,28 +1,66 @@
 extends Node
 
+const MAX_HIGHSCORES = 5
+
 var game_version: String = "1.0.1"
 var mouse_control: bool = false
 var window_movement: bool = true
 var sfx_volume: float
 var music_volume: float
 
+var endless_highs: Array = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+var bullet_highs: Array = [0, 0, 0, 0, 0]
+
 var latest_score: int = 0:
 	set = set_latest_score
 var latest_time: int = 0
 
-var high_score: int = 0
-var high_time: int = 0
+var latest_bullet_time: int = 0:
+	set = set_latest_bullet_time
 
 func set_latest_score(new_score: int) -> void:
 	latest_score = new_score
+	endless_highs.append( [latest_score, latest_time] )
 	
-	if latest_score > high_score:
-		high_score = latest_score
-		high_time = latest_time
-		DataLoader.save_config()
-		return
+	handle_endless_highs()
 	
-	if latest_score == high_score:
-		if latest_time < high_time:
-			high_time = latest_time
-			DataLoader.save_config()
+	DataLoader.save_config()
+
+func set_latest_bullet_time(new_time: int) -> void:
+	latest_bullet_time = new_time
+	bullet_highs.append(latest_bullet_time)
+	
+	handle_bullet_highs()
+	
+	DataLoader.save_config()
+
+func handle_endless_highs() -> void:
+	# [score, time]
+	var sort_descend = func(a, b):
+		if a[0] > b[0]:
+			return true
+		elif a[0] == b[0]:
+			if a[1] > b[1]:
+					return true
+		else:
+			return false
+	
+	if endless_highs.size() > MAX_HIGHSCORES:
+		endless_highs.sort_custom(sort_descend)
+		endless_highs.resize(MAX_HIGHSCORES)
+	
+	print(endless_highs)
+
+func handle_bullet_highs() -> void:
+	# time
+	var sort_descend = func(a, b):
+		if a > b:
+			return true
+		else:
+			return false
+	
+	if bullet_highs.size() > MAX_HIGHSCORES:
+		bullet_highs.sort_custom(sort_descend)
+		bullet_highs.resize(MAX_HIGHSCORES)
+	
+	print(bullet_highs)

@@ -1,3 +1,4 @@
+class_name BulletHellGoal
 extends RigidBody2D
 
 signal collected()
@@ -8,6 +9,7 @@ signal activated()
 @export_group("Inner Dependencies")
 @export var shape: Polygon2D
 @export var ring: GPUParticles2D
+@export var collision: CollisionShape2D
 @export var player_zone_collision: CollisionShape2D
 
 @export var collect_sound: AudioStreamPlayer
@@ -17,6 +19,7 @@ var wind_momma: WindMomma
 var player: Player
 
 var active: bool = true
+var dead: bool = false
 
 var magnetize: float = 0.0
 
@@ -45,6 +48,9 @@ func magnetize_to_player(delta: float) -> void:
 	)
 
 func collect() -> void:
+	if dead:
+		return
+	
 	active = false
 	magnetize = 0.0
 	player_zone_collision.set_deferred("disabled", true)
@@ -65,6 +71,8 @@ func collect() -> void:
 		self, "modulate:a", 0.25, stun_time
 	)
 	await tween.finished
+	if dead:
+		return
 	ready_sound.play()
 	modulate.a = 1.0
 	shape.color = Color.GREEN
@@ -73,9 +81,27 @@ func collect() -> void:
 	activated.emit()
 	active = true
 
+func die() -> void:
+	collision.set_deferred("disabled", true)
+	player_zone_collision.set_deferred("disabled", true)
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.set_parallel()
+	tween.tween_property(
+		shape, "modulate",
+		Color(1, 1, 1, 0), 5.0
+	)
+
 
 func _on_player_zone_body_entered(body: Node2D) -> void:
 	if body is Player:
+		collect()
+		apply_central_impulse(
+			Vector2.from_angle(TAU * randf()) * randf_range(250, 750)
+		)
+
+
+func _on_player_zone_area_entered(area: Area2D) -> void:
+	if area.is_in_group("dunkers"):
 		collect()
 		apply_central_impulse(
 			Vector2.from_angle(TAU * randf()) * randf_range(250, 750)

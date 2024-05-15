@@ -1,6 +1,6 @@
 extends Node
 
-const CURRENT_GAME_VERSION: String = "1.0.1"
+const CURRENT_GAME_VERSION: String = "1.1"
 
 const SAVE_PATH: String = "user://data.cfg"
 const USER_NAME: String = "USER"
@@ -42,6 +42,29 @@ func check_compatibility(version: String) -> String:
 			config.save(SAVE_PATH)
 			
 			upgraded_version = "1.0.1"
+		"1.0.1":
+			print("erm")
+			var config = ConfigFile.new()
+			config.load(SAVE_PATH)
+			
+			var highscore = config.get_value(USER_NAME, "high_score")
+			var hightime = config.get_value(USER_NAME, "high_time")
+			
+			var endless_highscores = Global.endless_highs
+			endless_highscores[0] = [highscore, hightime]
+			config.set_value(USER_NAME, "endless_highscores", endless_highscores)
+			
+			config.erase_section_key(USER_NAME, "high_score")
+			config.erase_section_key(USER_NAME, "high_time")
+			
+			var bullet_highscores = Global.bullet_highs
+			config.set_value(USER_NAME, "bullet_highscores", bullet_highscores)
+			
+			config.set_value(USER_NAME, "game_version", "1.1")
+			
+			config.save(SAVE_PATH)
+			
+			upgraded_version = "1.1"
 		CURRENT_GAME_VERSION:
 			upgraded_version = CURRENT_GAME_VERSION
 	
@@ -49,6 +72,7 @@ func check_compatibility(version: String) -> String:
 
 func save_config() -> void:
 	var config = ConfigFile.new()
+	config.load(SAVE_PATH)
 	config.set_value(USER_NAME, "game_version", CURRENT_GAME_VERSION)
 	
 	config.set_value(USER_NAME, "master_volume",
@@ -64,8 +88,8 @@ func save_config() -> void:
 		AudioServer.get_bus_index("music")
 	))
 	config.set_value(USER_NAME, "window_movement", Global.window_movement)
-	config.set_value(USER_NAME, "high_score", Global.high_score)
-	config.set_value(USER_NAME, "high_time", Global.high_time)
+	config.set_value(USER_NAME, "endless_highscores", Global.endless_highs)
+	config.set_value(USER_NAME, "bullet_highscores", Global.bullet_highs)
 	
 	config.set_value(USER_NAME, "mouse_control", Global.mouse_control)
 	config.set_value(USER_NAME, "move_up_keybinds", InputMap.action_get_events("move_up"))
@@ -84,8 +108,7 @@ func load_config() -> void:
 	if error != OK:
 		save_version = "1.0.0"
 	else:
-		for user in config.get_sections():
-			save_version = config.get_value(user, "game_version")
+		save_version = config.get_value(USER_NAME, "game_version")
 	
 	while save_version != CURRENT_GAME_VERSION: 
 		save_version = check_compatibility(save_version)
@@ -109,8 +132,8 @@ func load_config() -> void:
 	
 	Global.window_movement = config.get_value(USER_NAME, "window_movement")
 	Global.mouse_control = config.get_value(USER_NAME, "mouse_control")
-	Global.high_score = config.get_value(USER_NAME, "high_score")
-	Global.high_time = config.get_value(USER_NAME, "high_time")
+	Global.endless_highs = config.get_value(USER_NAME, "endless_highscores")
+	Global.bullet_highs = config.get_value(USER_NAME, "bullet_highscores")
 	
 	var move_up_keybinds = config.get_value(USER_NAME, "move_up_keybinds")
 	var move_left_keybinds = config.get_value(USER_NAME, "move_left_keybinds")

@@ -6,6 +6,7 @@ const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 
 @export var stun_timer: Timer
 @export var fire_sound: AudioStreamPlayer
+@export var dunkin_collision: CollisionShape2D
 
 func enter(_msg:={}) -> void:
 	fire()
@@ -40,6 +41,9 @@ func fire() -> void:
 
 func exit() -> void:
 	stun_timer.stop()
+	
+	dunkin_collision.set_deferred("disabled", true)
+	enemy.dunked = false
 
 func _on_goober_body_exited(body: Node) -> void:
 	if is_active:
@@ -47,6 +51,12 @@ func _on_goober_body_exited(body: Node) -> void:
 		enemy.look_at(
 			enemy.global_position + enemy.linear_velocity.normalized().rotated(PI)
 		)
+		
+		if body is Player:
+			enemy.dunked = true
+			dunkin_collision.set_deferred("disabled", false)
+			stun_timer.start()
+			print("buh")
 
 
 func _on_stun_timer_timeout() -> void:

@@ -1,6 +1,8 @@
 class_name PlayerGoal
 extends RigidBody2D
 
+const EXPLOSION = preload("res://goal/hazards/explosion/explosion.tscn")
+
 const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 const SAW = preload("res://goal/hazards/saw/saw.tscn")
 const BOMB = preload("res://goal/hazards/bomb/bomb.tscn")
@@ -19,6 +21,8 @@ const COSTS = {
 	"BARRIER": 9,
 	"BOMB": 10,
 }
+
+const EXPLOSION_COST = 5
 
 signal collected()
 
@@ -69,7 +73,7 @@ func show_collect() -> void:
 
 func explode() -> void:
 	var owies = get_tree().get_nodes_in_group("owies")
-	for owie: RigidBody2D in owies:
+	for owie: Node2D in owies:
 		if owie.has_method("die"):
 			owie.die()
 		else:
@@ -97,10 +101,19 @@ func explode() -> void:
 		if score_out:
 			break
 		
-		chosens.append(chosen_hazard)
 		score -= COSTS[chosen_hazard]
+		
+		if not chosen_hazard in ["BARRIER"]:
+			if score >= EXPLOSION_COST:
+				if randf() <= 0.5:
+					chosen_hazard += "*"
+					score -= EXPLOSION_COST
+		
+		chosens.append(chosen_hazard)
 	
-	for hazard_name: String in chosens:
+	for name: String in chosens:
+		var explodes = name.contains("*")
+		var hazard_name = name.trim_suffix("*")
 		var hazard: RigidBody2D = HAZARDS[hazard_name].instantiate()
 		hazard.global_position = global_position
 		var ang_offset = randf_range(-PI/4, PI/4)
@@ -109,6 +122,25 @@ func explode() -> void:
 		hazard.apply_central_impulse(
 			dir * speed
 		)
+		
+		if explodes:
+			var explosion = EXPLOSION.instantiate()
+			explosion.final_radius = randi_range(24, 64)
+			explosion.time_to_full = randf_range(2.5, 10.0)
+			explosion.linger_time = 1.5
+			hazard.add_child(explosion)
+			explosion.exploded.connect(
+				func():
+					if "freeze" in hazard:
+						hazard.set_deferred("freeze", true)
+					if "shape" in hazard:
+						hazard.shape.hide()
+			)
+			explosion.tree_exiting.connect(
+				func():
+					hazard.queue_free()
+			)
+		
 		get_tree().current_scene.add_child(hazard)
 
 func die() -> void:

@@ -48,7 +48,7 @@ streams_count = 1
 stream_0/stream = ExtResource("4_qq36h")
 stream_0/weight = 1.0
 
-[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("shape", "ring", "player_zone_collision", "collect_sound", "ready_sound")]
+[node name="BulletHellGoal" type="RigidBody2D" node_paths=PackedStringArray("shape", "ring", "collision", "player_zone_collision", "collect_sound", "ready_sound")]
 collision_layer = 16
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_hkmxs")
@@ -59,6 +59,7 @@ constant_torque = 200.0
 script = ExtResource("1_6swtt")
 shape = NodePath("Shape")
 ring = NodePath("Ring")
+collision = NodePath("CollisionShape2D")
 player_zone_collision = NodePath("PlayerZone/CollisionShape2D")
 collect_sound = NodePath("Collect")
 ready_sound = NodePath("Ready")
@@ -90,4 +91,5 @@ bus = &"sfx"
 stream = SubResource("AudioStreamRandomizer_k1ngn")
 bus = &"sfx"
 
+[connection signal="area_entered" from="PlayerZone" to="." method="_on_player_zone_area_entered"]
 [connection signal="body_entered" from="PlayerZone" to="." method="_on_player_zone_body_entered"]

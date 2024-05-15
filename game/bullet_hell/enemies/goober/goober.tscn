@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://5ey5xirm8gah"]
+[gd_scene load_steps=22 format=3 uid="uid://5ey5xirm8gah"]
 
 [ext_resource type="Script" path="res://bullet_hell/enemies/goober/goober.gd" id="1_3o1gh"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_85xb7"]
@@ -42,7 +42,7 @@ scale_curve = SubResource("CurveTexture_p45wa")
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_vqqk3"]
+[sub_resource type="CurveTexture" id="CurveTexture_n57lv"]
 curve = SubResource("Curve_kuxwl")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6yxfn"]
@@ -54,7 +54,7 @@ initial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.02
 scale_max = 0.1
-scale_curve = SubResource("CurveTexture_vqqk3")
+scale_curve = SubResource("CurveTexture_n57lv")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lwwfg"]
 radius = 8.0
@@ -77,6 +77,8 @@ damping_max = 150.0
 scale_min = 0.05
 scale_max = 0.25
 scale_curve = SubResource("CurveTexture_pvwyv")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_laees"]
 
 [node name="Goober" type="RigidBody2D" node_paths=PackedStringArray("state_machine", "shape", "bullet_spawner", "bullet_charge", "thruster", "collision_shape", "die_particles") groups=["enemies"]]
 collision_layer = 16
@@ -109,10 +111,11 @@ charge_timer = NodePath("ChargeTimer")
 wait_time = 2.0
 one_shot = true
 
-[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("stun_timer", "fire_sound")]
+[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("stun_timer", "fire_sound", "dunkin_collision")]
 script = ExtResource("5_ymon6")
 stun_timer = NodePath("StunTimer")
 fire_sound = NodePath("FireSound")
+dunkin_collision = NodePath("../../Dunkin/CollisionShape2D")
 
 [node name="StunTimer" type="Timer" parent="StateMachine/Fire"]
 wait_time = 4.0
@@ -169,7 +172,7 @@ disabled = true
 rect = Rect2(-44, -8, 8, 16)
 
 [node name="DieParticles" type="GPUParticles2D" parent="."]
-modulate = Color(1, 1, 0, 1)
+modulate = Color(0, 1, 0, 1)
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_nnfe4")
@@ -179,8 +182,18 @@ one_shot = true
 explosiveness = 1.0
 visibility_rect = Rect2(-256, -256, 512, 512)
 
+[node name="Dunkin" type="Area2D" parent="." groups=["dunkers"]]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dunkin"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_laees")
+disabled = true
+
 [connection signal="body_exited" from="." to="StateMachine/Fire" method="_on_goober_body_exited"]
 [connection signal="timeout" from="StateMachine/ChargeUp/ChargeTimer" to="StateMachine/ChargeUp" method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="StateMachine/Fire/StunTimer" to="StateMachine/Fire" method="_on_stun_timer_timeout"]
 [connection signal="screen_entered" from="EnterNotifier" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_entered" from="EnterNotifier" to="StateMachine/Approach" method="_on_enter_notifier_screen_entered"]
+[connection signal="area_entered" from="Dunkin" to="." method="_on_dunkin_area_entered"]
