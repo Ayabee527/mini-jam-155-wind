@@ -22,7 +22,8 @@ var hogging_input: bool = false
 var connected: bool = false
 
 func _ready() -> void:
-	owner.ready.connect(initialize)
+	await owner.ready
+	initialize()
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("escape") and visible:

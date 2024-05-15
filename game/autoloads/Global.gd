@@ -2,6 +2,8 @@ extends Node
 
 const MAX_HIGHSCORES = 5
 
+var username: String = ""
+
 var game_version: String = "1.0.1"
 var mouse_control: bool = false
 var window_movement: bool = true
@@ -17,6 +19,13 @@ var latest_time: int = 0
 
 var latest_bullet_time: int = 0:
 	set = set_latest_bullet_time
+
+func _ready() -> void:
+	SilentWolf.configure({
+		"api_key": "97LLX6KMs11oHRJNs7waM1Z7kY9mtEDD1EXe6d2j",
+		"game_id": "WindOfChange",
+		"log_level": 1
+	})
 
 func set_latest_score(new_score: int) -> void:
 	latest_score = new_score
@@ -50,6 +59,11 @@ func handle_endless_highs() -> void:
 		endless_highs.resize(MAX_HIGHSCORES)
 	
 	print(endless_highs)
+	if not Global.username.is_empty():
+		var sw_result: Dictionary = await SilentWolf.Scores.save_score(
+			Global.username, endless_highs[0][0]
+		).sw_save_score_complete
+		print("Score persisted successfully: " + str(sw_result.score_id))
 
 func handle_bullet_highs() -> void:
 	# time
@@ -64,3 +78,8 @@ func handle_bullet_highs() -> void:
 		bullet_highs.resize(MAX_HIGHSCORES)
 	
 	print(bullet_highs)
+	if not Global.username.is_empty():
+		var sw_result: Dictionary = await SilentWolf.Scores.save_score(
+			Global.username, bullet_highs[0], "bullet"
+		).sw_save_score_complete
+		print("Score persisted successfully: " + str(sw_result.score_id))

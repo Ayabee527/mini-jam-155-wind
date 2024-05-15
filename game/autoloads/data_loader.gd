@@ -43,7 +43,6 @@ func check_compatibility(version: String) -> String:
 			
 			upgraded_version = "1.0.1"
 		"1.0.1":
-			print("erm")
 			var config = ConfigFile.new()
 			config.load(SAVE_PATH)
 			
@@ -60,6 +59,8 @@ func check_compatibility(version: String) -> String:
 			var bullet_highscores = Global.bullet_highs
 			config.set_value(USER_NAME, "bullet_highscores", bullet_highscores)
 			
+			config.set_value(USER_NAME, "username", Global.username)
+			
 			config.set_value(USER_NAME, "game_version", "1.1")
 			
 			config.save(SAVE_PATH)
@@ -72,7 +73,11 @@ func check_compatibility(version: String) -> String:
 
 func save_config() -> void:
 	var config = ConfigFile.new()
-	config.load(SAVE_PATH)
+	var error = config.load(SAVE_PATH)
+	
+	if error != OK:
+		return
+	
 	config.set_value(USER_NAME, "game_version", CURRENT_GAME_VERSION)
 	
 	config.set_value(USER_NAME, "master_volume",
@@ -90,12 +95,24 @@ func save_config() -> void:
 	config.set_value(USER_NAME, "window_movement", Global.window_movement)
 	config.set_value(USER_NAME, "endless_highscores", Global.endless_highs)
 	config.set_value(USER_NAME, "bullet_highscores", Global.bullet_highs)
+	config.set_value(USER_NAME, "username", Global.username)
 	
 	config.set_value(USER_NAME, "mouse_control", Global.mouse_control)
 	config.set_value(USER_NAME, "move_up_keybinds", InputMap.action_get_events("move_up"))
 	config.set_value(USER_NAME, "move_left_keybinds", InputMap.action_get_events("move_left"))
 	config.set_value(USER_NAME, "move_down_keybinds", InputMap.action_get_events("move_down"))
 	config.set_value(USER_NAME, "move_right_keybinds", InputMap.action_get_events("move_right"))
+	
+	config.save(SAVE_PATH)
+
+func save_key(key: String, value: Variant) -> void:
+	var config = ConfigFile.new()
+	var error = config.load(SAVE_PATH)
+	
+	if error != OK:
+		return
+	
+	config.set_value(USER_NAME, key, value)
 	
 	config.save(SAVE_PATH)
 
@@ -134,6 +151,7 @@ func load_config() -> void:
 	Global.mouse_control = config.get_value(USER_NAME, "mouse_control")
 	Global.endless_highs = config.get_value(USER_NAME, "endless_highscores")
 	Global.bullet_highs = config.get_value(USER_NAME, "bullet_highscores")
+	Global.username = config.get_value(USER_NAME, "username")
 	
 	var move_up_keybinds = config.get_value(USER_NAME, "move_up_keybinds")
 	var move_left_keybinds = config.get_value(USER_NAME, "move_left_keybinds")

@@ -6,6 +6,7 @@ extends PanelContainer
 @export var achieves_menu: AchievesMenu
 @export var stats_menu: StatsMenu
 @export var mode_menu: PanelContainer
+@export var online_menu: OnlineMenu
 
 func _ready() -> void:
 	DataLoader.load_config()
@@ -76,3 +77,11 @@ func _on_stats_pressed() -> void:
 
 func _on_stats_menu_back() -> void:
 	stats_menu.hide()
+
+
+func _on_leaderboards_pressed() -> void:
+	online_menu.show()
+
+
+func _on_online_menu_back() -> void:
+	online_menu.hide()

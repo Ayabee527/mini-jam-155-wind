@@ -12,7 +12,8 @@ const STATS_HOLDER = preload("res://main_menu/stats/stats_holder/stats_holder.ts
 @export var bullet_highscore_holder: VBoxContainer
 
 func _ready() -> void:
-	owner.ready.connect(initialize)
+	await owner.ready
+	initialize()
 
 func initialize() -> void:
 	load_endless()

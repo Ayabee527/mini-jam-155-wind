@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dtffmmmmtbg8r"]
+[gd_scene load_steps=27 format=3 uid="uid://dtffmmmmtbg8r"]
 
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_4r7go"]
 [ext_resource type="Script" path="res://main_menu/wind_holder.gd" id="1_d3t3r"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://b82ilmqxmlcla" path="res://assets/sounds/1up.wav" id="5_cp7sa"]
 [ext_resource type="Script" path="res://main_menu/mode_menu.gd" id="8_2jq52"]
 [ext_resource type="PackedScene" uid="uid://ci6nldk5pf48q" path="res://main_menu/stats/stats_menu.tscn" id="8_sik18"]
+[ext_resource type="PackedScene" uid="uid://lmdkqsrww7lr" path="res://main_menu/online/online_menu.tscn" id="10_6sess"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdj60"]
 bg_color = Color(0, 0, 0, 1)
@@ -93,7 +94,7 @@ bg_color = Color(1, 1, 1, 0.25098)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wrpi"]
 bg_color = Color(1, 1, 1, 0.501961)
 
-[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "options_menu", "achieves_menu", "stats_menu", "mode_menu")]
+[node name="MainMenu" type="PanelContainer" node_paths=PackedStringArray("quit_butt", "options_menu", "achieves_menu", "stats_menu", "mode_menu", "online_menu")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -106,6 +107,7 @@ options_menu = NodePath("OptionsMenu")
 achieves_menu = NodePath("AchievesMenu")
 stats_menu = NodePath("StatsMenu")
 mode_menu = NodePath("ModeMenu")
+online_menu = NodePath("OnlineMenu")
 
 [node name="WindHolder" type="Node2D" parent="."]
 script = ExtResource("1_d3t3r")
@@ -217,6 +219,36 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+
+[node name="AllTime" type="LinkButton" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "ALL"
+
+[node name="BOARDS" type="RichTextLabel" parent="MarginContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+theme_override_fonts/normal_font = ExtResource("1_of1rs")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[wave][rainbow sat=0.3]<- LEADERBOARDS ->"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Daily" type="LinkButton" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_of1rs")
+theme_override_font_sizes/font_size = 8
+text = "DAILY"
 
 [node name="Version" type="Label" parent="MarginContainer"]
 layout_mode = 2
@@ -444,6 +476,10 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_jhgke")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g825x")
 text = "BACK"
 
+[node name="OnlineMenu" parent="." instance=ExtResource("10_6sess")]
+visible = false
+layout_mode = 2
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_wm8vi")
 autoplay = true
@@ -456,6 +492,7 @@ bus = &"music"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Achieves" to="." method="_on_achieves_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Stats" to="." method="_on_stats_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/AllTime" to="." method="_on_leaderboards_pressed"]
 [connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
 [connection signal="back" from="AchievesMenu" to="." method="_on_achieves_menu_back"]
 [connection signal="back" from="StatsMenu" to="." method="_on_stats_menu_back"]
@@ -463,3 +500,4 @@ bus = &"music"
 [connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer/BulletHell/BulletHell" to="ModeMenu" method="_on_bullet_hell_pressed"]
 [connection signal="pressed" from="ModeMenu/MarginContainer/VBoxContainer/HBoxContainer2/RogueLite/RogueLite" to="ModeMenu" method="_on_rogue_lite_pressed"]
 [connection signal="pressed" from="ModeMenu/MarginContainer/Back" to="ModeMenu" method="_on_back_pressed"]
+[connection signal="back" from="OnlineMenu" to="." method="_on_online_menu_back"]

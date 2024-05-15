@@ -11,7 +11,8 @@ signal back()
 @export var bullet_achieves_holder: VBoxContainer
 
 func _ready() -> void:
-	owner.ready.connect(initialize)
+	await owner.ready
+	initialize()
 
 func initialize():
 	AchievementHandler.load_achievements()
