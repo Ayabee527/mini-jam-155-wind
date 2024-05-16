@@ -60,6 +60,9 @@ func check_compatibility(version: String) -> String:
 			config.set_value(USER_NAME, "bullet_highscores", bullet_highscores)
 			
 			config.set_value(USER_NAME, "username", Global.username)
+			config.set_value(USER_NAME, "latest_endless_score", Global.latest_score)
+			config.set_value(USER_NAME, "latest_endless_time", Global.latest_time)
+			config.set_value(USER_NAME, "latest_bullet_time", Global.latest_bullet_time)
 			
 			config.set_value(USER_NAME, "game_version", "1.1")
 			
@@ -96,6 +99,10 @@ func save_config() -> void:
 	config.set_value(USER_NAME, "endless_highscores", Global.endless_highs)
 	config.set_value(USER_NAME, "bullet_highscores", Global.bullet_highs)
 	config.set_value(USER_NAME, "username", Global.username)
+	
+	config.set_value(USER_NAME, "latest_endless_score", Global.latest_score)
+	config.set_value(USER_NAME, "latest_endless_time", Global.latest_time)
+	config.set_value(USER_NAME, "latest_bullet_time", Global.latest_bullet_time)
 	
 	config.set_value(USER_NAME, "mouse_control", Global.mouse_control)
 	config.set_value(USER_NAME, "move_up_keybinds", InputMap.action_get_events("move_up"))
@@ -152,6 +159,10 @@ func load_config() -> void:
 	Global.endless_highs = config.get_value(USER_NAME, "endless_highscores")
 	Global.bullet_highs = config.get_value(USER_NAME, "bullet_highscores")
 	Global.username = config.get_value(USER_NAME, "username")
+	
+	Global.latest_score = config.get_value(USER_NAME, "latest_endless_score")
+	Global.latest_time = config.get_value(USER_NAME, "latest_endless_time")
+	Global.latest_bullet_time = config.get_value(USER_NAME, "latest_bullet_time")
 	
 	var move_up_keybinds = config.get_value(USER_NAME, "move_up_keybinds")
 	var move_left_keybinds = config.get_value(USER_NAME, "move_left_keybinds")

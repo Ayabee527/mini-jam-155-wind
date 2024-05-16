@@ -213,9 +213,6 @@ func load_achievements() -> void:
 	if bullet_high > 0:
 		complete("That One Hurt!")
 	
-	if bullet_high < 30:
-		complete("There's Always Next Time!")
-	
 	if bullet_high >= 60:
 		complete("Bullets, No Brains!")
 	if bullet_high >= 120:
@@ -268,9 +265,6 @@ func check_game_over() -> void:
 func check_bullet_gameover() -> void:
 	if Global.bullet_highs[0] > 0:
 		complete("That One Hurt!")
-	
-	if bullet_score < 30:
-		complete("There's Always Next Time!")
 	
 	if bullet_score >= 60:
 		complete("Bullets, No Brains!")

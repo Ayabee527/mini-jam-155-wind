@@ -66,7 +66,8 @@ func handle_endless_highs() -> void:
 	
 	if endless_highs.size() > MAX_HIGHSCORES:
 		endless_highs.sort_custom(sort_descend)
-		endless_highs.resize(MAX_HIGHSCORES)
+		while endless_highs.size() > MAX_HIGHSCORES:
+			endless_highs.pop_back()
 	
 	print(endless_highs)
 	if not username.is_empty():
@@ -84,7 +85,8 @@ func handle_bullet_highs() -> void:
 	
 	if bullet_highs.size() > MAX_HIGHSCORES:
 		bullet_highs.sort_custom(sort_descend)
-		bullet_highs.resize(MAX_HIGHSCORES)
+		while bullet_highs.size() > MAX_HIGHSCORES:
+			bullet_highs.pop_back()
 	
 	print(bullet_highs)
 	if not username.is_empty():
