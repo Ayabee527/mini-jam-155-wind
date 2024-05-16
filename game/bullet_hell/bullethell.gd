@@ -125,6 +125,8 @@ func over_game() -> void:
 	)
 	
 	Global.latest_bullet_time = time_alive
+	AchievementHandler.bullet_score = time_alive
+	AchievementHandler.check_bullet_gameover()
 	
 	allow_escape()
 
@@ -192,9 +194,13 @@ func _on_bullet_hell_goal_collected() -> void:
 func _on_player_hurt() -> void:
 	death_value += 20
 	
+	if death_value >= 95:
+		AchievementHandler.complete("Flashing Before My Eyes!")
+	
 	if death_value >= 100:
 		if not game_overed:
 			game_overed = true
+			print_rich("[shake][rainbow]GAME OVER!!!")
 			over_game()
 
 

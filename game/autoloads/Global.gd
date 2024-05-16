@@ -33,9 +33,10 @@ func set_latest_score(new_score: int) -> void:
 	
 	handle_endless_highs()
 	
-	SilentWolf.Scores.save_score(
-		username, latest_score, "daily_endless"
-	)
+	if not username.is_empty():
+		SilentWolf.Scores.save_score(
+			username, latest_score, "daily_endless"
+		)
 	
 	DataLoader.save_config()
 
@@ -45,9 +46,10 @@ func set_latest_bullet_time(new_time: int) -> void:
 	
 	handle_bullet_highs()
 	
-	SilentWolf.Scores.save_score(
-		username, latest_bullet_time, "daily_bullet"
-	)
+	if not username.is_empty():
+		SilentWolf.Scores.save_score(
+			username, latest_bullet_time, "daily_bullet"
+		)
 	
 	DataLoader.save_config()
 
@@ -58,7 +60,7 @@ func handle_endless_highs() -> void:
 			return true
 		elif a[0] == b[0]:
 			if a[1] > b[1]:
-					return true
+				return true
 		else:
 			return false
 	

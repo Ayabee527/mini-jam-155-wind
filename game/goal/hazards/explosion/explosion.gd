@@ -28,6 +28,8 @@ var prime_tween: Tween
 
 var rotation_speed: float = 0.0
 
+var ploded: bool = false
+
 func _ready() -> void:
 	if corners < 3:
 		corners = randi_range(3, 16)
@@ -76,30 +78,32 @@ func explode() -> void:
 		color = Color.GREEN
 		collision_shape.set_deferred("disabled", true)
 	
-	final_preview.hide()
-	current_preview.hide()
-	draw_explosion_circle()
-	
-	exploded.emit()
-	
-	var shape = CircleShape2D.new()
-	shape.radius = current_radius
-	collision_shape.shape = shape
-	explode_sound.play()
-	
-	await get_tree().create_timer(linger_time).timeout
-	collision_shape.set_deferred("disabled", true)
-	
-	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.set_parallel()
-	tween.tween_property(
-		self, "modulate:a", 0.0, 0.5
-	)
-	tween.tween_property(
-		self, "scale", Vector2.ZERO, 0.5
-	)
-	await tween.finished
-	queue_free()
+	if not ploded:
+		ploded = true
+		final_preview.hide()
+		current_preview.hide()
+		draw_explosion_circle()
+		
+		exploded.emit()
+		
+		var shape = CircleShape2D.new()
+		shape.radius = current_radius
+		collision_shape.shape = shape
+		explode_sound.play()
+		
+		await get_tree().create_timer(linger_time).timeout
+		collision_shape.set_deferred("disabled", true)
+		
+		var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.set_parallel()
+		tween.tween_property(
+			self, "modulate:a", 0.0, 0.5
+		)
+		tween.tween_property(
+			self, "scale", Vector2.ZERO, 0.5
+		)
+		await tween.finished
+		queue_free()
 
 func draw_final_preview() -> void:
 	final_preview.polygon.clear()

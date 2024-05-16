@@ -7,6 +7,7 @@ signal activated()
 @export var stun_time: float = 10.0
 
 @export_group("Inner Dependencies")
+@export var evade_timer: Timer
 @export var shape: Polygon2D
 @export var ring: GPUParticles2D
 @export var collision: CollisionShape2D
@@ -30,6 +31,7 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	
 	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
+	evade_timer.start()
 
 func _physics_process(delta: float) -> void:
 	if active:
@@ -50,6 +52,10 @@ func magnetize_to_player(delta: float) -> void:
 func collect() -> void:
 	if dead:
 		return
+	
+	if evade_timer.wait_time - evade_timer.time_left <= 0.25:
+		AchievementHandler.complete("Waste No Time!")
+	evade_timer.stop()
 	
 	active = false
 	magnetize = 0.0
@@ -80,6 +86,7 @@ func collect() -> void:
 	player_zone_collision.set_deferred("disabled", false)
 	activated.emit()
 	active = true
+	evade_timer.start()
 
 func die() -> void:
 	collision.set_deferred("disabled", true)
@@ -106,3 +113,7 @@ func _on_player_zone_area_entered(area: Area2D) -> void:
 		apply_central_impulse(
 			Vector2.from_angle(TAU * randf()) * randf_range(250, 750)
 		)
+
+
+func _on_evade_timer_timeout() -> void:
+	AchievementHandler.complete("Help! A Stalker!")

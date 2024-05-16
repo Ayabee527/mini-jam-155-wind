@@ -81,8 +81,9 @@ initial_state = NodePath("Rushdown")
 script = ExtResource("3_dvl1r")
 rush_speed = 300.0
 
-[node name="Stun" type="Node" parent="StateMachine"]
+[node name="Stun" type="Node" parent="StateMachine" node_paths=PackedStringArray("trail")]
 script = ExtResource("4_kpcox")
+trail = NodePath("../../Shape/Trail")
 
 [node name="Shape" type="Polygon2D" parent="."]
 modulate = Color(1, 0, 0, 1)

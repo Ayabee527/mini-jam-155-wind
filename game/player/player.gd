@@ -72,7 +72,7 @@ func _on_body_entered(body: Node) -> void:
 
 
 func _on_owie_detector_area_entered(area: Area2D) -> void:
-	print("OWIE!")
+	print_rich("[shake][color=red]OWIE!")
 	hurt.emit()
 	ouch_sound.play()
 	apply_central_impulse(

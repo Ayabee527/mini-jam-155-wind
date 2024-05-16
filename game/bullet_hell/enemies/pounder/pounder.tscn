@@ -87,6 +87,7 @@ thruster = NodePath("../../Shape/Tail/Thruster")
 [node name="Timer" type="Timer" parent="StateMachine/Hunt"]
 
 [node name="Explosion" parent="." instance=ExtResource("3_oflo8")]
+color = Color(1, 0.25098, 0.262745, 1)
 corners = 4
 final_radius = 48.0
 time_to_full = 15.0

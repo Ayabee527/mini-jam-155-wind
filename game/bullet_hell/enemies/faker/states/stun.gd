@@ -3,6 +3,7 @@ extends FakerEnemyState
 const BULLET = preload("res://goal/hazards/bullet/bullet.tscn")
 
 @export var bullet_count: int = 1
+@export var trail: Trail
 
 var entered: bool = false
 
@@ -12,6 +13,7 @@ func enter(_msg:={}) -> void:
 	#enemy.linear_velocity *= 1.25
 	enemy.owie_collision.set_deferred("disabled", true)
 	
+	trail.hide()
 	enemy.shape.modulate = Color.YELLOW
 	#enemy.trail.modulate = Color.YELLOW
 	#enemy.trail.modulate.a = 0.5
@@ -19,6 +21,7 @@ func enter(_msg:={}) -> void:
 	entered = true
 
 func exit() -> void:
+	trail.show()
 	enemy.shape.modulate = Color.RED
 	#enemy.trail.modulate = Color.RED
 	#enemy.trail.modulate.a = 1.0

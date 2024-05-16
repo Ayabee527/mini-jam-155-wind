@@ -65,10 +65,60 @@ var ACHIEVEMENTS = {
 		"description": "Dunk an enemy into the goal."
 	},
 	
-	"": {
+	"Flashing Before My Eyes!": {
 		"completed": false,
-		"description": ""
-	}
+		"description": "Nearly (but not quite) die from a hit."
+	},
+	
+	"That One Hurt!": {
+		"completed": false,
+		"description": "End your first bullet-hell run."
+	},
+	
+	"Bullets, No Brains!": {
+		"completed": false,
+		"description": "Last more than 1 minute in a bullet-hell run."
+	},
+	
+	"Slippery Fella!": {
+		"completed": false,
+		"description": "Last more than 2 minutes in a bullet-hell run."
+	},
+	
+	"Untouchable!": {
+		"completed": false,
+		"description": "Last more than 3 minutes in a bullet-hell run."
+	},
+	
+	"Bullets No, Brains!": {
+		"completed": false,
+		"description": "Last more than 4 minutes in a bullet-hell run."
+	},
+	
+	"SO MUCH RED!": {
+		"completed": false,
+		"description": "Last more than 5 minutes in a bullet-hell run."
+	},
+	
+	"Can't Touch This!": {
+		"completed": false,
+		"description": "Last more than 6 minutes in a bullet-hell run."
+	},
+	
+	"Help! A Stalker!": {
+		"completed": false,
+		"description": "Evade the goal for 20 seconds!"
+	},
+	
+	"Waste No Time!": {
+		"completed": false,
+		"description": "Hit the goal as soon as it's ready."
+	},
+	
+	"Fake Out!": {
+		"completed": false,
+		"description": "Clash with a single faker enemy 6 times."
+	},
 }
 
 const ENDLESS_ACHIEVEMENTS = [
@@ -78,7 +128,10 @@ const ENDLESS_ACHIEVEMENTS = [
 	"Maybe You Should Go Outside!", "They're In The Walls!", "Very Nice!"
 ]
 const BULLETHELL_ACHIEVEMENTS = [
-	"Straight Up Ballin!"
+	"Straight Up Ballin!", "Flashing Before My Eyes!", "That One Hurt!",
+	"Bullets, No Brains!", "Slippery Fella!", "Untouchable!",
+	"Bullets No, Brains!", "SO MUCH RED!", "Can't Touch This!",
+	"Help! A Stalker!", "Waste No Time!", "Fake Out!"
 ]
 
 var ACHIEVEMENT_KEYS: Array
@@ -88,7 +141,7 @@ signal achievement_complete(name: String, description: String)
 const SAVE_PATH = "user://achievements.cfg"
 const VARAIBLE_SECTION = "TRACKERS"
 const ACHIEVEMENT_SECTION = "ACHIEVEMENTS"
-const SAVE_PASSWORD = "SiLLY :3"
+#const SAVE_PASSWORD = "SiLLY :3"
 
 # RUN-BOUND VARIABLES
 var ball_hits: int = 0:
@@ -100,6 +153,8 @@ var ball_hits: int = 0:
 var score: int = 0
 var wall_hits: int = 0
 
+var bullet_score: int = 0
+
 func _ready() -> void:
 	ACHIEVEMENT_KEYS = ACHIEVEMENTS.keys()
 
@@ -108,16 +163,21 @@ func reset_run_bounds() -> void:
 	wall_hits = 0
 	ball_hits = 0
 
+func reset_bullet_run_bounds() -> void:
+	pass
+
 func save_achievements() -> void:
 	var config = ConfigFile.new()
 	
 	config.set_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
 	
-	config.save_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
+	#config.save_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
+	config.save(SAVE_PATH)
 
 func load_achievements() -> void:
 	var config = ConfigFile.new()
-	var error = config.load_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
+	#var error = config.load_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
+	var error = config.load(SAVE_PATH)
 	
 	if error != OK:
 		return
@@ -147,6 +207,27 @@ func load_achievements() -> void:
 	
 	if str(endless_high).contains("69"):
 		complete("Very Nice!")
+	
+	var bullet_high = Global.bullet_highs[0]
+	
+	if bullet_high > 0:
+		complete("That One Hurt!")
+	
+	if bullet_high < 30:
+		complete("There's Always Next Time!")
+	
+	if bullet_high >= 60:
+		complete("Bullets, No Brains!")
+	if bullet_high >= 120:
+		complete("Slippery Fella!")
+	if bullet_high >= 180:
+		complete("Untouchable!")
+	if bullet_high >= 240:
+		complete("Bullets No, Brains!")
+	if bullet_high >= 300:
+		complete("SO MUCH RED!")
+	if bullet_high >= 360:
+		complete("Can't Touch This!")
 
 func complete(achievement: String) -> void:
 	if not ACHIEVEMENTS[achievement]["completed"]:
@@ -161,6 +242,9 @@ func uncomplete(achievement: String) -> void:
 func check_game_over() -> void:
 	if ball_hits == 1:
 		complete("Voluntary Celibate!")
+	
+	if Global.endless_highs[0][0] > 0:
+		complete("First Of Many!")
 	
 	if score < 1000:
 		complete("Okay You're Pretty Bad!")
@@ -180,6 +264,23 @@ func check_game_over() -> void:
 	
 	if str(score).contains("69"):
 		complete("Very Nice!")
+
+func check_bullet_gameover() -> void:
+	if Global.bullet_highs[0] > 0:
+		complete("That One Hurt!")
 	
-	if Global.endless_highs[0][0] > 0:
-		complete("First Of Many!")
+	if bullet_score < 30:
+		complete("There's Always Next Time!")
+	
+	if bullet_score >= 60:
+		complete("Bullets, No Brains!")
+	if bullet_score >= 120:
+		complete("Slippery Fella!")
+	if bullet_score >= 180:
+		complete("Untouchable!")
+	if bullet_score >= 240:
+		complete("Bullets No, Brains!")
+	if bullet_score >= 300:
+		complete("SO MUCH RED!")
+	if bullet_score >= 360:
+		complete("Can't Touch This!")

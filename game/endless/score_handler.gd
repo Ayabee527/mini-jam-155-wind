@@ -15,6 +15,7 @@ signal score_updated(new_score: int)
 @export var score_label: RichTextLabel
 @export var timer_bar: TextureProgressBar
 
+var owies: int = 0
 var combo: int = 0
 var multiplier: float = 1.0:
 	set = set_multiplier
@@ -90,7 +91,8 @@ func _on_player_goal_collected() -> void:
 
 
 func _on_player_hurt() -> void:
+	owies += 1
 	multiplier = 0.0
-	var score_multiplier = max(0.99 - (combo * 0.001), 0.8)
+	var score_multiplier = max(0.99 - (owies * 0.001), 0.8)
 	print(score_multiplier)
 	score *= score_multiplier

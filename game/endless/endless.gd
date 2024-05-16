@@ -138,11 +138,11 @@ func _on_player_goal_collected() -> void:
 	life_timer.start(12)
 	wind_momma.wind_speed = 0.0
 	bump_window(player.linear_velocity * 1.25)
-	print("Goal Got!")
+	print_rich("[wave][color=lime]Goal Got!")
 
 
 func _on_life_timer_timeout() -> void:
-	print("GAME OVER!!!")
+	print_rich("[shake][rainbow]GAME OVER!!!")
 	if not game_overed:
 		game_overed = true
 		over_game()

@@ -16,6 +16,8 @@ signal back()
 var refreshing: bool = false
 
 func _ready() -> void:
+	return
+	
 	await owner.ready
 	refreshing = false
 	refresh()
@@ -23,6 +25,7 @@ func _ready() -> void:
 func refresh() -> void:
 	if not refreshing:
 		refreshing = true
+		print_rich("[wave][color=aqua]REFRESHING...")
 		
 		username_input.text = Global.username
 		validate_username(Global.username)
@@ -134,11 +137,12 @@ func load_everything() -> void:
 		
 		var holder = STATS_HOLDER.instantiate()
 		holder.place = str(i + 1) + ". " + score.player_name
-		holder.score = biggen_score(score.score)
+		holder.score = get_time_text(score.score)
 		bullet_daily_holders.add_child(holder)
 #endregion
 	
 	refreshing = false
+	print_rich("[shake][color=yellow]REFRESHED!")
 
 func update_status(text: String, color: String) -> void:
 	connect_status.text = "[u][color=" + color + "]" + text

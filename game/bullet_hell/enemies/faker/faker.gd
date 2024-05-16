@@ -18,6 +18,8 @@ var dead: bool = false
 
 var dunked: bool = false
 
+var clashes: int = 0
+
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	wind_momma = get_tree().get_first_node_in_group("wind_momma")
@@ -69,3 +71,7 @@ func _on_body_entered(body: Node) -> void:
 	if body is Player:
 		dunked = true
 		dunkin_collision.set_deferred("disabled", true)
+		
+		clashes += 1
+		if clashes == 6:
+			AchievementHandler.complete("Fake Out!")
