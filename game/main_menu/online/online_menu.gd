@@ -15,38 +15,39 @@ var refreshing: bool = false
 
 func _ready() -> void:
 	await owner.ready
+	refreshing = false
 	refresh()
-
-func update_refreshing(new_refreshing: bool) -> void:
-	refreshing = new_refreshing
 
 func refresh() -> void:
 	if not refreshing:
 		refreshing = true
-		
-		for child in endless_holders.get_children():
-			child.queue_free()
-		for child in bullet_holders.get_children():
-			child.queue_free()
-		
-		var loader = STATS_HOLDER.instantiate()
-		loader.place_label.hide()
-		loader.score = "LOADING..."
-		loader.modulate = Color.GRAY
-		endless_holders.add_child(loader)
-		
-		var loader_two = STATS_HOLDER.instantiate()
-		loader_two.place_label.hide()
-		loader_two.score = "LOADING..."
-		loader_two.modulate = Color.GRAY
-		bullet_holders.add_child(loader_two)
 		
 		username_input.text = Global.username
 		validate_username(Global.username)
 		
 		load_everything()
 
+func show_loading() -> void:
+	for child in endless_holders.get_children():
+		child.queue_free()
+	for child in bullet_holders.get_children():
+		child.queue_free()
+	
+	var loader = STATS_HOLDER.instantiate()
+	loader.place_label.hide()
+	loader.score = "LOADING..."
+	loader.modulate = Color.GRAY
+	endless_holders.add_child(loader)
+	
+	var loader_two = STATS_HOLDER.instantiate()
+	loader_two.place_label.hide()
+	loader_two.score = "LOADING..."
+	loader_two.modulate = Color.GRAY
+	bullet_holders.add_child(loader_two)
+
 func load_everything() -> void:
+	show_loading()
+	
 #region Load Endless Stats
 	var endless_result: Dictionary = await SilentWolf.Scores.get_scores(0, "main").sw_get_scores_complete
 	print("Endless Scores: " + str(endless_result.scores))
@@ -134,7 +135,9 @@ func _on_back_pressed() -> void:
 
 func validate_username(username: String) -> void:
 	username = username.to_lower()
-	if username == Global.username:
+	
+	if username.is_empty():
+		update_status("[wave]no name :(", "gray")
 		return
 	
 	update_status("[wave]processing", "gray")
@@ -147,7 +150,7 @@ func validate_username(username: String) -> void:
 		if user_taken:
 			Global.username = ""
 			DataLoader.save_key("username", Global.username)
-			update_status("username taken >:(", "red")
+			update_status("name taken >:(", "red")
 			username_input.clear()
 		else:
 			Global.username = username
@@ -166,14 +169,17 @@ func validate_username(username: String) -> void:
 		).sw_save_score_complete
 		
 		update_status("signed in >:D", "lime")
-		load_everything()
 	
 	print("\n")
 
 func _on_username_text_submitted(new_text: String) -> void:
+	if new_text.to_lower() == Global.username:
+		return
+	
 	if not refreshing:
 		refreshing = true
 		validate_username(new_text)
+		load_everything()
 
 func is_user_real(username: String) -> bool:
 	var exists: bool = false
@@ -209,24 +215,6 @@ func is_user_taken(username: String) -> bool:
 	)
 	
 	return taken
-
-func is_endless_high_valid(username: String) -> bool:
-	var endless_result = await SilentWolf.Scores.get_top_score_by_player(
-		username, 1, "main"
-	).sw_top_player_score_complete
-	print(username, ", Endless Result: ", endless_result)
-	var endless_top = endless_result.top_score.score
-	
-	return (endless_top == Global.endless_highs[0][0])
-
-func is_bullet_high_valid(username: String) -> bool:
-	var bullet_result = await SilentWolf.Scores.get_top_score_by_player(
-		username, 1, "bullet"
-	).sw_top_player_score_complete
-	print(username, ", Bullet Result: ", bullet_result)
-	var bullet_top = bullet_result.top_score.score
-	
-	return (bullet_top == Global.bullet_highs[0])
 
 func _on_visibility_changed() -> void:
 	if visible:
