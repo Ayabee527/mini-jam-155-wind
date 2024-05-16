@@ -24,7 +24,7 @@ func _ready() -> void:
 	SilentWolf.configure({
 		"api_key": "97LLX6KMs11oHRJNs7waM1Z7kY9mtEDD1EXe6d2j",
 		"game_id": "WindOfChange",
-		"log_level": 1
+		"log_level": 0
 	})
 
 func set_latest_score(new_score: int) -> void:
@@ -59,9 +59,9 @@ func handle_endless_highs() -> void:
 		endless_highs.resize(MAX_HIGHSCORES)
 	
 	print(endless_highs)
-	if not Global.username.is_empty():
+	if not username.is_empty():
 		var sw_result: Dictionary = await SilentWolf.Scores.save_score(
-			Global.username, endless_highs[0][0]
+			username, endless_highs[0][0]
 		).sw_save_score_complete
 		print("Score persisted successfully: " + str(sw_result.score_id))
 
@@ -78,8 +78,8 @@ func handle_bullet_highs() -> void:
 		bullet_highs.resize(MAX_HIGHSCORES)
 	
 	print(bullet_highs)
-	if not Global.username.is_empty():
+	if not username.is_empty():
 		var sw_result: Dictionary = await SilentWolf.Scores.save_score(
-			Global.username, bullet_highs[0], "bullet"
+			username, bullet_highs[0], "bullet"
 		).sw_save_score_complete
 		print("Score persisted successfully: " + str(sw_result.score_id))

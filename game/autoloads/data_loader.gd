@@ -128,7 +128,7 @@ func load_config() -> void:
 		save_version = config.get_value(USER_NAME, "game_version")
 	
 	while save_version != CURRENT_GAME_VERSION: 
-		save_version = check_compatibility(save_version)
+		save_version = await check_compatibility(save_version)
 	
 	error = config.load(SAVE_PATH)
 	if error != OK:
