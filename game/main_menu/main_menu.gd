@@ -10,12 +10,15 @@ extends PanelContainer
 
 func _ready() -> void:
 	DataLoader.load_config()
-	#AchievementHandler.load_achievements()
+	await get_tree().process_frame
+	AchievementHandler.load_achievements()
+	await get_tree().process_frame
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()
 	
 	SceneSwitcher.switch_in()
+	achieves_menu.initialize()
 
 func get_time_text(time_alive: int) -> String:
 	var text: String = "00:00"

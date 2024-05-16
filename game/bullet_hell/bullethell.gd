@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	
 	death_bar.value = death_value
 	
-	if Global.window_movement:
+	if Global.window_movement and not game_overed:
 		#window_velocity = window_velocity.move_toward(Vector2.ZERO, 50.0 * delta)
 		#center_window(delta)
 		
@@ -194,7 +194,7 @@ func _on_bullet_hell_goal_collected() -> void:
 func _on_player_hurt() -> void:
 	death_value += 20
 	
-	if death_value >= 95:
+	if death_value >= 95 and death_value < 100:
 		AchievementHandler.complete("Flashing Before My Eyes!")
 	
 	if death_value >= 100:
