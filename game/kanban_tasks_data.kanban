@@ -15,15 +15,15 @@
 		{
 			"uuid": "ad73f86c-e742-426e-9009-59f506be9e75",
 			"title": "Doing",
-			"tasks": []
+			"tasks": [
+				"18608829-e34e-46b9-a7f7-085c9fbb5fa9",
+				"03271e88-efd0-4829-a073-1c522d4d7cbd"
+			]
 		},
 		{
 			"uuid": "9ad08e5a-bbe9-402b-b134-af80db443ea9",
 			"title": "Done",
 			"tasks": [
-				"59c91128-ed4b-43d9-8553-dd4c3c42c7ef",
-				"03271e88-efd0-4829-a073-1c522d4d7cbd",
-				"18608829-e34e-46b9-a7f7-085c9fbb5fa9",
 				"b9e22730-2f23-4320-834c-25893abbe39b",
 				"0bf4f54a-164d-45ee-9ea1-55c76c5665ef",
 				"b23ba51b-cfc0-46e6-9579-023947b7d466",
@@ -246,13 +246,6 @@
 		{
 			"uuid": "03271e88-efd0-4829-a073-1c522d4d7cbd",
 			"title": "Bullet Hell Unlock Requirements",
-			"description": "",
-			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
-			"steps": []
-		},
-		{
-			"uuid": "59c91128-ed4b-43d9-8553-dd4c3c42c7ef",
-			"title": "Store Latest Game In File",
 			"description": "",
 			"category": "a8f354dd-0f54-4872-b694-05447a8b63fd",
 			"steps": []

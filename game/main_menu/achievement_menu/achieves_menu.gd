@@ -11,8 +11,6 @@ signal back()
 @export var bullet_achieves_holder: VBoxContainer
 
 func _ready() -> void:
-	return
-	
 	await owner.ready
 	initialize()
 

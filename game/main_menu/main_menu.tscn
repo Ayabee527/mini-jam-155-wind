@@ -295,14 +295,11 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="ModeMenu" type="PanelContainer" parent="." node_paths=PackedStringArray("bullet_hell", "bullet_hell_button", "bullet_hell_description")]
+[node name="ModeMenu" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3oyjb")
 script = ExtResource("8_2jq52")
-bullet_hell = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BulletHell")
-bullet_hell_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BulletHell/BulletHell")
-bullet_hell_description = NodePath("MarginContainer/VBoxContainer/HBoxContainer/BulletHell/MarginContainer/VBoxContainer/Description")
 
 [node name="MarginContainer" type="MarginContainer" parent="ModeMenu"]
 layout_mode = 2
