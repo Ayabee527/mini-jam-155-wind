@@ -33,6 +33,10 @@ func set_latest_score(new_score: int) -> void:
 	
 	handle_endless_highs()
 	
+	SilentWolf.Scores.save_score(
+		username, latest_score, "daily_endless"
+	)
+	
 	DataLoader.save_config()
 
 func set_latest_bullet_time(new_time: int) -> void:
@@ -40,6 +44,10 @@ func set_latest_bullet_time(new_time: int) -> void:
 	bullet_highs.append(latest_bullet_time)
 	
 	handle_bullet_highs()
+	
+	SilentWolf.Scores.save_score(
+		username, latest_bullet_time, "daily_bullet"
+	)
 	
 	DataLoader.save_config()
 
@@ -60,10 +68,9 @@ func handle_endless_highs() -> void:
 	
 	print(endless_highs)
 	if not username.is_empty():
-		var sw_result: Dictionary = await SilentWolf.Scores.save_score(
-			username, endless_highs[0][0]
-		).sw_save_score_complete
-		print("Score persisted successfully: " + str(sw_result.score_id))
+		SilentWolf.Scores.save_score(
+			username, endless_highs[0][0], "main"
+		)
 
 func handle_bullet_highs() -> void:
 	# time
@@ -79,7 +86,6 @@ func handle_bullet_highs() -> void:
 	
 	print(bullet_highs)
 	if not username.is_empty():
-		var sw_result: Dictionary = await SilentWolf.Scores.save_score(
+		SilentWolf.Scores.save_score(
 			username, bullet_highs[0], "bullet"
-		).sw_save_score_complete
-		print("Score persisted successfully: " + str(sw_result.score_id))
+		)

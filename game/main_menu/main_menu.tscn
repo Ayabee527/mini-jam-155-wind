@@ -220,35 +220,38 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="AllTime" type="LinkButton" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("1_of1rs")
-theme_override_font_sizes/font_size = 8
-text = "ALL"
 
-[node name="BOARDS" type="RichTextLabel" parent="MarginContainer"]
+[node name="Arrow1" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
 clip_contents = false
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 0
 theme_override_fonts/normal_font = ExtResource("1_of1rs")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "[wave][rainbow sat=0.3]<- LEADERBOARDS ->"
+text = "[wave][rainbow sat=0.5]->"
 fit_content = true
 autowrap_mode = 0
 
-[node name="Daily" type="LinkButton" parent="MarginContainer"]
+[node name="Leaderboards" type="LinkButton" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 10
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_of1rs")
 theme_override_font_sizes/font_size = 8
-text = "DAILY"
+text = "LEADERBOARDS"
+
+[node name="Arrow2" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_of1rs")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[wave][rainbow sat=0.5]<-"
+fit_content = true
+autowrap_mode = 0
 
 [node name="Version" type="Label" parent="MarginContainer"]
 layout_mode = 2
@@ -492,7 +495,7 @@ bus = &"music"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer2/Achieves" to="." method="_on_achieves_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Stats" to="." method="_on_stats_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/HBoxContainer3/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="MarginContainer/AllTime" to="." method="_on_leaderboards_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Leaderboards" to="." method="_on_leaderboards_pressed"]
 [connection signal="confirmed" from="OptionsMenu" to="." method="_on_options_menu_confirmed"]
 [connection signal="back" from="AchievesMenu" to="." method="_on_achieves_menu_back"]
 [connection signal="back" from="StatsMenu" to="." method="_on_stats_menu_back"]

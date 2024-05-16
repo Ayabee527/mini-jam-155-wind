@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://lmdkqsrww7lr"]
+[gd_scene load_steps=14 format=3 uid="uid://lmdkqsrww7lr"]
 
 [ext_resource type="Script" path="res://main_menu/online/online_menu.gd" id="1_6se6n"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="2_8rinf"]
@@ -112,19 +112,16 @@ content_margin_top = 4.0
 content_margin_bottom = 4.0
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mjl8a"]
-content_margin_top = 4.0
-content_margin_bottom = 4.0
-draw_center = false
-
-[node name="OnlineMenu" type="PanelContainer" node_paths=PackedStringArray("username_input", "connect_status", "endless_holders", "bullet_holders")]
+[node name="OnlineMenu" type="PanelContainer" node_paths=PackedStringArray("username_input", "connect_status", "endless_all_holders", "endless_daily_holders", "bullet_all_holders", "bullet_daily_holders")]
 custom_minimum_size = Vector2(256, 256)
 theme_override_styles/panel = SubResource("StyleBoxFlat_3oyjb")
 script = ExtResource("1_6se6n")
 username_input = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Username")
 connect_status = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Connected")
-endless_holders = NodePath("MarginContainer/VBoxContainer/TabContainer/Endless/ScrollContainer/VBoxContainer")
-bullet_holders = NodePath("MarginContainer/VBoxContainer/TabContainer/Bullet/ScrollContainer/VBoxContainer")
+endless_all_holders = NodePath("MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer/All/ScrollContainer/VBoxContainer")
+endless_daily_holders = NodePath("MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer/Daily/ScrollContainer/VBoxContainer")
+bullet_all_holders = NodePath("MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer/All/ScrollContainer/VBoxContainer")
+bullet_daily_holders = NodePath("MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer/Daily/ScrollContainer/VBoxContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -160,7 +157,6 @@ size_flags_vertical = 4
 theme_override_fonts/normal_font = ExtResource("2_8rinf")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "[u][color=lime]CONNECTED :D"
 fit_content = true
 autowrap_mode = 0
 
@@ -191,29 +187,91 @@ tab_alignment = 1
 
 [node name="Endless" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
 layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_8rinf")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_3784y")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_x5uue")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_2sdxj")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_3784y")
+theme_override_styles/panel = SubResource("StyleBoxFlat_iu6dq")
+tab_alignment = 1
+
+[node name="All" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer"]
+layout_mode = 2
 theme_override_constants/margin_top = 16
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless"]
-custom_minimum_size = Vector2(128, 128)
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer/All"]
+custom_minimum_size = Vector2(128, 96)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rgkx6")
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer/All/ScrollContainer"]
+layout_mode = 2
+
+[node name="Daily" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_top = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer/Daily"]
+custom_minimum_size = Vector2(128, 96)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rgkx6")
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Endless/TabContainer/Daily/ScrollContainer"]
 layout_mode = 2
 
 [node name="Bullet" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_8rinf")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_3784y")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_x5uue")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_2sdxj")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_3784y")
+theme_override_styles/panel = SubResource("StyleBoxFlat_iu6dq")
+tab_alignment = 1
+
+[node name="All" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer"]
+layout_mode = 2
 theme_override_constants/margin_top = 16
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet"]
-custom_minimum_size = Vector2(128, 128)
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer/All"]
+custom_minimum_size = Vector2(128, 96)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_mjl8a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rgkx6")
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer/All/ScrollContainer"]
+layout_mode = 2
+
+[node name="Daily" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_top = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer/Daily"]
+custom_minimum_size = Vector2(128, 96)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rgkx6")
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Bullet/TabContainer/Daily/ScrollContainer"]
 layout_mode = 2
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
