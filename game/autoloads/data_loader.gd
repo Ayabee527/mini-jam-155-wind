@@ -78,6 +78,20 @@ func check_compatibility(version: String) -> String:
 			Global.past_username = username
 			config.set_value(USER_NAME, "past_username", Global.past_username)
 			
+			var endless_highs = config.get_value(USER_NAME, "endless_highscores")
+			var bullet_highs = config.get_value(USER_NAME, "bullet_highscores")
+			
+			var reset_endless_highs: Array = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+			var reset_bullet_highs: Array = [0, 0, 0, 0, 0]
+			
+			reset_endless_highs[0] = endless_highs[0]
+			reset_bullet_highs[0] = bullet_highs[0]
+			
+			config.set_value(USER_NAME, "endless_highscores", reset_endless_highs)
+			config.set_value(USER_NAME, "bullet_highscores", reset_bullet_highs)
+			
+			config.set_value(USER_NAME, "game_version", "1.1.1")
+			
 			config.save(SAVE_PATH)
 			
 			AchievementHandler.update_achievements()

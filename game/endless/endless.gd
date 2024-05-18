@@ -105,7 +105,8 @@ func over_game() -> void:
 	
 	if not updating_score:
 		Global.latest_time = time_alive
-		Global.latest_score = score_handler.score
+		#Global.latest_score = score_handler.score
+		Global.set_latest_score(score_handler.score)
 		
 		AchievementHandler.score = score_handler.score
 		AchievementHandler.check_game_over()

@@ -215,6 +215,14 @@ func validate_username(username: String) -> void:
 			DataLoader.save_key("username", Global.username)
 			update_status("logged in :D", "lime")
 	else:
+		if not Global.past_username.is_empty():
+			Global.username = ""
+			DataLoader.save_key("username", Global.username)
+			username_input.text = Global.past_username
+			username_input.grab_focus()
+			update_status("try this ->", "gray")
+			return
+		
 		Global.username = username
 		Global.past_username = username
 		DataLoader.save_key("username", Global.username)

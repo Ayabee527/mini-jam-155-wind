@@ -9,6 +9,7 @@ extends PanelContainer
 @export var online_menu: OnlineMenu
 
 func _ready() -> void:
+	SceneSwitcher.switch_in()
 	DataLoader.load_config()
 	await get_tree().create_timer(0.5).timeout
 	AchievementHandler.load_achievements()
@@ -16,7 +17,6 @@ func _ready() -> void:
 	if OS.has_feature("web"):
 		quit_butt.hide()
 	
-	SceneSwitcher.switch_in()
 	achieves_menu.initialize()
 
 func get_time_text(time_alive: int) -> String:

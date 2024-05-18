@@ -124,7 +124,8 @@ func over_game() -> void:
 			pause_butt.hide()
 	)
 	
-	Global.latest_bullet_time = time_alive
+	#Global.latest_bullet_time = time_alive
+	Global.set_latest_bullet_time(time_alive)
 	AchievementHandler.bullet_score = time_alive
 	AchievementHandler.check_bullet_gameover()
 	
