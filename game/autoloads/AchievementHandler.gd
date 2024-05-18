@@ -58,6 +58,11 @@ var ACHIEVEMENTS = {
 		"description": "Game over with 69 in your score.",
 	},
 	
+	"IT'S OVER X50!": {
+		"completed": false,
+		"description": "Get max multiplier (x50) in an endless run!"
+	},
+	
 	# BULLET HELL
 	
 	"Straight Up Ballin!": {
@@ -125,7 +130,8 @@ const ENDLESS_ACHIEVEMENTS = [
 	"First Of Many!", "Voluntary Celibate!", "Okay You're Pretty Bad!",
 	"Okay, You're Pretty Good!", "Okay, You're Very Good!", "Okay, You're Very Good!",
 	"Okay, You're Too Good!", "Okay, You Can Stop Now!", "Tryhard!",
-	"Maybe You Should Go Outside!", "They're In The Walls!", "Very Nice!"
+	"Maybe You Should Go Outside!", "They're In The Walls!", "Very Nice!",
+	"IT'S OVER X50!"
 ]
 const BULLETHELL_ACHIEVEMENTS = [
 	"Straight Up Ballin!", "Flashing Before My Eyes!", "That One Hurt!",

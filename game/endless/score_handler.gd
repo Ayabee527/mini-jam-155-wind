@@ -5,6 +5,7 @@ signal score_updating()
 signal score_updated(new_score: int)
 
 @export var timer_multiplier_curve: Curve
+@export var multiplier_gradient: Gradient
 
 @export_group("Outer Dependencies")
 @export var player: Player
@@ -23,6 +24,7 @@ var multiplier: float = 1.0:
 var score: int = 0:
 	set = set_score
 var last_score: int = 0
+var latest_plus: int = 0
 
 func _ready() -> void:
 	timer_bar.min_value = 0
@@ -33,10 +35,13 @@ func _process(delta: float) -> void:
 	
 	multiplier += get_timer_multiplier() * delta * 0.75
 	multiplier += get_speed_multiplier() * delta * 0.75
-	multiplier = lerp(multiplier, 1.0, (multiplier / 50.0) * delta)
-	#multiplier = move_toward(multiplier, 1.0, 3.75 * delta)
+	#multiplier = lerp(multiplier, 1.0, (multiplier / 200.0) * delta)
+	if multiplier < 50.0:
+		multiplier = move_toward(multiplier, 1.0, 4.0 * delta)
 	
 	multiplier = clamp(multiplier, 0.0, 50.0)
+	if multiplier >= 50.0:
+		AchievementHandler.complete("IT'S OVER X50!")
 
 func get_speed_multiplier() -> float:
 	var multi: float = 0
@@ -81,18 +86,31 @@ func increment_score(new_score: int):
 
 func set_multiplier(new_multiplier: float) -> void:
 	multiplier = max(0, new_multiplier)
-	multiplier_label.text = "[wave]x" + str(snappedf(multiplier, 0.01))
+	var multiplier_percent = multiplier / 50.0
+	if multiplier < 50.0:
+		multiplier_label.text = "[wave]x" + str(snappedf(multiplier, 0.01))
+	else:
+		if multiplier_label.text != "[shake]x50":
+			multiplier_label.text = "[shake]x50"
+	
+	var color = multiplier_gradient.sample(multiplier_percent)
+	multiplier_label.modulate.r = color.r
+	multiplier_label.modulate.g = color.g
+	multiplier_label.modulate.b = color.b
 
 func _on_player_goal_collected() -> void:
 	combo += 1
 	if combo > 1:
-		score += (100 * (1.0 + (combo * 0.25))) * multiplier
-		multiplier *= 3.0
+		latest_plus = (100 * (1.0 + (combo * 0.25))) * multiplier
+		score += latest_plus
+		multiplier += 10.0
+		print_rich("[shake][color=green]GAINED " + str(latest_plus) + " SCORE!")
 
 
 func _on_player_hurt() -> void:
 	owies += 1
 	multiplier = 0.0
-	var score_multiplier = max(0.99 - (owies * 0.001), 0.8)
-	print(score_multiplier)
-	score *= score_multiplier
+	var score_multiplier = min(0.5 + (owies * 0.025), 2.0)
+	print_rich("[shake][color=red]SCORE MULTIPLIER: " + str(score_multiplier))
+	score -= ceili(latest_plus * score_multiplier)
+	print_rich("[shake][color=red]LOST " + str(ceili(latest_plus * score_multiplier)) + " SCORE!")

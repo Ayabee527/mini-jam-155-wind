@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://3r620wirfx5j"]
+[gd_scene load_steps=30 format=3 uid="uid://3r620wirfx5j"]
 
 [ext_resource type="Script" path="res://endless/endless.gd" id="1_c1edh"]
 [ext_resource type="Script" path="res://endless/score_handler.gd" id="2_dssv2"]
@@ -22,6 +22,10 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 
 [sub_resource type="Curve" id="Curve_it4fr"]
 _data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(0.25, 0.75), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.75, 0), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 6
+
+[sub_resource type="Gradient" id="Gradient_vkgg5"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 0.95, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0.482353, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pocrq"]
 bg_color = Color(0, 0, 0, 1)
@@ -146,6 +150,7 @@ one_shot = true
 [node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("player", "player_goal", "life_timer", "multiplier_label", "score_label", "timer_bar")]
 script = ExtResource("2_dssv2")
 timer_multiplier_curve = SubResource("Curve_it4fr")
+multiplier_gradient = SubResource("Gradient_vkgg5")
 player = NodePath("../Player")
 player_goal = NodePath("../PlayerGoal")
 life_timer = NodePath("../LifeTimer")
