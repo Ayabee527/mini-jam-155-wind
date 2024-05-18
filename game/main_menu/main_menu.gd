@@ -10,9 +10,8 @@ extends PanelContainer
 
 func _ready() -> void:
 	DataLoader.load_config()
-	await get_tree().process_frame
+	await get_tree().create_timer(0.5).timeout
 	AchievementHandler.load_achievements()
-	await get_tree().process_frame
 	
 	if OS.has_feature("web"):
 		quit_butt.hide()

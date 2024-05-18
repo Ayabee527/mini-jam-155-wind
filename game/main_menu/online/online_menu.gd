@@ -195,7 +195,7 @@ func validate_username(username: String) -> void:
 	if username.is_empty():
 		Global.username = ""
 		DataLoader.save_key("username", Global.username)
-		update_status("[wave]no name :(", "gray")
+		update_status("[wave]signed out :(", "gray")
 		return
 	
 	update_status("[wave]processing", "gray")
@@ -203,9 +203,9 @@ func validate_username(username: String) -> void:
 	var user_exists = await is_user_real(username)
 	print("User Exists?: ", user_exists)
 	if user_exists:
-		var user_taken = await is_user_taken(username)
-		print("User Taken?: ", user_taken)
-		if user_taken:
+		var user_yours = is_user_yours(username)
+		print("User Yours?: ", user_yours)
+		if not user_yours:
 			Global.username = ""
 			DataLoader.save_key("username", Global.username)
 			update_status("name taken >:(", "red")
@@ -216,7 +216,9 @@ func validate_username(username: String) -> void:
 			update_status("logged in :D", "lime")
 	else:
 		Global.username = username
+		Global.past_username = username
 		DataLoader.save_key("username", Global.username)
+		DataLoader.save_key("past_username", Global.past_username)
 		
 		await SilentWolf.Scores.save_score(
 			Global.username, Global.endless_highs[0][0], "main"
@@ -249,6 +251,9 @@ func is_user_real(username: String) -> bool:
 	exists = not endless_results.scores.is_empty()
 	
 	return exists
+
+func is_user_yours(username: String) -> bool:
+	return username == Global.past_username
 
 func is_user_taken(username: String) -> bool:
 	var taken: bool = false

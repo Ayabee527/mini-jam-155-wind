@@ -2,6 +2,7 @@ extends Node
 
 const MAX_HIGHSCORES = 5
 
+var past_username: String = ""
 var username: String = ""
 
 var game_version: String = "1.0.1"
@@ -69,7 +70,6 @@ func handle_endless_highs() -> void:
 		while endless_highs.size() > MAX_HIGHSCORES:
 			endless_highs.pop_back()
 	
-	print(endless_highs)
 	if not username.is_empty():
 		SilentWolf.Scores.save_score(
 			username, endless_highs[0][0], "main"

@@ -10,7 +10,7 @@ var ACHIEVEMENTS = {
 	
 	"Voluntary Celibate!": {
 		"completed": false,
-		"description": "Don't hit the goal once in an endless run.",
+		"description": "Hit the goal only once in an endless run.",
 	},
 	
 	"Okay You're Pretty Bad!": {
@@ -117,7 +117,7 @@ var ACHIEVEMENTS = {
 	
 	"Fake Out!": {
 		"completed": false,
-		"description": "Clash with a single faker enemy 6 times."
+		"description": "Clash with a clone of you 6 times."
 	},
 }
 
@@ -147,7 +147,7 @@ const ACHIEVEMENT_SECTION = "ACHIEVEMENTS"
 var ball_hits: int = 0:
 	set(new_ball_hits):
 		ball_hits = new_ball_hits
-		if ball_hits == 6:
+		if ball_hits == 5:
 			if wall_hits == 0:
 				complete("They're In The Walls!")
 var score: int = 0
@@ -172,6 +172,23 @@ func save_achievements() -> void:
 	config.set_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
 	
 	#config.save_encrypted_pass(SAVE_PATH, SAVE_PASSWORD)
+	config.save(SAVE_PATH)
+
+func update_achievements() -> void:
+	var config = ConfigFile.new()
+	var error = config.load(SAVE_PATH)
+	
+	if error != OK:
+		return
+	
+	var old_achievements: Dictionary = config.get_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
+	
+	for key in ACHIEVEMENTS.keys():
+		if old_achievements.has(key):
+			ACHIEVEMENTS[key].completed = old_achievements[key].completed
+	
+	config.set_value(ACHIEVEMENT_SECTION, "achievements", ACHIEVEMENTS)
+	
 	config.save(SAVE_PATH)
 
 func load_achievements() -> void:
