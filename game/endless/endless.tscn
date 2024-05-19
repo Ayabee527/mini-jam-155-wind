@@ -447,6 +447,7 @@ text = "Restart"
 [node name="OptionsMenu" parent="UI" instance=ExtResource("15_2210x")]
 visible = false
 
+[connection signal="game_over" from="." to="ScoreHandler" method="_on_endless_game_over"]
 [connection signal="game_over" from="." to="UI/PauseMenu" method="_on_main_game_over"]
 [connection signal="timeout" from="TimerTimer" to="." method="_on_timer_timer_timeout"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]

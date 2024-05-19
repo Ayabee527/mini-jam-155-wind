@@ -1,6 +1,6 @@
 extends Node
 
-const CURRENT_GAME_VERSION: String = "1.1.1"
+const CURRENT_GAME_VERSION: String = "1.1.2"
 
 const SAVE_PATH: String = "user://data.cfg"
 const USER_NAME: String = "USER"
@@ -97,6 +97,25 @@ func check_compatibility(version: String) -> String:
 			AchievementHandler.update_achievements()
 			
 			upgraded_version = "1.1.1"
+		"1.1.1":
+			var config = ConfigFile.new()
+			config.load(SAVE_PATH)
+			
+			config.erase_section_key(USER_NAME, "past_username")
+			
+			Global.username = ""
+			config.set_value(USER_NAME, "username", Global.username)
+			
+			config.set_value(USER_NAME, "game_version", "1.1.2")
+			
+			config.save(SAVE_PATH)
+			
+			#SilentWolf.Scores.wipe_leaderboard("main")
+			#SilentWolf.Scores.wipe_leaderboard("bullet")
+			#SilentWolf.Scores.wipe_leaderboard("daily_endless")
+			#SilentWolf.Scores.wipe_leaderboard("daily_bullet")
+			
+			upgraded_version = "1.1.2"
 		CURRENT_GAME_VERSION:
 			upgraded_version = CURRENT_GAME_VERSION
 	
@@ -127,7 +146,6 @@ func save_config() -> void:
 	config.set_value(USER_NAME, "endless_highscores", Global.endless_highs)
 	config.set_value(USER_NAME, "bullet_highscores", Global.bullet_highs)
 	config.set_value(USER_NAME, "username", Global.username)
-	config.set_value(USER_NAME, "past_username", Global.past_username)
 	
 	config.set_value(USER_NAME, "latest_endless_score", Global.latest_score)
 	config.set_value(USER_NAME, "latest_endless_time", Global.latest_time)
@@ -188,7 +206,6 @@ func load_config() -> void:
 	Global.endless_highs = config.get_value(USER_NAME, "endless_highscores")
 	Global.bullet_highs = config.get_value(USER_NAME, "bullet_highscores")
 	Global.username = config.get_value(USER_NAME, "username")
-	Global.past_username = config.get_value(USER_NAME, "past_username")
 	
 	Global.latest_score = config.get_value(USER_NAME, "latest_endless_score")
 	Global.latest_time = config.get_value(USER_NAME, "latest_endless_time")

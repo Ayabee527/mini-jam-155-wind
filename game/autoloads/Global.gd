@@ -2,7 +2,6 @@ extends Node
 
 const MAX_HIGHSCORES = 5
 
-var past_username: String = ""
 var username: String = ""
 
 var game_version: String = "1.0.1"

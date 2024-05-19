@@ -27,8 +27,10 @@ func refresh() -> void:
 		refreshing = true
 		print_rich("[wave][color=aqua]REFRESHING...")
 		
+		show_loading()
+		
 		username_input.text = Global.username
-		validate_username(Global.username)
+		await validate_username(Global.username)
 		
 		load_everything()
 
@@ -67,8 +69,6 @@ func show_loading() -> void:
 	bullet_daily_holders.add_child(loader_four)
 
 func load_everything() -> void:
-	show_loading()
-	
 #region Load Endless Stats
 	var endless_result: Dictionary = await SilentWolf.Scores.get_scores(0, "main").sw_get_scores_complete
 	print("Endless Scores: " + str(endless_result.scores))
@@ -196,37 +196,29 @@ func validate_username(username: String) -> void:
 		Global.username = ""
 		DataLoader.save_key("username", Global.username)
 		update_status("[wave]signed out :(", "gray")
+		username_input.editable = true
 		return
+	
+	if (username == Global.username) and not username.is_empty():
+		update_status("logged in :D", "lime")
+		username_input.editable = false
+		username_input.release_focus()
+		return
+	else:
+		username_input.editable = true
 	
 	update_status("[wave]processing", "gray")
 	print("\n")
 	var user_exists = await is_user_real(username)
 	print("User Exists?: ", user_exists)
 	if user_exists:
-		var user_yours = is_user_yours(username)
-		print("User Yours?: ", user_yours)
-		if not user_yours:
-			Global.username = ""
-			DataLoader.save_key("username", Global.username)
-			update_status("name taken >:(", "red")
-			username_input.clear()
-		else:
-			Global.username = username
-			DataLoader.save_key("username", Global.username)
-			update_status("logged in :D", "lime")
-	else:
-		if not Global.past_username.is_empty():
-			Global.username = ""
-			DataLoader.save_key("username", Global.username)
-			username_input.text = Global.past_username
-			username_input.grab_focus()
-			update_status("try this ->", "gray")
-			return
-		
-		Global.username = username
-		Global.past_username = username
+		Global.username = ""
 		DataLoader.save_key("username", Global.username)
-		DataLoader.save_key("past_username", Global.past_username)
+		update_status("name taken >:(", "red")
+		username_input.clear()
+	else:
+		Global.username = username
+		DataLoader.save_key("username", Global.username)
 		
 		await SilentWolf.Scores.save_score(
 			Global.username, Global.endless_highs[0][0], "main"
@@ -237,6 +229,8 @@ func validate_username(username: String) -> void:
 		).sw_save_score_complete
 		
 		update_status("signed in >:D", "lime")
+		username_input.editable = false
+		username_input.release_focus()
 	
 	print("\n")
 
@@ -246,7 +240,8 @@ func _on_username_text_submitted(new_text: String) -> void:
 	
 	if not refreshing:
 		refreshing = true
-		validate_username(new_text)
+		show_loading()
+		await validate_username(new_text)
 		load_everything()
 
 func is_user_real(username: String) -> bool:
@@ -290,3 +285,8 @@ func is_user_taken(username: String) -> bool:
 func _on_visibility_changed() -> void:
 	if visible:
 		refresh()
+
+
+func _on_username_focus_entered() -> void:
+	if not username_input.editable:
+		username_input.release_focus()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://lmdkqsrww7lr"]
+[gd_scene load_steps=15 format=3 uid="uid://lmdkqsrww7lr"]
 
 [ext_resource type="Script" path="res://main_menu/online/online_menu.gd" id="1_6se6n"]
 [ext_resource type="FontFile" uid="uid://dg0wgobwcnhf1" path="res://assets/fonts/GravityBold8.ttf" id="2_8rinf"]
@@ -64,6 +64,15 @@ content_margin_bottom = 8.0
 bg_color = Color(1, 1, 1, 0.25098)
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppbpp"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_color = Color(0.501961, 0.501961, 0.501961, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3784y"]
 content_margin_left = 4.0
@@ -163,14 +172,19 @@ autowrap_mode = 0
 [node name="Username" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8rinf")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/normal = SubResource("StyleBoxFlat_fqpgy")
 theme_override_styles/focus = SubResource("StyleBoxFlat_rnl1f")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_ppbpp")
 placeholder_text = "USERNAME"
 max_length = 10
 expand_to_text_length = true
-select_all_on_focus = true
+context_menu_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+caret_blink = true
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(128, 0)
@@ -276,4 +290,5 @@ layout_mode = 2
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Username" to="." method="_on_username_focus_entered"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/Username" to="." method="_on_username_text_submitted"]

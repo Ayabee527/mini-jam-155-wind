@@ -26,6 +26,8 @@ var score: int = 0:
 var last_score: int = 0
 var latest_plus: int = 0
 
+var game_overed: bool = false
+
 func _ready() -> void:
 	timer_bar.min_value = 0
 	timer_bar.max_value = life_timer.wait_time
@@ -33,15 +35,16 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	timer_bar.value = life_timer.time_left
 	
-	multiplier += get_timer_multiplier() * delta * 0.75
-	multiplier += get_speed_multiplier() * delta * 0.75
-	#multiplier = lerp(multiplier, 1.0, (multiplier / 200.0) * delta)
-	if multiplier < 50.0:
-		multiplier = move_toward(multiplier, 1.0, 4.0 * delta)
-	
-	multiplier = clamp(multiplier, 0.0, 50.0)
-	if multiplier >= 50.0:
-		AchievementHandler.complete("IT'S OVER X50!")
+	if not game_overed:
+		multiplier += get_timer_multiplier() * delta * 0.75
+		multiplier += get_speed_multiplier() * delta * 0.75
+		#multiplier = lerp(multiplier, 1.0, (multiplier / 200.0) * delta)
+		if multiplier < 50.0:
+			multiplier = move_toward(multiplier, 1.0, 4.0 * delta)
+		
+		multiplier = clamp(multiplier, 0.0, 50.0)
+		if multiplier >= 50.0:
+			AchievementHandler.complete("IT'S OVER X50!")
 
 func get_speed_multiplier() -> float:
 	var multi: float = 0
@@ -109,8 +112,13 @@ func _on_player_goal_collected() -> void:
 
 func _on_player_hurt() -> void:
 	owies += 1
-	multiplier = 0.0
+	multiplier -= 12.5
 	var score_multiplier = min(0.5 + (owies * 0.025), 2.0)
 	print_rich("[shake][color=red]SCORE MULTIPLIER: " + str(score_multiplier))
 	score -= ceili(latest_plus * score_multiplier)
+	latest_plus *= 0.5
 	print_rich("[shake][color=red]LOST " + str(ceili(latest_plus * score_multiplier)) + " SCORE!")
+
+
+func _on_endless_game_over() -> void:
+	game_overed = true
