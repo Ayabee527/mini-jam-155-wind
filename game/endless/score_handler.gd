@@ -104,19 +104,19 @@ func set_multiplier(new_multiplier: float) -> void:
 func _on_player_goal_collected() -> void:
 	combo += 1
 	if combo > 1:
-		latest_plus = (100 * (1.0 + (combo * 0.25))) * multiplier
+		latest_plus = (50 * (1.0 + (combo * 0.25))) * multiplier
 		score += latest_plus
-		multiplier += 10.0
+		multiplier += 5.0
 		print_rich("[shake][color=green]GAINED " + str(latest_plus) + " SCORE!")
 
 
 func _on_player_hurt() -> void:
 	owies += 1
-	multiplier -= 12.5
+	multiplier -= 5.0
 	var score_multiplier = min(0.5 + (owies * 0.025), 2.0)
 	print_rich("[shake][color=red]SCORE MULTIPLIER: " + str(score_multiplier))
 	score -= ceili(latest_plus * score_multiplier)
-	latest_plus *= 0.5
+	latest_plus *= 0.75
 	print_rich("[shake][color=red]LOST " + str(ceili(latest_plus * score_multiplier)) + " SCORE!")
 
 
