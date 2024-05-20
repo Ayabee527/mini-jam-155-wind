@@ -17,12 +17,12 @@ const HAZARDS = {
 
 const COSTS = {
 	"BULLET": 2,
-	"SAW": 6,
-	"BARRIER": 9,
-	"BOMB": 10,
+	"SAW": 8,
+	"BARRIER": 10,
+	"BOMB": 14,
 }
 
-const EXPLOSION_COST = 5
+const EXPLOSION_COST = 10
 
 signal collected()
 
@@ -105,7 +105,7 @@ func explode() -> void:
 		
 		if not chosen_hazard in ["BARRIER"]:
 			if score >= EXPLOSION_COST:
-				if randf() <= 0.5:
+				if randf() <= 0.25:
 					chosen_hazard += "*"
 					score -= EXPLOSION_COST
 		

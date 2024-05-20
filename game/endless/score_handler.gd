@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 		multiplier += get_speed_multiplier() * delta * 0.75
 		#multiplier = lerp(multiplier, 1.0, (multiplier / 200.0) * delta)
 		if multiplier < 50.0:
-			multiplier = move_toward(multiplier, 1.0, 4.0 * delta)
+			multiplier = move_toward(multiplier, 1.0, 3.5 * delta)
 		
 		multiplier = clamp(multiplier, 0.0, 50.0)
 		if multiplier >= 50.0:
@@ -54,11 +54,11 @@ func get_speed_multiplier() -> float:
 		0
 	)
 	multi += max(
-		player_goal.linear_velocity.length() / 210.0,
+		player_goal.linear_velocity.length() / 105.0,
 		0
 	)
 	
-	return multi
+	return multi * 0.5
 
 func get_timer_multiplier() -> float:
 	var multi: float = 0
@@ -112,11 +112,11 @@ func _on_player_goal_collected() -> void:
 
 func _on_player_hurt() -> void:
 	owies += 1
-	multiplier -= 5.0
+	multiplier -= 7.5
 	var score_multiplier = min(0.5 + (owies * 0.025), 2.0)
 	print_rich("[shake][color=red]SCORE MULTIPLIER: " + str(score_multiplier))
 	score -= ceili(latest_plus * score_multiplier)
-	latest_plus *= 0.75
+	latest_plus = floori(latest_plus / 2.0)
 	print_rich("[shake][color=red]LOST " + str(ceili(latest_plus * score_multiplier)) + " SCORE!")
 
 

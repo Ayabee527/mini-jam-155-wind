@@ -5,7 +5,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ih2u"]
 rough = true
-bounce = 0.5
+bounce = 0.33
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i2ojj"]
 radius = 16.1245
@@ -69,7 +69,7 @@ polygon = PackedVector2Array(0, -2, 2, 0, 0, 2, -2, 0)
 shape = SubResource("CircleShape2D_i2ojj")
 
 [node name="Owie" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Owie"]

@@ -345,6 +345,7 @@ position = Vector2(128, 32)
 
 [node name="Player" parent="." instance=ExtResource("10_bxptl")]
 position = Vector2(128, 224)
+friction = 4.0
 
 [node name="WindMomma" type="Node2D" parent="." node_paths=PackedStringArray("player", "player_goal") groups=["wind_momma"]]
 script = ExtResource("11_ffql8")

@@ -93,15 +93,17 @@ func over_game() -> void:
 		multiplier_label, "modulate:a",
 		0.0, 5.0
 	)
-	tween.tween_property(
-		pause_butt, "modulate:a",
-		0.0, 5.0
-	)
+	#tween.tween_property(
+		#pause_butt, "modulate:a",
+		#0.0, 5.0
+	#)
 	tween.play()
-	tween.finished.connect(
-		func():
-			pause_butt.hide()
-	)
+	#tween.finished.connect(
+		#func():
+			#pause_butt.hide()
+	#)
+	
+	pause_butt.hide()
 	
 	if not updating_score:
 		Global.latest_time = time_alive

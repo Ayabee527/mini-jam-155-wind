@@ -16,7 +16,7 @@ func _ready() -> void:
 	wind_momma = get_tree().get_first_node_in_group("wind_momma")
 	wind_momma.wind_updated.connect(update_wind)
 	
-	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed)
+	add_constant_central_force(wind_momma.wind_direction * wind_momma.wind_speed * 0.5)
 	
 	angular_velocity = randf_range(-TAU, TAU)
 	
@@ -71,7 +71,7 @@ func die() -> void:
 
 func update_wind(direction: Vector2, speed: float) -> void:
 	constant_force = Vector2.ZERO
-	add_constant_central_force(direction * speed)
+	add_constant_central_force(direction * speed * 0.5)
 
 
 func _on_explode_particles_finished() -> void:
